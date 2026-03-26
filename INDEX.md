@@ -282,6 +282,12 @@
 | [SETGLOBALDEFINE.md](functions/SETGLOBALDEFINE.md) | SETGLOBALDEFINE |
 | [UNDEFGLOBALDEFINE.md](functions/UNDEFGLOBALDEFINE.md) | UNDEFGLOBALDEFINE |
 
+### 通信・プロセス間通信
+
+| ファイル | 関数 |
+|---------|------|
+| [DIRECTSSTP.md](functions/DIRECTSSTP.md) | DIRECTSSTP |
+
 ### デバッグ
 
 | ファイル | 関数 |
