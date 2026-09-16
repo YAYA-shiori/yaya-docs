@@ -126,6 +126,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [LINT.GetLocalVarLetted](../functions/LINT.GetLocalVarLetted.md) | ローカル変数の代入箇所を取得（LINT） |
 | [LINT.GetLocalVarUsedBy](../functions/LINT.GetLocalVarUsedBy.md) | ローカル変数の使用箇所を取得（LINT） |
 | [LINT.GetUserDefFuncUsedBy](../functions/LINT.GetUserDefFuncUsedBy.md) | ユーザー定義関数の使用箇所を取得（LINT） |
+| [LINT.GetVarRefs](../functions/LINT.GetVarRefs.md) | 変数・関数の出現とブロックを出現ごとに取得（LINT） |
 | [LOADLIB](../functions/LOADLIB.md) | 外部ライブラリを読み込む |
 | [LOG](../functions/LOG.md) | 自然対数を返す |
 | [LOG10](../functions/LOG10.md) | 常用対数を返す |

@@ -22,8 +22,20 @@ LINT.GetLocalVarUsedBy(function_name)
 
 変数名は使用された順に返され、ネストしたスコープ（波括弧ブロック）への出入りは `{` および `}` で示されます。
 
+Tc574-1以降では、同じステートメント内の代入先の変数（`foreach` のループ変数を含む）は、そのステートメントの最後に並びます。代入は右辺の評価後に行われるためです。
+
+```
+_z = _z + 1      // → _z（読み）, _z（代入）
+_a[0] = _b       // → _b, _a
+```
+
+`case` 構文が内部で生成するローカル変数（`_CaSe_ExPr_PrEfIx_` で始まる名前）は列挙されません（Tc574-1以降）。
+
+戻り値には読みと代入の区別がありません。制約の詳細は [LINT系関数の仕様と制約](../other/lint-functions.md) を参照してください。
+
 ## Compatibility
 - YAYA: Tc568-1以降で使用可能
+- Tc574-1: 同一ステートメント内で代入先を最後に並べるように変更。case の内部変数を除外
 
 ## See Also
 - LINT.GetFuncUsedBy
@@ -31,3 +43,4 @@ LINT.GetLocalVarUsedBy(function_name)
 - LINT.GetGlobalVarUsedBy
 - LINT.GetGlobalVarLetted
 - LINT.GetLocalVarLetted
+- LINT.GetVarRefs

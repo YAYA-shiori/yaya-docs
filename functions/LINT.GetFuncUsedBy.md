@@ -20,6 +20,8 @@ LINT.GetFuncUsedBy(function_name)
 ## Description
 指定した関数内で使用しているすべての関数名（ユーザー定義関数・システム関数を含む）を列挙し、汎用配列で返します。コードの依存関係解析や開発時の検査に使用するLint系ユーティリティ関数です。
 
+関数名は重複を除去し、名前順に並べて返されます。埋め込み式 `%(式)` を含む文字列があると、展開に内部的に使われる `TOSTR` も含まれます。制約の詳細は [LINT系関数の仕様と制約](../other/lint-functions.md) を参照してください。
+
 ## Compatibility
 - YAYA: Tc568-1以降で使用可能
 
@@ -29,3 +31,4 @@ LINT.GetFuncUsedBy(function_name)
 - LINT.GetLocalVarUsedBy
 - LINT.GetGlobalVarLetted
 - LINT.GetLocalVarLetted
+- LINT.GetVarRefs

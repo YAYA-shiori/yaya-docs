@@ -77,6 +77,7 @@
 | [talklib.md](other/talklib.md) | talklib |
 | [simple-yaya-template.md](other/simple-yaya-template.md) | シンプルなYAYAテンプレート |
 | [troubleshooting.md](other/troubleshooting.md) | トラブルシューティング |
+| [lint-functions.md](other/lint-functions.md) | LINT系関数の仕様と制約 |
 
 ---
 
@@ -306,6 +307,7 @@
 | [LINT.GetLocalVarLetted.md](functions/LINT.GetLocalVarLetted.md) | LINT.GetLocalVarLetted |
 | [LINT.GetLocalVarUsedBy.md](functions/LINT.GetLocalVarUsedBy.md) | LINT.GetLocalVarUsedBy |
 | [LINT.GetUserDefFuncUsedBy.md](functions/LINT.GetUserDefFuncUsedBy.md) | LINT.GetUserDefFuncUsedBy |
+| [LINT.GetVarRefs.md](functions/LINT.GetVarRefs.md) | LINT.GetVarRefs |
 
 ---
 

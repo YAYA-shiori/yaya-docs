@@ -22,8 +22,18 @@ LINT.GetLocalVarLetted(function_name)
 
 変数名は代入が行われた順に返され、ネストしたスコープ（波括弧ブロック）への出入りは `{` および `}` で示されます。
 
+以下も代入として列挙されます。
+- 複合代入（`+=` `-=` など）と `++` `--`
+- 配列要素への代入（`_a[0] = 1` は `_a`）（Tc574-1以降）
+- `foreach _list ; _v` のループ変数 `_v`（Tc574-1以降）
+
+`case` 構文が内部で生成するローカル変数（`_CaSe_ExPr_PrEfIx_` で始まる名前）は列挙されません（Tc574-1以降）。
+
+制約の詳細は [LINT系関数の仕様と制約](../other/lint-functions.md) を参照してください。
+
 ## Compatibility
 - YAYA: Tc568-1以降で使用可能
+- Tc574-1: 配列要素への代入と foreach のループ変数を列挙するように変更。case の内部変数を除外
 
 ## See Also
 - LINT.GetLocalVarUsedBy
@@ -31,3 +41,4 @@ LINT.GetLocalVarLetted(function_name)
 - LINT.GetGlobalVarUsedBy
 - LINT.GetUserDefFuncUsedBy
 - LINT.GetFuncUsedBy
+- LINT.GetVarRefs
