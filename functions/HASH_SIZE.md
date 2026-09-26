@@ -1,6 +1,5 @@
 # HASH_SIZE
 **Category:** ハッシュ操作
-**Source:** マニュアル/関数/HASH_SIZE
 
 ## Signature
 ```

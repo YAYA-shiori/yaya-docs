@@ -1,6 +1,5 @@
 # LINT.GetGlobalVarLetted
 **Category:** デバッグ
-**Source:** マニュアル/関数/LINT.GetGlobalVarLetted
 
 ## Signature
 ```

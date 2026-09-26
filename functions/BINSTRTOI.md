@@ -1,7 +1,6 @@
 # BINSTRTOI
 
 **Category:** 文字列操作
-**Source:** マニュアル/関数/BINSTRTOI
 
 ## Signature
 

@@ -1,7 +1,6 @@
 # CHARSETLIBEX
 
 **Category:** 外部ライブラリ
-**Source:** マニュアル/関数/CHARSETLIBEX
 
 ## Signature
 

@@ -1,6 +1,5 @@
 # SETTAMAHWND
 **Category:** デバッグ
-**Source:** マニュアル/関数/SETTAMAHWND
 
 ## Signature
 ```

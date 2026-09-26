@@ -1,6 +1,5 @@
 # GETERRORLOG
 **Category:** デバッグ
-**Source:** マニュアル/関数/GETERRORLOG
 
 ## Signature
 ```

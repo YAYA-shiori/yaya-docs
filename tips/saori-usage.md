@@ -1,7 +1,5 @@
 # SAORIの使い方
 
-**Source:** Tips/SAORIの使い方
-
 ## 概要
 
 YAYA/03 でSAORI（外部DLL）を使う方法の解説。SAORI-universal（DLL形式）とSAORI-basic（EXE形式）の2種類がある。

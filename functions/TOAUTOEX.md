@@ -1,6 +1,5 @@
 # TOAUTOEX
 **Category:** 型取得/変換
-**Source:** マニュアル/関数/TOAUTOEX
 
 ## Signature
 ```

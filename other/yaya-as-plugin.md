@@ -1,7 +1,5 @@
 # YAYA as PLUGIN
 
-**Source:** YAYA as PLUGIN
-
 ## 概要
 
 yaya.dllのプラグイン規格対応用辞書セット。YAYA構文でプラグインを作成でき、SAORI連携もサポートする。PLUGIN/2.0仕様に対応し、主にSSP専用のプラグインシステムとして機能する。

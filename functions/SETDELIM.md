@@ -1,6 +1,5 @@
 # SETDELIM
 **Category:** 配列操作
-**Source:** マニュアル/関数/SETDELIM
 
 ## Signature
 ```

@@ -1,6 +1,5 @@
 # LINT.GetGlobalVarUsedBy
 **Category:** デバッグ
-**Source:** マニュアル/関数/LINT.GetGlobalVarUsedBy
 
 ## Signature
 ```

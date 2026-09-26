@@ -1,6 +1,5 @@
 # GETSECCOUNT
 **Category:** システム情報
-**Source:** マニュアル/関数/GETSECCOUNT
 
 ## Signature
 ```

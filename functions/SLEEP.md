@@ -1,6 +1,5 @@
 # SLEEP
 **Category:** デバッグ
-**Source:** マニュアル/関数/SLEEP
 
 ## Signature
 ```

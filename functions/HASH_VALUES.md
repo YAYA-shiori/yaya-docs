@@ -1,6 +1,5 @@
 # HASH_VALUES
 **Category:** ハッシュ操作
-**Source:** マニュアル/関数/HASH_VALUES
 
 ## Signature
 ```

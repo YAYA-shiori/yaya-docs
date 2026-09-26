@@ -22,11 +22,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
+      primary: black
+      accent: indigo
       toggle:
         icon: material/brightness-7
         name: ダークモードに切り替え
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
+      primary: black
+      accent: indigo
       toggle:
         icon: material/brightness-4
         name: ライトモードに切り替え

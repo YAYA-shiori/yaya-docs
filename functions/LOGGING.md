@@ -1,6 +1,5 @@
 # LOGGING
 **Category:** デバッグ
-**Source:** マニュアル/関数/LOGGING
 
 ## Signature
 ```

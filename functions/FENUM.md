@@ -1,7 +1,6 @@
 # FENUM
 
 **Category:** ファイル操作
-**Source:** マニュアル/関数/FENUM
 
 ## Signature
 

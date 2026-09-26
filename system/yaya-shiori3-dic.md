@@ -1,7 +1,5 @@
 # yaya_shiori3.dic
 
-**Source:** システム辞書/yaya_shiori3.dic
-
 ## 概要
 
 `yaya_shiori3.dic` は YAYA ベースのゴーストに核心機能を提供する基本システム辞書。

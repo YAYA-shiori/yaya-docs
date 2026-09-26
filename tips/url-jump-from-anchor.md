@@ -1,7 +1,5 @@
 # アンカータグからURLジャンプ
 
-**Source:** Tips/アンカータグからURLジャンプ
-
 ## 概要
 
 アンカータグをクリックしたときに、IDが `http://` で始まる場合はブラウザでURLを開く機能の実装方法。RSSの記事タイトルをクリックしてURLジャンプする場合などにも使える。
@@ -65,8 +63,8 @@ AYATEMPLATE.EscapeText
 sample
 {
   "\1\s[10]\0\s[0]/
-  文Wikiを開きます。\n\n/
-  \_a[http://emily.shillest.net/ayaya/?FrontPage]ここをクリック\_a/
+  YAYAマニュアルを開きます。\n\n/
+  \_a[https://yaya-shiori.github.io/yaya-docs/]ここをクリック\_a/
   \e"
 }
 ```

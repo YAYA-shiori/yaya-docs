@@ -1,6 +1,5 @@
 # RE_GREP
 **Category:** 正規表現
-**Source:** マニュアル/関数/RE_GREP
 
 ## Signature
 ```

@@ -1,6 +1,5 @@
 # IHASH
 **Category:** ハッシュ操作
-**Source:** マニュアル/関数/IHASH
 
 ## Signature
 ```

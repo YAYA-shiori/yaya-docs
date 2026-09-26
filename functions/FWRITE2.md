@@ -1,6 +1,5 @@
 # FWRITE2
 **Category:** ファイル操作
-**Source:** マニュアル/関数/FWRITE2
 
 ## Signature
 ```

@@ -1,7 +1,5 @@
 # OnTranslateの使い方
 
-**Source:** Tips/OnTranslateの使い方
-
 ## 概要
 
 `OnTranslate` は、ゴーストがしゃべるスクリプトをまとめて後処理で置き換える際に使うイベント。語尾の変更や敬称の重複回避に有用。

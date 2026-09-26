@@ -1,6 +1,5 @@
 # LINT.GetVarRefs
 **Category:** デバッグ
-**Source:** マニュアル/関数/LINT.GetVarRefs
 
 ## Signature
 ```

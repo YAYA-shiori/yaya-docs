@@ -1,7 +1,5 @@
 # 複雑な _in_ チェック
 
-**Source:** Tips/複雑な_in_チェック
-
 ## 概要
 
 No documentation available.

@@ -1,6 +1,5 @@
 # HASH_SPLIT
 **Category:** ハッシュ操作
-**Source:** マニュアル/関数/HASH_SPLIT
 
 ## Signature
 ```

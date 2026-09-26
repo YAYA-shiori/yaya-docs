@@ -1,6 +1,5 @@
 # GETENV
 **Category:** システム情報
-**Source:** マニュアル/関数/GETENV
 
 ## Signature
 ```

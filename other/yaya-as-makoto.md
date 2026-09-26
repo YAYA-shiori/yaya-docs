@@ -1,7 +1,5 @@
 # YAYA as MAKOTO
 
-**Source:** YAYA as MAKOTO
-
 ## 概要
 
 Setoriが作成したモジュール。YAYAの文法でトークやさくらスクリプトを変換するトランスレータ「MAKOTO」を作成できる。YAYAのシステム関数とSAORI機能を活用する。

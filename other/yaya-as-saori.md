@@ -1,7 +1,5 @@
 # YAYA as SAORI
 
-**Source:** YAYA as SAORI
-
 ## 概要
 
 Setoriが作成したモジュール。他の SHIORI 実装から `yaya.dll` を SAORI として呼び出し、YAYA の機能を利用できるようにする。デフォルトでは組み込みシステム関数のみが利用可能だが、カスタムモジュールで機能を拡張できる。

@@ -1,6 +1,5 @@
 # ZEN2HAN
 **Category:** 文字列操作
-**Source:** マニュアル/関数/ZEN2HAN
 
 ## Signature
 ```

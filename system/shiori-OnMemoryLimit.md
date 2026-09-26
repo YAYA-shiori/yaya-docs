@@ -1,7 +1,5 @@
 # shiori.OnMemoryLimit
 
-**Source:** マニュアル/エラー処理関数/shiori.OnMemoryLimit
-
 ## 概要
 
 メモリの限界に達したときに呼び出されるユーザー定義関数。

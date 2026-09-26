@@ -1,7 +1,5 @@
 # 音を鳴らす
 
-**Source:** Tips/音を鳴らす
-
 ## 概要
 
 YAYAでSAORI「MCIAudioR」（作者: umeici）を使って音声・MIDIを再生する方法を説明します。

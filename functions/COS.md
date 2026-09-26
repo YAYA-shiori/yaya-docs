@@ -1,7 +1,6 @@
 # COS
 
 **Category:** 数学関数
-**Source:** マニュアル/関数/COS
 
 ## Signature
 

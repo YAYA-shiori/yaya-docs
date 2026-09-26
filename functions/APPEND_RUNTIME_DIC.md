@@ -1,7 +1,6 @@
 # APPEND_RUNTIME_DIC
 
 **Category:** メタ操作・特殊関数
-**Source:** マニュアル/関数/APPEND_RUNTIME_DIC
 
 ## Signature
 

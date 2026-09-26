@@ -1,6 +1,5 @@
 # HASH_KEYS
 **Category:** ハッシュ操作
-**Source:** マニュアル/関数/HASH_KEYS
 
 ## Signature
 ```

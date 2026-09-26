@@ -1,6 +1,5 @@
 # STRDECODE
 **Category:** 文字列操作
-**Source:** マニュアル/関数/STRDECODE
 
 ## Signature
 ```

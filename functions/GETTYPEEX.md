@@ -1,6 +1,5 @@
 # GETTYPEEX
 **Category:** 型取得/変換
-**Source:** マニュアル/関数/GETTYPEEX
 
 ## Signature
 ```

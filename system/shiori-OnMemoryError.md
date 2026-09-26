@@ -1,7 +1,5 @@
 # shiori.OnMemoryError
 
-**Source:** マニュアル/エラー処理関数/shiori.OnMemoryError
-
 ## 概要
 
 メモリエラーが発生したときに呼び出されるユーザー定義関数。

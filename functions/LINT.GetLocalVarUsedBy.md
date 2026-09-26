@@ -1,6 +1,5 @@
 # LINT.GetLocalVarUsedBy
 **Category:** デバッグ
-**Source:** マニュアル/関数/LINT.GetLocalVarUsedBy
 
 ## Signature
 ```

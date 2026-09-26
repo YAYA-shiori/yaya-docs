@@ -1,6 +1,5 @@
 # LOADLIB
 **Category:** 外部ライブラリ
-**Source:** マニュアル/関数/LOADLIB
 
 ## Signature
 ```

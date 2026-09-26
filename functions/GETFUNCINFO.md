@@ -1,6 +1,5 @@
 # GETFUNCINFO
 **Category:** メタ操作・特殊関数
-**Source:** マニュアル/関数/GETFUNCINFO
 
 ## Signature
 ```

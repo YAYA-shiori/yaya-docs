@@ -1,7 +1,5 @@
 # shiori.OnCallLimit
 
-**Source:** マニュアル/エラー処理関数/shiori.OnCallLimit
-
 ## 概要
 
 呼び出しの深さが限界に達したときに呼び出されるユーザー定義関数。

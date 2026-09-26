@@ -1,7 +1,5 @@
 # xaoric.dllを使ったRSS読み取り
 
-**Source:** Tips/xaoric.dllを使ったRSS読み取り
-
 ## 概要
 
 `xaoric.dll` はXMLパースライブラリで、RSSファイルの解析に利用できる。

@@ -1,7 +1,6 @@
 # BITWISE_NOT
 
 **Category:** ビット演算
-**Source:** マニュアル/関数/BITWISE_NOT
 
 ## Signature
 

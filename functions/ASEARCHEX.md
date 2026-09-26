@@ -1,7 +1,6 @@
 # ASEARCHEX
 
 **Category:** 配列操作
-**Source:** マニュアル/関数/ASEARCHEX
 
 ## Signature
 

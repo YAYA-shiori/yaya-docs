@@ -1,7 +1,5 @@
 # shiori.OnLoopLimit
 
-**Source:** マニュアル/エラー処理関数/shiori.OnLoopLimit
-
 ## 概要
 
 ループの反復回数が限界に達したときに呼び出されるユーザー定義関数。

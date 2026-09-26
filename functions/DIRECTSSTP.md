@@ -1,7 +1,6 @@
 # DIRECTSSTP
 
 **Category:** 通信・プロセス間通信
-**Source:** マニュアル/関数/DIRECTSSTP
 
 ## Signature
 

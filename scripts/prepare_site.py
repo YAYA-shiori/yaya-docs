@@ -1,6 +1,6 @@
 """GitHub Pages 用に原稿を _site_src/ へ写す。
 
-- INDEX.md を index.md（トップページ）にする
+- INDEX.md を index.md（トップページ）にし、INDEX.md へのリンクも書き換える
 - GitHub では表示できるが Python-Markdown では崩れる書き方を直す
   （段落の直後に空行なしで続くリスト・表の前に空行を入れる）
 原稿そのものは書き換えない。
@@ -15,6 +15,7 @@ DIRS = ['basic', 'functions', 'grammar', 'other', 'startup', 'system', 'tips']
 
 BLOCK_START = re.compile(r'^\s*(?:[-*+]\s|\d+\.\s|\|)')
 FENCE = re.compile(r'^\s*(```|~~~)')
+INDEX_LINK = re.compile(r'(\]\((?:\.\./)*)INDEX\.md')
 
 
 def fix_markdown(text):
@@ -32,7 +33,7 @@ def fix_markdown(text):
                 out.append('')
         out.append(line)
         prev = line
-    return '\n'.join(out)
+    return INDEX_LINK.sub(r'\1index.md', '\n'.join(out))
 
 
 def copy_md(src, dst):

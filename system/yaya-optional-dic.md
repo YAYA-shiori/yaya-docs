@@ -1,7 +1,5 @@
 # yaya_optional.dic
 
-**Source:** システム辞書/yaya_optional.dic
-
 ## 概要
 
 `yaya_optional.dic` は SHIORI3 フレームワーク操作のためのユーティリティ関数を含む YAYA システム辞書。SAKURAスクリプトタグの操作、ゴーストの検出、FMO（フレームメモリオブジェクト）テーブル管理の4つの主要機能を提供する。

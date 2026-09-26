@@ -1,6 +1,5 @@
 # LINT.GetUserDefFuncUsedBy
 **Category:** デバッグ
-**Source:** マニュアル/関数/LINT.GetUserDefFuncUsedBy
 
 ## Signature
 ```

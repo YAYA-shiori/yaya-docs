@@ -1,7 +1,6 @@
 # BITWISE_SHIFT
 
 **Category:** ビット演算
-**Source:** マニュアル/関数/BITWISE_SHIFT
 
 ## Signature
 

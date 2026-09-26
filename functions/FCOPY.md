@@ -1,7 +1,6 @@
 # FCOPY
 
 **Category:** ファイル操作
-**Source:** マニュアル/関数/FCOPY
 
 ## Signature
 

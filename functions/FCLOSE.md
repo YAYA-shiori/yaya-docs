@@ -1,7 +1,6 @@
 # FCLOSE
 
 **Category:** ファイル操作
-**Source:** マニュアル/関数/FCLOSE
 
 ## Signature
 

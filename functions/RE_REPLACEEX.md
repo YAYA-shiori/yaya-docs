@@ -1,6 +1,5 @@
 # RE_REPLACEEX
 **Category:** 正規表現
-**Source:** マニュアル/関数/RE_REPLACEEX
 
 ## Signature
 ```

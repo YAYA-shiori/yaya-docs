@@ -1,6 +1,5 @@
 # READFMO
 **Category:** システム情報
-**Source:** マニュアル/関数/READFMO
 
 > **【Windows専用】** この関数はWindows用にコンパイルされたyayaでしか動作しません。
 

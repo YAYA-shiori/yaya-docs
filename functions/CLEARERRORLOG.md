@@ -1,7 +1,6 @@
 # CLEARERRORLOG
 
 **Category:** デバッグ
-**Source:** マニュアル/関数/CLEARERRORLOG
 
 ## Signature
 

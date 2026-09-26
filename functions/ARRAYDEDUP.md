@@ -1,7 +1,6 @@
 # ARRAYDEDUP
 
 **Category:** 配列操作
-**Source:** マニュアル/関数/ARRAYDEDUP
 
 ## Signature
 

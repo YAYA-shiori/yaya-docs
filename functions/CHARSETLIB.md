@@ -1,7 +1,6 @@
 # CHARSETLIB
 
 **Category:** 外部ライブラリ
-**Source:** マニュアル/関数/CHARSETLIB
 
 ## Signature
 

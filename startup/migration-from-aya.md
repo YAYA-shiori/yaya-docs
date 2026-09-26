@@ -1,7 +1,5 @@
 # AYAからの移行
 
-**Source:** StartUp/AYAからの移行
-
 ## 主な変更点
 
 ### DLL・ファイル名の変更
