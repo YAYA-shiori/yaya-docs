@@ -22,7 +22,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 - 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる
 - 左メニューの章立ては `.pages`（mkdocs-awesome-pages-plugin）、各ページの名前は H1 から決まる
-- GitHub では表示できても MkDocs（Python-Markdown）では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
+- GitHub では表示できても MkDocs（Python-Markdown）では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
 - ヘッダの色は `mkdocs.yml` の `theme.palette` の `primary`（現在は black）で決まる
 - MkDocs は 1.6 系に固定している（`requirements.txt`）。MkDocs 2.0 はプラグインや Material テーマと互換性が無い
 

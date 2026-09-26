@@ -16,6 +16,13 @@ DIRS = ['basic', 'functions', 'grammar', 'other', 'startup', 'system', 'tips']
 BLOCK_START = re.compile(r'^\s*(?:[-*+]\s|\d+\.\s|\|)')
 FENCE = re.compile(r'^\s*(```|~~~)')
 INDEX_LINK = re.compile(r'(\]\((?:\.\./)*)INDEX\.md')
+CODE_SPAN = re.compile(r'`[^`]*`')
+
+
+def unescape_table_code(line):
+    # GitHub では表のコードスパン内の | を \| と書く必要があるが、
+    # Python-Markdown はコードスパン内の | を区切りとみなさず \ をそのまま表示してしまう
+    return CODE_SPAN.sub(lambda m: m.group(0).replace('\\|', '|'), line)
 
 
 def fix_markdown(text):
@@ -31,6 +38,8 @@ def fix_markdown(text):
             # 直前が本文の行（空行・同種のブロック・見出し以外）なら空行を入れる
             if prev.strip() != '' and not BLOCK_START.match(prev) and not prev.startswith((' ', '\t')):
                 out.append('')
+            if line.lstrip().startswith('|'):
+                line = unescape_table_code(line)
         out.append(line)
         prev = line
     return INDEX_LINK.sub(r'\1index.md', '\n'.join(out))
