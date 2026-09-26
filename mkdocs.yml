@@ -1,0 +1,54 @@
+site_name: YAYA マニュアル
+site_description: 伺かの SHIORI「YAYA」の言語マニュアル
+site_url: https://yaya-shiori.github.io/yaya-docs/
+repo_url: https://github.com/YAYA-shiori/yaya-docs
+repo_name: YAYA-shiori/yaya-docs
+edit_uri: ""
+
+# 原稿はリポジトリ直下にあるため、scripts/prepare_site.py で _site_src/ に写してからビルドする
+docs_dir: _site_src
+site_dir: _site
+
+theme:
+  name: material
+  language: ja
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: ダークモードに切り替え
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: ライトモードに切り替え
+
+plugins:
+  - search:
+      lang: ja
+  - awesome-pages
+
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - mdx_truly_sane_lists
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+      # GitHub と同じく日本語の見出しをそのままアンカーにする
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+validation:
+  links:
+    anchors: warn
