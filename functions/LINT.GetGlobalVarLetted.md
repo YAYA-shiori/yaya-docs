@@ -26,12 +26,14 @@ LINT.GetGlobalVarLetted(function_name)
 - 複合代入（`+=` `-=` など）と `++` `--`
 - 配列要素への代入（`G_a[0] = 1` は `G_a`）（Tc574-1以降）
 - `foreach _list ; G_v` のループ変数 `G_v`（Tc574-1以降）
+- `foreach _list ; G_k, G_v` の2つのループ変数 `G_k` `G_v`（Tc600-3以降）
 
 制約の詳細は [LINT系関数の仕様と制約](../other/lint-functions.md) を参照してください。
 
 ## Compatibility
 - YAYA: Tc568-1以降で使用可能
 - Tc574-1: 配列要素への代入と foreach のループ変数を列挙するように変更
+- Tc600-3: 2変数の foreach のループ変数を両方とも列挙
 
 ## See Also
 - LINT.GetFuncUsedBy

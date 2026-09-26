@@ -47,7 +47,7 @@ foreach _refs ; _r {
 | 値 | 対象 |
 |----|------|
 | `r` | 代入先以外のすべての出現 |
-| `w` | `=` `:=` の代入先、配列要素への `=` の代入先（`_a[0] = 1` の `_a`）、`foreach` のループ変数 |
+| `w` | `=` `:=` の代入先、配列要素への `=` の代入先（`_a[0] = 1` の `_a`）、`foreach` のループ変数（2変数の foreach では両方。Tc600-3以降） |
 | `rw` | `+=` `-=` `*=` `/=` `%=` `,=` とその `:=` 形、`++` `--` の対象（配列要素への複合代入を含む） |
 
 代入は右辺の評価後に行われるため、同じステートメント内では代入先（`w` / `rw`）が最後に並びます。
@@ -82,7 +82,7 @@ _z = _z + 1
 | `subst` | 代入を含む数式 |
 | `if` / `elseif` / `while` / `switch` | 各構文の条件式 |
 | `for-init` / `for-cond` / `for-step` | `for a ; b ; c` の a / b / c |
-| `foreach` / `foreach-var` | `foreach a ; b` の a / b |
+| `foreach` / `foreach-var` | `foreach a ; b` の a / b（`foreach a ; k, v` では k と v がどちらも `foreach-var`。Tc600-3以降） |
 | `case` / `when` | case の式 / when の条件 |
 | `parallel` / `void` / `return` | 各構文の式 |
 

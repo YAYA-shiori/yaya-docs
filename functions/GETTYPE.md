@@ -18,6 +18,7 @@ GETTYPE( var )
 - 2: 浮動小数点数
 - 3: 文字列
 - 4: 汎用配列
+- 5: ハッシュ（Tc600-3以降）
 
 ## Description
 指定した値のデータ型を取得する。
@@ -27,6 +28,8 @@ GETTYPE( var )
 ## Compatibility
 - YAYA: 初期から利用可能
 - AYA: 5.8以降
+- Tc600-3: ハッシュのとき 5 を返すようになった
 
 ## See Also
 - GETTYPEEX
+- IHASH

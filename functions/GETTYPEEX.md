@@ -18,6 +18,7 @@ GETTYPEEX( var )
 - 2: 実数
 - 3: 文字列
 - 4: 汎用配列
+- 5: ハッシュ（Tc600-3以降）
 
 ## Description
 指定した変数のデータ型を取得する。`GETTYPE` との主な違いは、引数に変数そのものではなく**変数名を文字列として**渡す点にある。
@@ -26,6 +27,7 @@ GETTYPEEX( var )
 
 ## Compatibility
 - YAYA: Tc537-3以降
+- Tc600-3: ハッシュのとき 5 を返すようになった
 
 ## See Also
 - GETTYPE

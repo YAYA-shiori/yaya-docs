@@ -21,6 +21,7 @@
 | [09-reserved-words.md](grammar/09-reserved-words.md) | 予約語 |
 | [10-yaya-as-windows-dll.md](grammar/10-yaya-as-windows-dll.md) | Windows DLLとしてのYAYA |
 | [11-character-encoding.md](grammar/11-character-encoding.md) | 文字コード |
+| [12-hash.md](grammar/12-hash.md) | ハッシュと値の入れ子（Tc600-3以降） |
 
 ---
 
@@ -78,6 +79,7 @@
 | [simple-yaya-template.md](other/simple-yaya-template.md) | シンプルなYAYAテンプレート |
 | [troubleshooting.md](other/troubleshooting.md) | トラブルシューティング |
 | [lint-functions.md](other/lint-functions.md) | LINT系関数の仕様と制約 |
+| [changes-600.md](other/changes-600.md) | 600 での変更点（Tc600-3以降） |
 
 ---
 
@@ -114,6 +116,17 @@
 | [SETDELIM.md](functions/SETDELIM.md) | SETDELIM |
 | [GETDELIM.md](functions/GETDELIM.md) | GETDELIM |
 | [IARRAY.md](functions/IARRAY.md) | IARRAY |
+
+### ハッシュ操作
+
+| ファイル | 関数 |
+|---------|------|
+| [IHASH.md](functions/IHASH.md) | IHASH |
+| [HASH_KEYS.md](functions/HASH_KEYS.md) | HASH_KEYS |
+| [HASH_VALUES.md](functions/HASH_VALUES.md) | HASH_VALUES |
+| [HASH_SPLIT.md](functions/HASH_SPLIT.md) | HASH_SPLIT |
+| [HASH_EXIST.md](functions/HASH_EXIST.md) | HASH_EXIST |
+| [HASH_SIZE.md](functions/HASH_SIZE.md) | HASH_SIZE |
 
 ### 文字列操作
 
