@@ -14,8 +14,8 @@ shiori.OnLoopLimit(_filename_, _linenum_)
 
 | Parameter | Description |
 |-----------|-------------|
-| _filename_ | エラーが発生した辞書ファイル名 |
-| _linenum_ | エラーが発生した行番号 |
+| *filename* | エラーが発生した辞書ファイル名 |
+| *linenum* | エラーが発生した行番号 |
 
 ## Returns
 

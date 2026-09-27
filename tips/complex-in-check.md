@@ -1,4 +1,4 @@
-# 複雑な _in_ チェック
+# 複雑な `_in_` チェック
 
 ## 概要
 
@@ -96,6 +96,6 @@ OnCommunicate
 
 ## 関連項目
 
-- [演算（_in_ 演算子）](../grammar/04-arithmetic.md)
+- [演算（`_in_` 演算子）](../grammar/04-arithmetic.md)
 - [SPLIT](../functions/SPLIT.md)
 - [SUBSTR](../functions/SUBSTR.md)

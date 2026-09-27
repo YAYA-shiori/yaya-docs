@@ -17,7 +17,7 @@ SETGLOBALDEFINE( define_name , define_value )
 - **0**: 失敗
 
 ## Description
-メモリ上の "_RUNTIME_DIC_" という名前の辞書に `#globaldefine` を記述したのと同等の効果をもたらします。
+メモリ上の `_RUNTIME_DIC_` という名前の辞書に `#globaldefine` を記述したのと同等の効果をもたらします。
 
 ## Compatibility
 - YAYA: Tc562-1以降

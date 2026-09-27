@@ -437,7 +437,7 @@
 | [format-time-hms.md](tips/format-time-hms.md) | 秒数を○時間○分○秒形式にする |
 | [simple-to-generic-array.md](tips/simple-to-generic-array.md) | 簡易配列→汎用配列の変換 |
 | [menu-from-array.md](tips/menu-from-array.md) | 簡易配列からメニューを構築する |
-| [complex-in-check.md](tips/complex-in-check.md) | 複雑な _in_ チェック |
+| [complex-in-check.md](tips/complex-in-check.md) | 複雑な `_in_` チェック |
 | [collision-response-satolili-style.md](tips/collision-response-satolili-style.md) | 見切れ・重なり反応を里々風に |
 | [remember-birthday.md](tips/remember-birthday.md) | 誕生日を覚える |
 | [vary-boot-talk-by-absence.md](tips/vary-boot-talk-by-absence.md) | 起動してなかった時間により起動トークを変える |

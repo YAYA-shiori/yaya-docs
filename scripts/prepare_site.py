@@ -5,11 +5,13 @@
   （段落の直後に空行なしで続くリスト・表の前に空行を入れる）
 - 関数ページなどの英語の見出し（Signature など）を日本語にする
 - 本文中の関数名（functions/ にページがあるもの）を関数ページへのリンクにする
+- `_in_` のように _ で挟んだ書き方（斜体になってしまう）を警告する
 原稿そのものは書き換えない。
 """
 import os
 import re
 import shutil
+import sys
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
 OUT = os.path.join(ROOT, '_site_src')
@@ -45,6 +47,12 @@ FUNC_ALT = '|'.join(map(re.escape, FUNC_NAMES))
 BARE_FUNC = re.compile(r'(?<![A-Za-z0-9_./\-])(' + FUNC_ALT + r')(?![A-Za-z0-9_\-]|\.[A-Za-z])')
 CODE_FUNC = re.compile(r'`(' + FUNC_ALT + r')(?:\(.*\))?`')
 PROTECTED = re.compile(r'!?\[[^\]]*\]\([^)]*\)|`[^`]*`|<[^>]+>|https?://\S+')
+
+# `_in_` や `_RUNTIME_DIC_` のように _ で挟んだ名前は GitHub でも MkDocs でも斜体になってしまう。
+# 斜体は *var* で書く決まりにして、コードスパンの外の _名前_ を警告する（Python-Markdown と同じ判定）
+UNDERSCORE_EM = re.compile(r'(?<!\w)_(?!_)(.+?)(?<!_)_(?!\w)')
+NOT_EM = re.compile(r'`[^`]*`|<[^>]+>|https?://\S+|\]\([^)]*\)')
+ESCAPED = re.compile(r'\\.')
 
 
 def unescape_table_code(line):
@@ -98,9 +106,22 @@ def fix_markdown(text, func_dir, self_name):
     return INDEX_LINK.sub(r'\1index.md', '\n'.join(out))
 
 
+def check_underscore_em(text, path):
+    in_fence = False
+    for lineno, line in enumerate(text.split('\n'), 1):
+        if FENCE.match(line):
+            in_fence = not in_fence
+        elif not in_fence:
+            # \_ のようにエスケープした文字は区切りにならない
+            for m in UNDERSCORE_EM.finditer(ESCAPED.sub('x', NOT_EM.sub(' ', line))):
+                print(f'警告: {path}:{lineno}: {m.group(0)} が斜体になる。'
+                      f'名前ならコードスパンで囲み、斜体なら *{m.group(1)}* と書く', file=sys.stderr)
+
+
 def copy_md(src, dst):
     with open(src, encoding='utf-8') as f:
         text = f.read()
+    check_underscore_em(text, os.path.relpath(src, ROOT).replace(os.sep, '/'))
     # 関数ページへの相対パスと、自分自身へはリンクしないための関数名
     func_dir = os.path.relpath(os.path.join(OUT, 'functions'), os.path.dirname(dst)).replace(os.sep, '/') + '/'
     self_name = None

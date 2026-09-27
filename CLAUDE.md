@@ -23,6 +23,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする（`assets/` の画像・CSS も写す）。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる
 - 左メニューの章立ては `.pages`（mkdocs-awesome-pages-plugin）、各ページの名前は H1 から決まる
 - GitHub では表示できても MkDocs（Python-Markdown）では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
+- `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも MkDocs でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する
 - 本文や See Also に書いた関数名（`functions/` にページがあるもの。素の `FOPEN` でもコードスパンの `` `FOPEN` `` / `` `FOPEN(...)` `` でもよい）は、`prepare_site.py` がサイト用に関数ページへのリンクにする（旧 wiki の自動リンクの代わり）。見出し・コードブロック・既存のリンクの中と、関数ページ自身の名前はリンクにしない。原稿には書き込まれないので GitHub 上ではリンクにならない
 - 関数ページの見出し（Signature / Parameters / Returns など）は原稿では英語のまま書く。サイトでは `prepare_site.py` の `HEADING_JA` で日本語に置き換える
 - ヘッダの色は `mkdocs.yml` の `theme.palette` の `primary`（現在は black）で決まる
