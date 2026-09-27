@@ -66,6 +66,8 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [FREAD](../functions/FREAD.md) | ファイルから読み込む |
 | [FREADBIN](../functions/FREADBIN.md) | バイナリとしてファイルを読み込む |
 | [FREADENCODE](../functions/FREADENCODE.md) | エンコード変換しながら読み込む |
+| [FREADJSON](../functions/FREADJSON.md) | JSONファイルを丸ごと読み込んでハッシュ・配列にする（Tc601-1以降） |
+| [FREADXML](../functions/FREADXML.md) | XMLファイルを丸ごと読み込んでハッシュにする（Tc601-1以降） |
 | [FRENAME](../functions/FRENAME.md) | ファイルをリネーム |
 | [FSEEK](../functions/FSEEK.md) | ファイルポインタを移動 |
 | [FSIZE](../functions/FSIZE.md) | ファイルサイズを返す |
@@ -138,6 +140,8 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [LSO](../functions/LSO.md) | 最後に選択されたオプションのインデックスを返す |
 | [MKDIR](../functions/MKDIR.md) | ディレクトリを作成 |
 | [OUTPUTNUM](../functions/OUTPUTNUM.md) | 数値の出力書式を設定 |
+| [PARSEJSON](../functions/PARSEJSON.md) | JSON文字列をハッシュ・配列にする（Tc601-1以降） |
+| [PARSEXML](../functions/PARSEXML.md) | XML文字列をハッシュにする（Tc601-1以降） |
 | [POW](../functions/POW.md) | べき乗を返す |
 | [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md) | グローバル定義を処理 |
 

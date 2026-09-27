@@ -145,6 +145,8 @@
 | [CVREAL.md](functions/CVREAL.md) | CVREAL |
 | [CVAUTO.md](functions/CVAUTO.md) | CVAUTO |
 | [CVAUTOEX.md](functions/CVAUTOEX.md) | CVAUTOEX |
+| [PARSEJSON.md](functions/PARSEJSON.md) | PARSEJSON |
+| [PARSEXML.md](functions/PARSEXML.md) | PARSEXML |
 
 ### 配列操作
 
@@ -262,6 +264,8 @@
 | [FREAD.md](functions/FREAD.md) | FREAD |
 | [FREADENCODE.md](functions/FREADENCODE.md) | FREADENCODE |
 | [FREADBIN.md](functions/FREADBIN.md) | FREADBIN |
+| [FREADJSON.md](functions/FREADJSON.md) | FREADJSON |
+| [FREADXML.md](functions/FREADXML.md) | FREADXML |
 | [FWRITE.md](functions/FWRITE.md) | FWRITE |
 | [FWRITE2.md](functions/FWRITE2.md) | FWRITE2 |
 | [FWRITEBIN.md](functions/FWRITEBIN.md) | FWRITEBIN |
