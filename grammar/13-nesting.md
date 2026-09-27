@@ -267,7 +267,7 @@ Tc602-6 までは、配列の中の配列に多次元代入すると、書き換
 
 ## 文字列化と保存
 
-入れ子の値を文字列にすると（[TOSTR](../functions/TOSTR.md)、文字列との連結、埋め込み、[LOGGING](../functions/LOGGING.md) など）、内側もそのまま `,` や `=` でつながれるので、どこまでが内側なのかわからなくなる。
+入れ子の値を文字列にすると（[TOSTR](../functions/TOSTR.md)、文字列との連結、埋め込みなど）、内側もそのまま `,` や `=` でつながれるので、どこまでが内側なのかわからなくなる。
 
 ```
 _h = IHASH()
@@ -281,7 +281,7 @@ TOSTR(_h)    // "l=1,2,m=x=1"
 | 目的 | 方法 |
 |---|---|
 | 変数をファイルに保存して復元する | [SAVEVAR](../functions/SAVEVAR.md) / [RESTOREVAR](../functions/RESTOREVAR.md)。入れ子は `IARRAY{...}` / `IHASH{...}` の形で保存される（[保存形式](../functions/SAVEVAR.md#保存形式)） |
-| 中身を確認する | [DUMPVAR](../functions/DUMPVAR.md)（Tc600-4以降）。入れ子は `(array)[ ... ]` / `(hash){ ... }` で表示される |
+| 中身を確認する | [DUMPVAR](../functions/DUMPVAR.md)（Tc600-4以降）。入れ子は `(array)[ ... ]` / `(hash){ ... }` で表示される。[LOGGING](../functions/LOGGING.md)（Tc602-8以降）も、入れ子の配列を `( )`、ハッシュを `{ }` で囲んで書き出す |
 | 文字列にして受け渡す | [DUMPJSON](../functions/DUMPJSON.md) と [PARSEJSON](../functions/PARSEJSON.md)。ただし JSON で表せない区別（整数のキーと文字列のキー、VOID と空文字列など）は失われる |
 
 ## 制限
