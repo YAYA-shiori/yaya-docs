@@ -76,8 +76,10 @@ foreach _j["tags"]; _t {
 
 ## Compatibility
 - YAYA: Tc601-1以降
+- Tc602-1: 小数点が `,` のロケール（ドイツ語など）の環境で、小数を含む JSON の解析に失敗していたのを修正
 
 ## See Also
 - [PARSEJSON](PARSEJSON.md)
+- [FWRITEJSON](FWRITEJSON.md)
 - [FREADXML](FREADXML.md)
 - [ハッシュと値の入れ子](../grammar/12-hash.md)

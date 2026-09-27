@@ -39,7 +39,9 @@ PARSEJSON('{')              // 空（警告 W0026）
 
 ## Compatibility
 - YAYA: Tc601-1以降
+- Tc602-1: 小数点が `,` のロケール（ドイツ語など）の環境で、小数を含む JSON の解析に失敗していたのを修正
 
 ## See Also
 - [FREADJSON](FREADJSON.md)
+- [DUMPJSON](DUMPJSON.md)
 - [PARSEXML](PARSEXML.md)

@@ -147,6 +147,8 @@
 | [CVAUTOEX.md](functions/CVAUTOEX.md) | CVAUTOEX |
 | [PARSEJSON.md](functions/PARSEJSON.md) | PARSEJSON |
 | [PARSEXML.md](functions/PARSEXML.md) | PARSEXML |
+| [DUMPJSON.md](functions/DUMPJSON.md) | DUMPJSON |
+| [DUMPXML.md](functions/DUMPXML.md) | DUMPXML |
 
 ### 配列操作
 
@@ -270,6 +272,8 @@
 | [FWRITE2.md](functions/FWRITE2.md) | FWRITE2 |
 | [FWRITEBIN.md](functions/FWRITEBIN.md) | FWRITEBIN |
 | [FWRITEDECODE.md](functions/FWRITEDECODE.md) | FWRITEDECODE |
+| [FWRITEJSON.md](functions/FWRITEJSON.md) | FWRITEJSON |
+| [FWRITEXML.md](functions/FWRITEXML.md) | FWRITEXML |
 | [FCOPY.md](functions/FCOPY.md) | FCOPY |
 | [FMOVE.md](functions/FMOVE.md) | FMOVE |
 | [FDEL.md](functions/FDEL.md) | FDEL |

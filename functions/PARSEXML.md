@@ -41,4 +41,5 @@ PARSEXML('<a><b></a>')          // 空（警告 W0026）
 
 ## See Also
 - [FREADXML](FREADXML.md)
+- [DUMPXML](DUMPXML.md)
 - [PARSEJSON](PARSEJSON.md)

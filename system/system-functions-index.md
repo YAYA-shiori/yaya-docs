@@ -47,7 +47,9 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 |------|------|
 | [DICLOAD](../functions/DICLOAD.md) | 辞書ファイルを読み込む |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | 辞書ファイルをアンロード |
+| [DUMPJSON](../functions/DUMPJSON.md) | 値をJSONの文字列にする（Tc602-1以降） |
 | [DUMPVAR](../functions/DUMPVAR.md) | 変数をダンプ |
+| [DUMPXML](../functions/DUMPXML.md) | 要素のハッシュをXMLの文字列にする（Tc602-1以降） |
 | [ERASE](../functions/ERASE.md) | 文字列から部分文字列を削除 |
 | [ERASEVAR](../functions/ERASEVAR.md) | 変数を削除 |
 | [EVAL](../functions/EVAL.md) | 文字列を式として評価 |
@@ -81,6 +83,8 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [FWRITE2](../functions/FWRITE2.md) | ファイルに書き込む（改行付き） |
 | [FWRITEBIN](../functions/FWRITEBIN.md) | バイナリとしてファイルに書き込む |
 | [FWRITEDECODE](../functions/FWRITEDECODE.md) | デコード変換しながら書き込む |
+| [FWRITEJSON](../functions/FWRITEJSON.md) | 値をJSONにしてファイルに書き込む（Tc602-1以降） |
+| [FWRITEXML](../functions/FWRITEXML.md) | 要素のハッシュをXMLにしてファイルに書き込む（Tc602-1以降） |
 
 ## G-I
 
