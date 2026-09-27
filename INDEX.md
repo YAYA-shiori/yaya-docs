@@ -15,6 +15,7 @@
 - はじめてゴーストを作りたいんだけど？ → [ゴーストの作り方](startup/creating-ghost.md)
 - AYA でゴーストを作っていたけど、YAYA に移りたい → [AYAからの移行](startup/migration-from-aya.md)
 - 里々から YAYA に移りたい → [里々からの移行](startup/migration-from-satolili.md)
+- YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)
 
 ## 調べたいとき
 
@@ -45,6 +46,7 @@
 - [紺野ややめ](https://github.com/YAYA-shiori/konnoyayame) — YAYA のテンプレートゴースト
 - [玉（tama）](https://github.com/YAYA-shiori/tama/releases) — 辞書のエラーチェックやデバッグに使うツール
 - [yaya-CI-check](https://github.com/YAYA-shiori/yaya-CI-check) — GitHub Actions で辞書を検査する CI ツール
+- [ukagaka-doc-mcp](https://github.com/finelagusaz/ukagaka-doc-mcp) - AIによる開発で伺か関連の仕様を勝手に探してもらうためのツール
 
 ---
 
