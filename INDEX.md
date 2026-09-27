@@ -147,6 +147,7 @@
 | [CVAUTOEX.md](functions/CVAUTOEX.md) | CVAUTOEX |
 | [PARSEJSON.md](functions/PARSEJSON.md) | PARSEJSON |
 | [PARSEXML.md](functions/PARSEXML.md) | PARSEXML |
+| [PARSEHEADER.md](functions/PARSEHEADER.md) | PARSEHEADER |
 | [DUMPJSON.md](functions/DUMPJSON.md) | DUMPJSON |
 | [DUMPXML.md](functions/DUMPXML.md) | DUMPXML |
 
