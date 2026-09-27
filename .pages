@@ -5,5 +5,5 @@ nav:
   - システム辞書: system
   - StartUp / チュートリアル: startup
   - その他: other
-  - 関数: functions
+  - システム関数(組み込み関数): functions
   - Tips: tips
