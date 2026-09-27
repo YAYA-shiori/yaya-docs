@@ -51,5 +51,5 @@ OnBoot {
 
 ## 関連項目
 
-- マニュアル/関数/GETSECCOUNT
-- マニュアル/関数/GETTIME
+- [GETSECCOUNT](../functions/GETSECCOUNT.md)
+- [GETTIME](../functions/GETTIME.md)

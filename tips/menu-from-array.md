@@ -65,7 +65,7 @@ OnChoiceSelect {
 
 ## 関連項目
 
-- Tips/配列の要素数を取得
-- Tips/選択肢をいきなり独立した関数で書く
-- マニュアル/関数/ARRAYSIZE
-- マニュアル/関数/SPLIT
+- [配列の要素数を取得](get-array-size.md)
+- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)
+- [ARRAYSIZE](../functions/ARRAYSIZE.md)
+- [SPLIT](../functions/SPLIT.md)

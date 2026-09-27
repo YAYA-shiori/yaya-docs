@@ -24,6 +24,6 @@ OnTranslate
 
 ## 関連項目
 
-- Tips/OnTranslateの使い方
-- マニュアル/関数/REPLACE
-- マニュアル/関数/RE_REPLACE
+- [OnTranslateの使い方](on-translate-usage.md)
+- [REPLACE](../functions/REPLACE.md)
+- [RE_REPLACE](../functions/RE_REPLACE.md)

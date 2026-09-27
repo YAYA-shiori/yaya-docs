@@ -48,7 +48,7 @@ MorphAnalysis
 
 ## 関連項目
 
-- マニュアル/関数/FUNCTIONEX
-- マニュアル/関数/LOADLIB
-- マニュアル/関数/UNLOADLIB
-- other/saori-usage.md
+- [FUNCTIONEX](../functions/FUNCTIONEX.md)
+- [LOADLIB](../functions/LOADLIB.md)
+- [UNLOADLIB](../functions/UNLOADLIB.md)
+- [SAORIの使い方（その他）](../other/saori-usage.md)

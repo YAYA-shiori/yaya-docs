@@ -44,6 +44,6 @@ RE_REPLACE(_text, "(ちゃん|くん|さん|殿)殿", "殿")
 
 ## 関連項目
 
-- Tips/OnTranslateイベント
-- マニュアル/関数/REPLACE
-- マニュアル/関数/RE_REPLACE
+- [OnTranslateイベント](on-translate-event.md)
+- [REPLACE](../functions/REPLACE.md)
+- [RE_REPLACE](../functions/RE_REPLACE.md)

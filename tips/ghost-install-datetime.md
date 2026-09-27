@@ -36,6 +36,6 @@ GETSECCOUNT() - FATTRIB('../../')[9]
 
 ## 関連項目
 
-- マニュアル/関数/GETTIME
-- マニュアル/関数/FATTRIB
-- マニュアル/関数/GETSECCOUNT
+- [GETTIME](../functions/GETTIME.md)
+- [FATTRIB](../functions/FATTRIB.md)
+- [GETSECCOUNT](../functions/GETSECCOUNT.md)

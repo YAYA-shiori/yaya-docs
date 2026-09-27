@@ -45,5 +45,5 @@ OnGhostChanged
 
 ## 関連項目
 
-- Tips/SAKURAスクリプトタグを取り除く
+- [SAKURAスクリプトタグを取り除く](remove-sakura-tags.md)
 - システム辞書/yaya_optional.dic

@@ -36,6 +36,6 @@ i = RE_SPLIT("Sakura,Seriko,Mayura,Naru", ",")
 
 ## 関連項目
 
-- マニュアル/関数/SPLIT
-- マニュアル/関数/RE_SPLIT
-- Tips/配列の要素数を取得
+- [SPLIT](../functions/SPLIT.md)
+- [RE_SPLIT](../functions/RE_SPLIT.md)
+- [配列の要素数を取得](get-array-size.md)

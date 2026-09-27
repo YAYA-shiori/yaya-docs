@@ -37,4 +37,4 @@ dic, xxxxx.ayc
 
 ## 関連項目
 
-- マニュアル/基本/yaya-shiori3-dic
+- [yaya_shiori3.dic](../system/yaya-shiori3-dic.md)

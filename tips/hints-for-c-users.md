@@ -78,6 +78,6 @@ EVAL("func_%(var)")
 
 ## 関連項目
 
-- マニュアル/文法/関数
-- マニュアル/文法/値と変数
-- マニュアル/文法/フロー制御
+- [関数](../grammar/02-functions.md)
+- [値と変数](../grammar/03-values-and-variables.md)
+- [フロー制御](../grammar/07-flow-control.md)

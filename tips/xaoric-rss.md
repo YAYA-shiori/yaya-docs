@@ -28,6 +28,6 @@
 
 ## 関連項目
 
-- Tips/SAORIの使い方
-- マニュアル/関数/FUNCTIONEX
-- マニュアル/関数/SPLIT
+- [SAORIの使い方](saori-usage.md)
+- [FUNCTIONEX](../functions/FUNCTIONEX.md)
+- [SPLIT](../functions/SPLIT.md)

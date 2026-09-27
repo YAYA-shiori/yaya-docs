@@ -4,6 +4,7 @@
 - GitHub では表示できるが Python-Markdown では崩れる書き方を直す
   （段落の直後に空行なしで続くリスト・表の前に空行を入れる）
 - 関数ページなどの英語の見出し（Signature など）を日本語にする
+- 本文中の関数名（functions/ にページがあるもの）を関数ページへのリンクにする
 原稿そのものは書き換えない。
 """
 import os
@@ -35,6 +36,16 @@ HEADING_JA = {
 }
 HEADING = re.compile(r'^(#{2,6} +)(' + '|'.join(map(re.escape, HEADING_JA)) + r') *$')
 
+# 旧 wiki の自動リンクの代わりに、本文中の関数名を関数ページへのリンクにする。
+# 既存のリンク・HTML タグ・URL の中は触らない。コードスパンは中身が関数名か
+# 関数呼び出し（`FOPEN(...)` など）のときだけリンクにする
+FUNC_NAMES = sorted((n[:-3] for n in os.listdir(os.path.join(ROOT, 'functions')) if n.endswith('.md')),
+                    key=len, reverse=True)
+FUNC_ALT = '|'.join(map(re.escape, FUNC_NAMES))
+BARE_FUNC = re.compile(r'(?<![A-Za-z0-9_./\-])(' + FUNC_ALT + r')(?![A-Za-z0-9_\-]|\.[A-Za-z])')
+CODE_FUNC = re.compile(r'`(' + FUNC_ALT + r')(?:\(.*\))?`')
+PROTECTED = re.compile(r'!?\[[^\]]*\]\([^)]*\)|`[^`]*`|<[^>]+>|https?://\S+')
+
 
 def unescape_table_code(line):
     # GitHub では表のコードスパン内の | を \| と書く必要があるが、
@@ -42,7 +53,27 @@ def unescape_table_code(line):
     return CODE_SPAN.sub(lambda m: m.group(0).replace('\\|', '|'), line)
 
 
-def fix_markdown(text):
+def autolink(line, func_dir, self_name):
+    def link(name, label):
+        if name == self_name:
+            return label
+        return f'[{label}]({func_dir}{name}.md)'
+
+    def text(part):
+        return BARE_FUNC.sub(lambda m: link(m.group(1), m.group(1)), part)
+
+    out = []
+    pos = 0
+    for m in PROTECTED.finditer(line):
+        out.append(text(line[pos:m.start()]))
+        code = CODE_FUNC.fullmatch(m.group(0))
+        out.append(link(code.group(1), m.group(0)) if code else m.group(0))
+        pos = m.end()
+    out.append(text(line[pos:]))
+    return ''.join(out)
+
+
+def fix_markdown(text, func_dir, self_name):
     out = []
     in_fence = False
     prev = ''
@@ -60,6 +91,8 @@ def fix_markdown(text):
                 out.append('')
             if line.lstrip().startswith('|'):
                 line = unescape_table_code(line)
+        if not in_fence and not FENCE.match(line) and not line.startswith('#'):
+            line = autolink(line, func_dir, self_name)
         out.append(line)
         prev = line
     return INDEX_LINK.sub(r'\1index.md', '\n'.join(out))
@@ -68,9 +101,15 @@ def fix_markdown(text):
 def copy_md(src, dst):
     with open(src, encoding='utf-8') as f:
         text = f.read()
+    # 関数ページへの相対パスと、自分自身へはリンクしないための関数名
+    func_dir = os.path.relpath(os.path.join(OUT, 'functions'), os.path.dirname(dst)).replace(os.sep, '/') + '/'
+    self_name = None
+    if func_dir == './':
+        func_dir = ''
+        self_name = os.path.basename(dst)[:-3]
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     with open(dst, 'w', encoding='utf-8', newline='\n') as f:
-        f.write(fix_markdown(text))
+        f.write(fix_markdown(text, func_dir, self_name))
 
 
 def main():

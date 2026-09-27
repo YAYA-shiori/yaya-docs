@@ -27,4 +27,4 @@ SAORIの具体的な使い方については、Tips「SAORIの使い方」を参
 YAYAの初期バージョンから使用可能。
 
 ## See Also
-- Tips/SAORIの使い方
+- [SAORIの使い方](../tips/saori-usage.md)

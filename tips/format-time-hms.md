@@ -46,5 +46,5 @@ sec_hms {
 
 ## 関連項目
 
-- マニュアル/関数/TOINT
-- マニュアル/関数/GETSECCOUNT
+- [TOINT](../functions/TOINT.md)
+- [GETSECCOUNT](../functions/GETSECCOUNT.md)

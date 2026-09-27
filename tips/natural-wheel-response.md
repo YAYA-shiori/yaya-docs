@@ -49,5 +49,5 @@ OnGhostUnload
 
 ## 関連項目
 
-- Tips/マウス反応（なで反応）を自然なものにする
+- [マウス反応（なで反応）を自然なものにする](natural-mouse-response.md)
 - ERASEVAR

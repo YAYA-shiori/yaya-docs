@@ -39,6 +39,6 @@ Birthday.txtの内容を辞書に組み込み、`OnInputBirthday`コールバッ
 
 ## 関連項目
 
-- Tips/選択肢をいきなり独立した関数で書く
-- マニュアル/関数/SUBSTR
-- マニュアル/関数/GETTIME
+- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)
+- [SUBSTR](../functions/SUBSTR.md)
+- [GETTIME](../functions/GETTIME.md)

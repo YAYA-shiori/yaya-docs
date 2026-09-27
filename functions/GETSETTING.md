@@ -18,7 +18,7 @@ GETSETTING( string )
 ## Description
 動作中の文に設定されている情報を返す関数。
 
-`string`には以下の識別子（文字列）または後方互換のための数値（0〜4）を指定できる。また、基礎設定（マニュアル/文法/1.基礎設定）のエントリ名を指定することも可能。
+`string`には以下の識別子（文字列）または後方互換のための数値（0〜4）を指定できる。また、[基礎設定](../grammar/01-basic-settings.md)のエントリ名を指定することも可能。
 
 ## Information Types
 | 識別子 | 旧数値 | 取得されるデータ | 例 |
@@ -37,4 +37,4 @@ GETSETTING( string )
 
 ## See Also
 - SETSETTING
-- マニュアル/文法/1.基礎設定
+- [基礎設定](../grammar/01-basic-settings.md)

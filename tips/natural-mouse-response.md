@@ -61,5 +61,5 @@ MouseReaction0Head
 
 ## 関連項目
 
-- Tips/ホイール反応を自然なものにする
+- [ホイール反応を自然なものにする](natural-wheel-response.md)
 - EVAL

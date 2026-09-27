@@ -47,6 +47,6 @@ dim_enum {
 
 ## 関連項目
 
-- マニュアル/関数/ARRAYSIZE
-- Tips/簡易配列→汎用配列の変換
-- Tips/簡易配列からメニューを構築する
+- [ARRAYSIZE](../functions/ARRAYSIZE.md)
+- [簡易配列→汎用配列の変換](simple-to-generic-array.md)
+- [簡易配列からメニューを構築する](menu-from-array.md)

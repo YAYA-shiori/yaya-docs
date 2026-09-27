@@ -37,5 +37,5 @@ OnGhostChanged
 
 ## 関連項目
 
-- Tips/ゴースト切替えメッセージを変化させる(新)
-- マニュアル/文法/フロー制御
+- [ゴースト切替えメッセージを変化させる(新)](ghost-switch-message-new.md)
+- [フロー制御](../grammar/07-flow-control.md)

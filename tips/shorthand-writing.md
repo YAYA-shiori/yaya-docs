@@ -40,6 +40,6 @@ OnGhostChanged
 
 ## 関連項目
 
-- マニュアル/文法/プリプロセッサ
-- マニュアル/関数/PROCESSGLOBALDEFINE
-- マニュアル/関数/SETGLOBALDEFINE
+- [プリプロセス](../grammar/08-preprocessor.md)
+- [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md)
+- [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md)

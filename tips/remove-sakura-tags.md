@@ -40,5 +40,5 @@ RemoveSakuraScript
 
 ## 関連項目
 
-- Tips/SAKURAスクリプトタグをエスケープする
-- マニュアル/関数/RE_REPLACE
+- [SAKURAスクリプトタグをエスケープする](escape-sakura-tags.md)
+- [RE_REPLACE](../functions/RE_REPLACE.md)

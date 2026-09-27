@@ -63,4 +63,4 @@ OnInputKazuate_b
 ## 関連項目
 
 - RAND
-- Tips/選択肢をいきなり独立した関数で書く
+- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)

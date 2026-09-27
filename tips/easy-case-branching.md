@@ -56,5 +56,5 @@ GetSeasonSlot
 
 ## 関連項目
 
-- マニュアル/文法/フロー制御
-- マニュアル/関数/GETTIME
+- [フロー制御](../grammar/07-flow-control.md)
+- [GETTIME](../functions/GETTIME.md)

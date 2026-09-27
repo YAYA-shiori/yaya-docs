@@ -42,5 +42,5 @@ OnCacheRestore
 
 ## 関連項目
 
-- マニュアル/基本/変数
-- Tips/SAORIの使い方
+- [変数](../basic/variables.md)
+- [SAORIの使い方](saori-usage.md)

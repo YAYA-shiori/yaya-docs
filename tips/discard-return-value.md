@@ -40,5 +40,5 @@ void SRAND("ほげほげ")
 
 ## 関連項目
 
-- マニュアル/関数/SRAND
-- マニュアル/文法/関数
+- [SRAND](../functions/SRAND.md)
+- [関数](../grammar/02-functions.md)

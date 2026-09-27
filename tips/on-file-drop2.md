@@ -25,5 +25,5 @@
 
 ## 関連項目
 
-- Tips/SAORIの使い方
-- Tips/選択肢をいきなり独立した関数で書く方法（関連テクニック）
+- [SAORIの使い方](saori-usage.md)
+- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)（関連テクニック）

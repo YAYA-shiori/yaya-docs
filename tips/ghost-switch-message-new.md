@@ -95,6 +95,6 @@ OnGhostChanged_ゴーストA
 
 ## 関連項目
 
-- Tips/ゴースト切替えメッセージを変化させる
+- [ゴースト切替えメッセージを変化させる](ghost-switch-message.md)
 - ISFUNC
 - EVAL

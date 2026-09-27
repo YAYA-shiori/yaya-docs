@@ -61,5 +61,5 @@ RandomTalk1
 
 ## 関連項目
 
-- Tips/多重人格モード
+- [多重人格モード](multiple-personality-mode.md)
 - CALLBYNAME

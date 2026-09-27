@@ -52,6 +52,6 @@ Emily/Phase4ゴーストを参考例として、さらに高度な最適化テ�
 
 ## 関連項目
 
-- マニュアル/関数/EVAL
-- マニュアル/関数/CHR
-- Tips/玉を使った辞書エラーチェック
+- [EVAL](../functions/EVAL.md)
+- [CHR](../functions/CHR.md)
+- [玉を使った辞書エラーチェック](tama-error-check.md)

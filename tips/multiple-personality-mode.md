@@ -63,6 +63,6 @@ OnAiTalk1
 
 ## 関連項目
 
-- Tips/会話の途中で人格を切り替える
+- [会話の途中で人格を切り替える](switch-personality-mid-talk.md)
 - EVAL
 - CALLBYNAME

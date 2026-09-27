@@ -64,6 +64,6 @@ SomeTalk {
 
 ## 関連項目
 
-- マニュアル/関数/FUNCTIONEX
-- Tips/高速化
-- other/saori-usage
+- [FUNCTIONEX](../functions/FUNCTIONEX.md)
+- [高速化](optimization.md)
+- [SAORIの使い方（その他）](../other/saori-usage.md)

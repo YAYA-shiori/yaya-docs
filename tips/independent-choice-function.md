@@ -44,7 +44,7 @@ AnswerYes {
 
 ## 関連項目
 
-- Tips/直前の会話をもう一度再生する
-- Tips/誕生日を覚える
-- マニュアル/関数/ISFUNC
-- マニュアル/関数/EVAL
+- [直前の会話をもう一度再生する](replay-last-talk.md)
+- [誕生日を覚える](remember-birthday.md)
+- [ISFUNC](../functions/ISFUNC.md)
+- [EVAL](../functions/EVAL.md)

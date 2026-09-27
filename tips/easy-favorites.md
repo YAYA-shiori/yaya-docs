@@ -41,6 +41,6 @@ On_sakura.recommendsites_EX : array
 
 ## 関連項目
 
-- マニュアル/関数/IARRAY
-- マニュアル/関数/RE_SPLIT
-- マニュアル/関数/CHR
+- [IARRAY](../functions/IARRAY.md)
+- [RE_SPLIT](../functions/RE_SPLIT.md)
+- [CHR](../functions/CHR.md)

@@ -37,4 +37,4 @@ Tc555-1以降
 
 ## See Also
 - CLEARERRORLOG
-- マニュアル/文法/1.基礎設定
+- [基礎設定](../grammar/01-basic-settings.md)

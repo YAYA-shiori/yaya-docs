@@ -30,4 +30,4 @@ SETSETTING( name , string )
 
 ## See Also
 - GETSETTING
-- マニュアル/文法/1.基本設定
+- [基礎設定](../grammar/01-basic-settings.md)

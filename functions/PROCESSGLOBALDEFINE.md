@@ -16,10 +16,10 @@ PROCESSGLOBALDEFINE(string)
 - 失敗: -1
 
 ## Description
-`#globaldefine` で定義したプリプロセス処理（文字列置き換え処理）と同様の処理を行います。プリプロセッサ機能の詳細については、マニュアル/文法/8.プリプロセスを参照してください。
+`#globaldefine` で定義したプリプロセス処理（文字列置き換え処理）と同様の処理を行います。プリプロセッサ機能の詳細については、[プリプロセス](../grammar/08-preprocessor.md)を参照してください。
 
 ## Compatibility
 - YAYA: バージョンTc559-1から使用可能
 
 ## See Also
-- マニュアル/文法/8.プリプロセス
+- [プリプロセス](../grammar/08-preprocessor.md)

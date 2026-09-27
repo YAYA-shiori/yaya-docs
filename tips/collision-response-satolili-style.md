@@ -104,5 +104,5 @@ OnSecondChange {
 
 ## 関連項目
 
-- マニュアル/関数/ISVAR
-- Tips/高速化
+- [ISVAR](../functions/ISVAR.md)
+- [高速化](optimization.md)

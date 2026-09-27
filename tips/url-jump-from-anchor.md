@@ -77,6 +77,6 @@ sample
 
 ## 関連項目
 
-- マニュアル/関数/RE_MATCH
-- マニュアル/関数/ISFUNC
-- マニュアル/関数/EVAL
+- [RE_MATCH](../functions/RE_MATCH.md)
+- [ISFUNC](../functions/ISFUNC.md)
+- [EVAL](../functions/EVAL.md)
