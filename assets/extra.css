@@ -1,0 +1,5 @@
+/* ヘッダ（とモバイルのドロワー）のロゴだけ白い丸背景にする。黒いヘッダに髪が溶けないように */
+.md-logo img {
+  background-color: #fff;
+  border-radius: 50%;
+}

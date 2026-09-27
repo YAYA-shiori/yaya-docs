@@ -12,6 +12,8 @@ site_dir: _site
 theme:
   name: material
   language: ja
+  logo: assets/logo.png
+  favicon: assets/logo.png
   features:
     - navigation.sections
     - navigation.top
@@ -34,6 +36,9 @@ theme:
       toggle:
         icon: material/brightness-4
         name: ライトモードに切り替え
+
+extra_css:
+  - assets/extra.css
 
 plugins:
   - search:
