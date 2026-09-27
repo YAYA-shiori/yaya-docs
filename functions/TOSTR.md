@@ -32,6 +32,7 @@ _result = TOSTR( _array )
 ## Compatibility
 - YAYA: 初期バージョンより
 - AYA: 5.8以降
+- Tc602-5: 整数の最小値（-9223372036854775808）が `-` だけになっていたのを修正
 
 ## See Also
 - TOINT

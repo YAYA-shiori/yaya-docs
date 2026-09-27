@@ -150,6 +150,10 @@
 | [PARSEHEADER.md](functions/PARSEHEADER.md) | PARSEHEADER |
 | [DUMPJSON.md](functions/DUMPJSON.md) | DUMPJSON |
 | [DUMPXML.md](functions/DUMPXML.md) | DUMPXML |
+| [PARSEYAML.md](functions/PARSEYAML.md) | PARSEYAML |
+| [PARSETOML.md](functions/PARSETOML.md) | PARSETOML |
+| [DUMPYAML.md](functions/DUMPYAML.md) | DUMPYAML |
+| [DUMPTOML.md](functions/DUMPTOML.md) | DUMPTOML |
 
 ### 配列操作
 
@@ -269,12 +273,16 @@
 | [FREADBIN.md](functions/FREADBIN.md) | FREADBIN |
 | [FREADJSON.md](functions/FREADJSON.md) | FREADJSON |
 | [FREADXML.md](functions/FREADXML.md) | FREADXML |
+| [FREADYAML.md](functions/FREADYAML.md) | FREADYAML |
+| [FREADTOML.md](functions/FREADTOML.md) | FREADTOML |
 | [FWRITE.md](functions/FWRITE.md) | FWRITE |
 | [FWRITE2.md](functions/FWRITE2.md) | FWRITE2 |
 | [FWRITEBIN.md](functions/FWRITEBIN.md) | FWRITEBIN |
 | [FWRITEDECODE.md](functions/FWRITEDECODE.md) | FWRITEDECODE |
 | [FWRITEJSON.md](functions/FWRITEJSON.md) | FWRITEJSON |
 | [FWRITEXML.md](functions/FWRITEXML.md) | FWRITEXML |
+| [FWRITEYAML.md](functions/FWRITEYAML.md) | FWRITEYAML |
+| [FWRITETOML.md](functions/FWRITETOML.md) | FWRITETOML |
 | [FCOPY.md](functions/FCOPY.md) | FCOPY |
 | [FMOVE.md](functions/FMOVE.md) | FMOVE |
 | [FDEL.md](functions/FDEL.md) | FDEL |

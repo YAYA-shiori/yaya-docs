@@ -70,6 +70,7 @@ DUMPJSON(未定義の変数)       // null
 
 ## Compatibility
 - YAYA: Tc602-1以降
+- Tc602-5: 整数の最小値（-9223372036854775808）が `-` だけになり、正しい JSON にならなかったのを修正
 
 ## See Also
 - [FWRITEJSON](FWRITEJSON.md)

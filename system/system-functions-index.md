@@ -48,8 +48,10 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [DICLOAD](../functions/DICLOAD.md) | 辞書ファイルを読み込む |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | 辞書ファイルをアンロード |
 | [DUMPJSON](../functions/DUMPJSON.md) | 値をJSONの文字列にする（Tc602-1以降） |
+| [DUMPTOML](../functions/DUMPTOML.md) | ハッシュをTOMLの文字列にする（Tc602-5以降） |
 | [DUMPVAR](../functions/DUMPVAR.md) | 変数をダンプ |
 | [DUMPXML](../functions/DUMPXML.md) | 要素のハッシュをXMLの文字列にする（Tc602-1以降） |
+| [DUMPYAML](../functions/DUMPYAML.md) | 値をYAMLの文字列にする（Tc602-5以降） |
 | [ERASE](../functions/ERASE.md) | 文字列から部分文字列を削除 |
 | [ERASEVAR](../functions/ERASEVAR.md) | 変数を削除 |
 | [EVAL](../functions/EVAL.md) | 文字列を式として評価 |
@@ -69,7 +71,9 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [FREADBIN](../functions/FREADBIN.md) | バイナリとしてファイルを読み込む |
 | [FREADENCODE](../functions/FREADENCODE.md) | エンコード変換しながら読み込む |
 | [FREADJSON](../functions/FREADJSON.md) | JSONファイルを丸ごと読み込んでハッシュ・配列にする（Tc601-1以降） |
+| [FREADTOML](../functions/FREADTOML.md) | TOMLファイルを丸ごと読み込んでハッシュにする（Tc602-5以降） |
 | [FREADXML](../functions/FREADXML.md) | XMLファイルを丸ごと読み込んでハッシュにする（Tc601-1以降） |
+| [FREADYAML](../functions/FREADYAML.md) | YAMLファイルを丸ごと読み込んでハッシュ・配列にする（Tc602-5以降） |
 | [FRENAME](../functions/FRENAME.md) | ファイルをリネーム |
 | [FSEEK](../functions/FSEEK.md) | ファイルポインタを移動 |
 | [FSIZE](../functions/FSIZE.md) | ファイルサイズを返す |
@@ -84,7 +88,9 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [FWRITEBIN](../functions/FWRITEBIN.md) | バイナリとしてファイルに書き込む |
 | [FWRITEDECODE](../functions/FWRITEDECODE.md) | デコード変換しながら書き込む |
 | [FWRITEJSON](../functions/FWRITEJSON.md) | 値をJSONにしてファイルに書き込む（Tc602-1以降） |
+| [FWRITETOML](../functions/FWRITETOML.md) | ハッシュをTOMLにしてファイルに書き込む（Tc602-5以降） |
 | [FWRITEXML](../functions/FWRITEXML.md) | 要素のハッシュをXMLにしてファイルに書き込む（Tc602-1以降） |
+| [FWRITEYAML](../functions/FWRITEYAML.md) | 値をYAMLにしてファイルに書き込む（Tc602-5以降） |
 
 ## G-I
 
@@ -146,7 +152,9 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [OUTPUTNUM](../functions/OUTPUTNUM.md) | 数値の出力書式を設定 |
 | [PARSEHEADER](../functions/PARSEHEADER.md) | HTTP・SHIORIのようなヘッダをハッシュ・配列にする（Tc602-3以降） |
 | [PARSEJSON](../functions/PARSEJSON.md) | JSON文字列をハッシュ・配列にする（Tc601-1以降） |
+| [PARSETOML](../functions/PARSETOML.md) | TOML文字列をハッシュにする（Tc602-5以降） |
 | [PARSEXML](../functions/PARSEXML.md) | XML文字列をハッシュにする（Tc601-1以降） |
+| [PARSEYAML](../functions/PARSEYAML.md) | YAML文字列をハッシュ・配列にする（Tc602-5以降） |
 | [POW](../functions/POW.md) | べき乗を返す |
 | [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md) | グローバル定義を処理 |
 
