@@ -9,13 +9,18 @@
 - [ダウンロード（GitHub Releases）](https://github.com/YAYA-shiori/yaya-shiori/releases)
 - [更新履歴](https://github.com/YAYA-shiori/yaya-shiori/wiki/ChangeLog)
 
+## YAYA v6 (通称Tc600系)
+
+- [steve green氏](https://github.com/steve02081504)の開発ブランチを取り込み、互換性を調整し、大幅強化版としてリリースしたものです。
+- 変数の柔軟性、高速ヘッダ解析、XML/JSONなどのパーサ、DB(SQLite)など、500系と高い互換性を保ちながら大幅な改修が行われています。
+- YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)
+
 ## はじめての方へ
 
 - YAYA や AYA って何？ → [YAYAについて](other/yaya.md)
 - はじめてゴーストを作りたいんだけど？ → [ゴーストの作り方](startup/creating-ghost.md)
 - AYA でゴーストを作っていたけど、YAYA に移りたい → [AYAからの移行](startup/migration-from-aya.md)
 - 里々から YAYA に移りたい → [里々からの移行](startup/migration-from-satolili.md)
-- YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)
 
 ## 調べたいとき
 
