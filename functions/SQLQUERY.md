@@ -52,6 +52,7 @@ SQLQUERY("ghost.db", "SELECT ev.id, t.value->>1 AS v FROM ev, json_each(ev.json,
 
 ## Compatibility
 - YAYA: Tc602-11以降
+- Tc602-13: 値がパラメータより多いときに警告 W0030 を出すようにした
 
 ## See Also
 - [SQLEXEC](SQLEXEC.md)
