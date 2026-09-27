@@ -100,3 +100,4 @@ EVAL('_n = 0; while _n < 3 { _n++ }; _n')   // 3
 
 - ISEVALUABLE
 - APPEND_RUNTIME_DIC
+- [シェルモード](../grammar/01-basic-settings.md#シェルモード)（辞書が無いとき、requestの入力を EVAL して返す）
