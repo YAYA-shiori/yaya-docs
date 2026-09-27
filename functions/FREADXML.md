@@ -85,4 +85,4 @@ foreach _x["children"]; _item {
 - [PARSEXML](PARSEXML.md)
 - [FWRITEXML](FWRITEXML.md)
 - [FREADJSON](FREADJSON.md)
-- [ハッシュと値の入れ子](../grammar/12-hash.md)
+- [値の入れ子と多次元代入](../grammar/13-nesting.md)

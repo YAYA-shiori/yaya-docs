@@ -119,4 +119,4 @@ _y["voice"]["speed"]         // 3
 - [FWRITEYAML](FWRITEYAML.md)
 - [FREADJSON](FREADJSON.md)
 - [FREADTOML](FREADTOML.md)
-- [ハッシュと値の入れ子](../grammar/12-hash.md)
+- [値の入れ子と多次元代入](../grammar/13-nesting.md)

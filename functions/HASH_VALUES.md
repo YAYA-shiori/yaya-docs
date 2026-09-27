@@ -37,3 +37,4 @@ TOSTR(_v)       // "1,1,2"
 ## See Also
 - HASH_KEYS
 - IHASH
+- [値の入れ子と多次元代入](../grammar/13-nesting.md)

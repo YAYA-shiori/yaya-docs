@@ -94,4 +94,4 @@ foreach _t["friends"]; _f {
 - [FWRITETOML](FWRITETOML.md)
 - [FREADJSON](FREADJSON.md)
 - [FREADYAML](FREADYAML.md)
-- [ハッシュと値の入れ子](../grammar/12-hash.md)
+- [値の入れ子と多次元代入](../grammar/13-nesting.md)

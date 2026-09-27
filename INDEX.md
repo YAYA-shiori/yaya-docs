@@ -63,7 +63,8 @@
 | [09-reserved-words.md](grammar/09-reserved-words.md) | 予約語 |
 | [10-yaya-as-windows-dll.md](grammar/10-yaya-as-windows-dll.md) | Windows DLLとしてのYAYA |
 | [11-character-encoding.md](grammar/11-character-encoding.md) | 文字コード |
-| [12-hash.md](grammar/12-hash.md) | ハッシュと値の入れ子（Tc600-3以降） |
+| [12-hash.md](grammar/12-hash.md) | ハッシュ（Tc600-3以降） |
+| [13-nesting.md](grammar/13-nesting.md) | 値の入れ子と多次元代入（Tc600-3以降） |
 
 ---
 

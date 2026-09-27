@@ -15,7 +15,7 @@ Tc600-3 以降の YAYA（600 系）で、500 系（Tc574-1 まで）から変わ
 | 新しいシステム関数 | ― | [IHASH](../functions/IHASH.md) [HASH_KEYS](../functions/HASH_KEYS.md) [HASH_VALUES](../functions/HASH_VALUES.md) [HASH_SPLIT](../functions/HASH_SPLIT.md) [HASH_EXIST](../functions/HASH_EXIST.md) [HASH_SIZE](../functions/HASH_SIZE.md)、Tc601-1 から [FREADJSON](../functions/FREADJSON.md) [FREADXML](../functions/FREADXML.md) [PARSEJSON](../functions/PARSEJSON.md) [PARSEXML](../functions/PARSEXML.md)、Tc602-1 から [FWRITEJSON](../functions/FWRITEJSON.md) [FWRITEXML](../functions/FWRITEXML.md) [DUMPJSON](../functions/DUMPJSON.md) [DUMPXML](../functions/DUMPXML.md)、Tc602-3 から [PARSEHEADER](../functions/PARSEHEADER.md)、Tc602-5 から [FREADYAML](../functions/FREADYAML.md) [FREADTOML](../functions/FREADTOML.md) [PARSEYAML](../functions/PARSEYAML.md) [PARSETOML](../functions/PARSETOML.md) [FWRITEYAML](../functions/FWRITEYAML.md) [FWRITETOML](../functions/FWRITETOML.md) [DUMPYAML](../functions/DUMPYAML.md) [DUMPTOML](../functions/DUMPTOML.md) |
 | 新しい警告 | ― | W0024（ハッシュを `-` `*` `/` `%` に使った）、Tc601-1 から W0025（ファイルを開けない）・W0026（JSON/XML/YAML/TOML を解析できない）、Tc602-1 から W0027（JSON/XML/YAML/TOML に変換できない） |
 
-ハッシュ・入れ子・多次元代入の文法は [ハッシュと値の入れ子](../grammar/12-hash.md) を参照。
+文法は [ハッシュ](../grammar/12-hash.md) と [値の入れ子と多次元代入](../grammar/13-nesting.md) を参照。
 
 500 系の `a[x][y] = v` は読み込み時にエラー E0029 だったので、この構文を含む既存の辞書は無い。
 
@@ -72,7 +72,8 @@ Tc574-2 以降の 500 系と Tc602-2 以降の 600 系では、`#ifdef __AYA_SYS
 
 ## 関連
 
-- [ハッシュと値の入れ子](../grammar/12-hash.md)
+- [ハッシュ](../grammar/12-hash.md)
+- [値の入れ子と多次元代入](../grammar/13-nesting.md)
 - [フロー制御（foreach）](../grammar/07-flow-control.md#foreach-ループ)
 - [SAVEVAR](../functions/SAVEVAR.md)
 - [プリプロセス](../grammar/08-preprocessor.md)
