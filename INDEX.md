@@ -300,6 +300,15 @@
 | [MKDIR.md](functions/MKDIR.md) | MKDIR |
 | [RMDIR.md](functions/RMDIR.md) | RMDIR |
 
+### データベース
+
+| ファイル | 関数 |
+|---------|------|
+| [SQLOPEN.md](functions/SQLOPEN.md) | SQLOPEN |
+| [SQLCLOSE.md](functions/SQLCLOSE.md) | SQLCLOSE |
+| [SQLEXEC.md](functions/SQLEXEC.md) | SQLEXEC |
+| [SQLQUERY.md](functions/SQLQUERY.md) | SQLQUERY |
+
 ### 外部ライブラリ
 
 | ファイル | 関数 |
