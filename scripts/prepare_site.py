@@ -3,6 +3,7 @@
 - INDEX.md を index.md（トップページ）にし、INDEX.md へのリンクも書き換える
 - GitHub では表示できるが Python-Markdown では崩れる書き方を直す
   （段落の直後に空行なしで続くリスト・表の前に空行を入れる）
+- 関数ページなどの英語の見出し（Signature など）を日本語にする
 原稿そのものは書き換えない。
 """
 import os
@@ -17,6 +18,22 @@ BLOCK_START = re.compile(r'^\s*(?:[-*+]\s|\d+\.\s|\|)')
 FENCE = re.compile(r'^\s*(```|~~~)')
 INDEX_LINK = re.compile(r'(\]\((?:\.\./)*)INDEX\.md')
 CODE_SPAN = re.compile(r'`[^`]*`')
+
+# 関数ページなどの英語の見出しをサイトでは日本語で表示する
+HEADING_JA = {
+    'Signature': '書式',
+    'Parameters': '引数',
+    'Returns': '戻り値',
+    'Description': '解説',
+    'Example': '使用例',
+    'Compatibility': '互換性',
+    'See Also': '関連項目',
+    'Notes': '備考',
+    'Availability': '対応バージョン',
+    'Error Codes': 'エラーコード',
+    'Information Types': '取得できる情報',
+}
+HEADING = re.compile(r'^(#{2,6} +)(' + '|'.join(map(re.escape, HEADING_JA)) + r') *$')
 
 
 def unescape_table_code(line):
@@ -34,6 +51,9 @@ def fix_markdown(text):
             if not in_fence and prev.strip() != '':
                 out.append('')
             in_fence = not in_fence
+        elif not in_fence and HEADING.match(line):
+            m = HEADING.match(line)
+            line = m.group(1) + HEADING_JA[m.group(2)]
         elif not in_fence and BLOCK_START.match(line):
             # 直前が本文の行（空行・同種のブロック・見出し以外）なら空行を入れる
             if prev.strip() != '' and not BLOCK_START.match(prev) and not prev.startswith((' ', '\t')):
