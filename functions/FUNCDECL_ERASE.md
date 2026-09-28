@@ -27,9 +27,12 @@ FUNCDECL_ERASE(variable_name, function_name)
 
 呼び出された関数の戻り値はシステムによって無視される。
 
+変数がまだ無いときは、空の変数を作ってから登録する。
+
 ## Compatibility
 
 - YAYA: Tc565-1 以降
+- Tc574-8 / Tc603-1: 変数がまだ無いときは作って登録するようにした（それまでは何もせず 0 を返していた）
 
 ## See Also
 
