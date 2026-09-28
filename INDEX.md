@@ -13,6 +13,7 @@
 
 - [steve green氏](https://github.com/steve02081504)の開発ブランチを取り込み、互換性を調整し、大幅強化版としてリリースしたものです。
 - 変数の柔軟性、高速ヘッダ解析、XML/JSONなどのパーサ、DB(SQLite)など、500系と高い互換性を保ちながら大幅な改修が行われています。
+- まずはざっくり知りたい → [YAYA 6 登場](other/yaya6-launch.md)
 - YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)
 
 ## はじめての方へ
@@ -130,6 +131,7 @@
 | [troubleshooting.md](other/troubleshooting.md) | トラブルシューティング |
 | [lint-functions.md](other/lint-functions.md) | LINT系関数の仕様と制約 |
 | [changes-600.md](other/changes-600.md) | 600 での変更点（Tc600-3以降） |
+| [yaya6-launch.md](other/yaya6-launch.md) | YAYA 6 登場（600 系の紹介） |
 
 ---
 

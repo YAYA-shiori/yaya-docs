@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="1200" height="480" role="img" aria-label="配列を1万要素まで育てるループの要素コピー回数（理論値）。YAYA 5 は約5000万回、YAYA 6 は約1万回">
+  <rect width="1200" height="480" rx="28" fill="#0a0b14"/>
+
+  <g font-family="'Segoe UI','Hiragino Sans','Noto Sans JP','Yu Gothic UI','Yu Gothic',Meiryo,sans-serif">
+    <text x="48" y="70" fill="#ffffff" font-size="36" font-weight="700">配列を 1 万要素まで育てるループ</text>
+    <text x="48" y="112" fill="#b9bfd6" font-size="23">要素のコピー回数（理論値・少ないほど速い）</text>
+
+    <line x1="230" y1="148" x2="230" y2="318" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1"/>
+
+    <!-- YAYA 5 -->
+    <text x="210" y="190" text-anchor="end" fill="#e8eaff" font-size="28" font-weight="700">YAYA 5</text>
+    <text x="210" y="216" text-anchor="end" fill="#8f96b8" font-size="19">Tc574</text>
+    <rect x="230" y="166" width="470" height="50" rx="4" fill="#4b5068"/>
+    <text x="718" y="201" fill="#e8eaff" font-size="26" font-weight="600">約 5,000 万回</text>
+
+    <!-- YAYA 6 -->
+    <text x="210" y="274" text-anchor="end" fill="#ffffff" font-size="28" font-weight="700">YAYA 6</text>
+    <text x="210" y="300" text-anchor="end" fill="#8f96b8" font-size="19">Tc603</text>
+    <rect x="230" y="250" width="4" height="50" rx="2" fill="#b39dff"/>
+    <text x="250" y="285" fill="#ffffff" font-size="26" font-weight="600">約 1 万回</text>
+    <text x="376" y="285" fill="#8f96b8" font-size="20">← 棒が見えないのは仕様です</text>
+
+    <!-- 見出しの数字 -->
+    <text x="1060" y="236" text-anchor="middle" fill="#b39dff" font-size="68" font-weight="800">1/5000</text>
+    <text x="1060" y="272" text-anchor="middle" fill="#c9cdf0" font-size="20">当社比</text>
+
+    <text x="48" y="382" fill="#8f96b8" font-size="19">※「_a ,= x」を 1 万回くり返すとして、500 系は毎回配列を丸ごと複製（1＋2＋…＋10000 ≒ 5,000 万回）、</text>
+    <text x="48" y="412" fill="#8f96b8" font-size="19">　 600 系は複製しないものとして単純に計算した値です。実測値ではありません。</text>
+    <text x="48" y="442" fill="#8f96b8" font-size="19">　 実際に速くなる度合いは、要素の中身や処理の内容によって変わります。</text>
+  </g>
+</svg>

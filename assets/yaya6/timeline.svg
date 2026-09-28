@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" width="1200" height="370" role="img" aria-label="Tc600-3 から Tc603-1 までの主な追加機能の年表">
+  <rect width="1200" height="370" rx="28" fill="#0a0b14"/>
+
+  <g font-family="'Segoe UI','Hiragino Sans','Noto Sans JP','Yu Gothic UI','Yu Gothic',Meiryo,sans-serif" text-anchor="middle">
+    <text x="48" y="58" text-anchor="start" fill="#ffffff" font-size="30" font-weight="700">進化の軌跡</text>
+    <text x="212" y="58" text-anchor="start" fill="#8f96b8" font-size="20">Tc600-3 → Tc603-1</text>
+
+    <line x1="70" y1="210" x2="1130" y2="210" stroke="#3a3f5c" stroke-width="3"/>
+
+    <g stroke="#ffffff" stroke-opacity="0.25">
+      <line x1="110" y1="180" x2="110" y2="200"/><line x1="390" y1="180" x2="390" y2="200"/>
+      <line x1="670" y1="180" x2="670" y2="200"/><line x1="950" y1="180" x2="950" y2="200"/>
+      <line x1="250" y1="220" x2="250" y2="240"/><line x1="530" y1="220" x2="530" y2="240"/>
+      <line x1="810" y1="220" x2="810" y2="240"/><line x1="1090" y1="220" x2="1090" y2="240"/>
+    </g>
+
+    <g fill="#0b0d1a" stroke="#8f96b8" stroke-width="2.5">
+      <circle cx="110" cy="210" r="8"/><circle cx="250" cy="210" r="8"/>
+      <circle cx="390" cy="210" r="8"/><circle cx="530" cy="210" r="8"/>
+      <circle cx="670" cy="210" r="8"/><circle cx="810" cy="210" r="8"/>
+      <circle cx="950" cy="210" r="8"/>
+    </g>
+    <circle cx="1090" cy="210" r="12" fill="#b39dff"/>
+
+    <!-- 上段 -->
+    <text x="110" y="114" fill="#ffffff" font-size="22" font-weight="700">Tc600-3</text>
+    <text x="110" y="146" fill="#c9cdf0" font-size="18">ハッシュ誕生</text>
+    <text x="110" y="170" fill="#c9cdf0" font-size="18">入れ子・多次元代入</text>
+
+    <text x="390" y="114" fill="#ffffff" font-size="22" font-weight="700">Tc602-1</text>
+    <text x="390" y="146" fill="#c9cdf0" font-size="18">JSON / XML を</text>
+    <text x="390" y="170" fill="#c9cdf0" font-size="18">書き出す</text>
+
+    <text x="670" y="114" fill="#ffffff" font-size="22" font-weight="700">Tc602-3</text>
+    <text x="670" y="146" fill="#c9cdf0" font-size="18">高速ヘッダ解析</text>
+    <text x="670" y="170" fill="#c9cdf0" font-size="18">PARSEHEADER</text>
+
+    <text x="950" y="114" fill="#ffffff" font-size="22" font-weight="700">Tc602-11</text>
+    <text x="950" y="146" fill="#c9cdf0" font-size="18">SQLite 搭載</text>
+    <text x="950" y="170" fill="#c9cdf0" font-size="18">ゴーストに長期記憶</text>
+
+    <!-- 下段 -->
+    <text x="250" y="268" fill="#ffffff" font-size="22" font-weight="700">Tc601-1</text>
+    <text x="250" y="296" fill="#c9cdf0" font-size="18">JSON / XML を</text>
+    <text x="250" y="320" fill="#c9cdf0" font-size="18">読み込む</text>
+
+    <text x="530" y="268" fill="#ffffff" font-size="22" font-weight="700">Tc602-2</text>
+    <text x="530" y="296" fill="#c9cdf0" font-size="18">500 系と共用の辞書</text>
+    <text x="530" y="320" fill="#c9cdf0" font-size="18">#ifdef で書き分け</text>
+
+    <text x="810" y="268" fill="#ffffff" font-size="22" font-weight="700">Tc602-5</text>
+    <text x="810" y="296" fill="#c9cdf0" font-size="18">YAML / TOML</text>
+    <text x="810" y="320" fill="#c9cdf0" font-size="18">にも対応</text>
+
+    <text x="1090" y="272" fill="#b39dff" font-size="24" font-weight="800">Tc603-1</text>
+    <text x="1090" y="300" fill="#ffffff" font-size="18" font-weight="600">600 系 初の正式版</text>
+    <text x="1090" y="324" fill="#c9cdf0" font-size="18">一般提供開始</text>
+  </g>
+</svg>

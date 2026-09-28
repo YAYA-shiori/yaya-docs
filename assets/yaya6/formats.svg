@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600" role="img" aria-label="JSON・XML・YAML・TOML・SQLite・ヘッダ形式の文字列と YAYA 6 のハッシュを行き来する図">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#8f96b8"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="600" rx="28" fill="#0a0b14"/>
+
+  <g font-family="'Segoe UI','Hiragino Sans','Noto Sans JP','Yu Gothic UI','Yu Gothic',Meiryo,sans-serif">
+    <text x="600" y="62" text-anchor="middle" fill="#ffffff" font-size="32" font-weight="700">読める。書ける。ぜんぶハッシュになる。</text>
+
+    <!-- 線 -->
+    <g fill="none" stroke="#8f96b8" stroke-width="2">
+      <path d="M312 150 C400 150 390 292 468 292" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <path d="M312 320 L468 320" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <path d="M312 490 C400 490 390 348 468 348" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <path d="M888 150 C800 150 810 292 732 292" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <path d="M888 320 L732 320" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <path d="M888 490 C800 490 810 348 732 348" stroke-dasharray="6 6" marker-end="url(#arr)"/>
+    </g>
+
+    <!-- 中央 -->
+    <rect x="470" y="256" width="260" height="128" rx="22" fill="#15173a" stroke="#b39dff" stroke-width="2.5"/>
+    <text x="600" y="310" text-anchor="middle" fill="#ffffff" font-size="34" font-weight="800">YAYA 6</text>
+    <text x="600" y="344" text-anchor="middle" fill="#c9cdf0" font-size="20">ハッシュ ＋ 入れ子の値</text>
+
+    <g fill="#13152a" stroke="#ffffff" stroke-opacity="0.18">
+      <rect x="52" y="102" width="260" height="96" rx="16"/>
+      <rect x="52" y="272" width="260" height="96" rx="16"/>
+      <rect x="52" y="442" width="260" height="96" rx="16"/>
+      <rect x="888" y="102" width="260" height="96" rx="16"/>
+      <rect x="888" y="272" width="260" height="96" rx="16"/>
+      <rect x="888" y="442" width="260" height="96" rx="16"/>
+    </g>
+
+    <g fill="#ffffff" font-size="26" font-weight="700">
+      <text x="76" y="140">JSON</text>
+      <text x="76" y="310">XML</text>
+      <text x="76" y="480">YAML</text>
+      <text x="912" y="140">TOML</text>
+      <text x="912" y="310">SQLite</text>
+      <text x="912" y="480" font-size="24">ヘッダ形式</text>
+    </g>
+
+    <g fill="#8f96b8" font-size="16" text-anchor="end">
+      <text x="288" y="140">Tc601-1〜</text>
+      <text x="288" y="310">Tc601-1〜</text>
+      <text x="288" y="480">Tc602-5〜</text>
+      <text x="1124" y="140">Tc602-5〜</text>
+      <text x="1124" y="310">Tc602-11〜</text>
+      <text x="1124" y="480">Tc602-3〜</text>
+    </g>
+
+    <g fill="#c9cdf0" font-size="18" font-family="Consolas,'SF Mono',Menlo,monospace">
+      <text x="76" y="176">FREADJSON / DUMPJSON</text>
+      <text x="76" y="346">PARSEXML / FWRITEXML</text>
+      <text x="76" y="516">FREADYAML / DUMPYAML</text>
+      <text x="912" y="176">PARSETOML / FWRITETOML</text>
+      <text x="912" y="346">SQLEXEC / SQLQUERY</text>
+      <text x="912" y="516">PARSEHEADER</text>
+    </g>
+
+    <text x="600" y="580" text-anchor="middle" fill="#8f96b8" font-size="19">実線：読み書き　　点線：読み込みのみ（SHIORI / SSTP / HTTP ふうの「キー: 値」の文字列）</text>
+  </g>
+</svg>

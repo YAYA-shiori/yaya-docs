@@ -11,6 +11,8 @@ site_dir: _site
 
 theme:
   name: material
+  # OGP などの <head> の追加（overrides/main.html）
+  custom_dir: overrides
   language: ja
   logo: assets/logo.png
   favicon: assets/logo.png
@@ -37,6 +39,14 @@ theme:
         icon: material/brightness-4
         name: ライトモードに切り替え
 
+# ページごとの OGP（overrides/main.html が使う）。キーは原稿のパス、image は site_url からの相対パス（1200x630）
+extra:
+  ogp:
+    other/yaya6-launch.md:
+      title: YAYA 6 登場 ─ これまでで最も賢い YAYA。
+      description: ハッシュ、入れ子、JSON / XML / YAML / TOML の読み書き、SQLite。YAYA 600 系、初の正式版 Tc603 の一般提供を開始しました。
+      image: assets/yaya6/ogp.png
+
 extra_css:
   - assets/extra.css
 
@@ -49,6 +59,8 @@ markdown_extensions:
   - tables
   - admonition
   - attr_list
+  # <div markdown> の中の Markdown を処理する（other/yaya6-launch.md の装飾用）
+  - md_in_html
   - mdx_truly_sane_lists
   - pymdownx.superfences
   - toc:
