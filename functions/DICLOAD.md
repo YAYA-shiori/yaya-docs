@@ -13,7 +13,7 @@ DICLOAD( filename [, code] )
 | Parameter | Description |
 |-----------|-------------|
 | filename | 読み込む辞書ファイル名 |
-| code | 文字コードID（省略時は基本設定ファイルの設定に従う） |
+| code | 文字コードID、または文字コードの名前（[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）。省略時、空文字列、`default` のときは基本設定ファイルの設定に従う。知らない名前なら警告 W0012 を出して何も読み込まずに 1 を返す |
 
 ## Returns
 
@@ -34,6 +34,7 @@ DICLOAD( filename [, code] )
 ## Compatibility
 
 - YAYA: Tc556-1以降
+- Tc574-8 / Tc603-1: 文字コードIDを数値で渡したときに無視されていたのを修正。知らない文字コードの名前を渡すと、警告 W0012 を出して失敗するようにした（それまでは基本設定ファイルの設定で読み込んでいた）
 
 ## See Also
 

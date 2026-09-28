@@ -12,7 +12,7 @@ READFMO( [ name ] [ , charset ] )
 | Parameter | Description |
 |-----------|-------------|
 | name | （省略可）FMOの識別子。省略時は "Sakura" |
-| charset | （省略可）文字エンコーディング。省略時はOSのデフォルト。Tc569-13で追加。 |
+| charset | （省略可）文字エンコーディング（[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）。省略時はOSのデフォルト。Tc569-13で追加。不正な値なら警告 W0012 を出して何も返さない |
 
 ## Returns
 - 成功: FMOの内容を文字列として返す
@@ -23,3 +23,4 @@ READFMO( [ name ] [ , charset ] )
 
 ## Compatibility
 - YAYA: バージョンTc524-1で導入
+- Tc574-8 / Tc603-1: 知らない文字コードの名前や不正なIDを渡すと、警告 W0012 を出して何も返さないようにした（それまでは OS デフォルトとして読んでいた）

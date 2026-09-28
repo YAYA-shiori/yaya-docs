@@ -10,7 +10,7 @@ STRDECODE(string [, code] [, type])
 | Parameter | Description |
 |-----------|-------------|
 | string | デコード対象の文字列 |
-| code | 変換に使う文字コードID（省略時は0） |
+| code | 変換に使う文字コードID（省略時は0）、または文字コードの名前（[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）。知らない名前なら警告 W0012 を出して 0 を返す |
 | type | デコード形式。`url`（URLエンコード）または `base64`（Base64）を指定。省略時は `url` |
 
 ## Returns
@@ -22,6 +22,7 @@ STRDECODE(string [, code] [, type])
 
 ## Compatibility
 - YAYA: Tc521-1以降（Tc532-1で `GETSTRURLDE­CODE` から改名）
+- Tc574-8 / Tc603-1: 知らない文字コードの名前を渡すと、警告 W0012 を出して0 を返すようにした（それまでは警告を出さずに OS デフォルトとして扱っていた）
 
 ## See Also
 - STRENCODE（エンコード関数）

@@ -12,7 +12,7 @@ FCHARSET( code )
 
 | Parameter | Description |
 |-----------|-------------|
-| code | 設定する文字コードID |
+| code | 設定する文字コードID、または文字コードの名前（[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）。知らない名前なら警告 W0012 を出し、設定を変えない |
 
 ## Returns
 
@@ -26,6 +26,7 @@ FCHARSET( code )
 
 - YAYA: 初版より対応
 - AYA: 5.8以降
+- Tc574-8 / Tc603-1: 知らない文字コードの名前を渡すと、警告 W0012 を出して設定を変えないようにした（それまでは警告を出さずに OS デフォルトとして扱っていた）
 
 ## See Also
 

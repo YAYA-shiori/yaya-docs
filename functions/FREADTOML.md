@@ -10,7 +10,7 @@ FREADTOML( path [, charset] )
 | Parameter | Description |
 |-----------|-------------|
 | path | 読み込む TOML ファイルのパス（yaya.dll からの相対パス、または絶対パス） |
-| charset | ファイルの文字コード（省略可）。文字列（`"UTF-8"` `"Shift_JIS"` など）または数値で指定する。省略時は UTF-8（TOML の規格では UTF-8 と決まっている） |
+| charset | ファイルの文字コード（省略可）。文字列（`"UTF-8"` `"Shift_JIS"` など。[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）または数値で指定する。省略時は UTF-8（TOML の規格では UTF-8 と決まっている） |
 
 ## Returns
 - 成功時: TOML を変換したハッシュ（下記の [値の対応](#値の対応)）
@@ -88,6 +88,7 @@ foreach _t["friends"]; _f {
 
 ## Compatibility
 - YAYA: Tc602-5以降
+- Tc603-1: 知らない文字コードの名前を渡すと警告 W0012 を出して失敗するようにした（それまでは警告を出さずに OS デフォルトとして扱っていた）
 
 ## See Also
 - [PARSETOML](PARSETOML.md)

@@ -10,7 +10,7 @@ FREADYAML( path [, charset] )
 | Parameter | Description |
 |-----------|-------------|
 | path | 読み込む YAML ファイルのパス（yaya.dll からの相対パス、または絶対パス） |
-| charset | ファイルの文字コード（省略可）。文字列（`"UTF-8"` `"Shift_JIS"` など）または数値で指定する。省略時は UTF-8 |
+| charset | ファイルの文字コード（省略可）。文字列（`"UTF-8"` `"Shift_JIS"` など。[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)）または数値で指定する。省略時は UTF-8 |
 
 ## Returns
 - 成功時: YAML を変換した値（下記の [値の対応](#値の対応)）
@@ -113,6 +113,7 @@ _y["voice"]["speed"]         // 3
 
 ## Compatibility
 - YAYA: Tc602-5以降
+- Tc603-1: 知らない文字コードの名前を渡すと警告 W0012 を出して失敗するようにした（それまでは警告を出さずに OS デフォルトとして扱っていた）
 
 ## See Also
 - [PARSEYAML](PARSEYAML.md)
