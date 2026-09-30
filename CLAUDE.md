@@ -16,6 +16,12 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 関数なら `system/system-functions-index.md` にも追加する
 - 新しいディレクトリを作ったら、`.pages` の `nav` と `scripts/prepare_site.py` の `DIRS` に加える
 
+## 言語仕様が変わったとき
+
+- 記法・式・制御構造・関数・設定ファイルなど、言語仕様に関わる変更をしたら、チートシート（`startup/cheatsheet.md`）も同じ変更に合わせて更新する
+- 関数やシステム関数の追加・改名・削除、対応バージョンの変更も、チートシートの該当する表に反映する
+- チートシートの例は、`yaya.exe`（`../yaya-shiori` の EXE 構成）で動かして出力を確かめてから書く。マニュアルの文面と実機が食い違っていたら、実機を正としてページを直す
+
 ## GitHub Pages
 
 `main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が MkDocs（Material テーマ）でビルドし、https://yaya-shiori.github.io/yaya-docs/ に公開する。

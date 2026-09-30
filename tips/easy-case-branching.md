@@ -11,18 +11,20 @@
 ```
 OnGhostChanging_normal
 {
-  case reference0
-  when "タケシ" { "タケシのところに行くのね。" }
-  when "所長たん" { "所長たんに呼ばれたの？" }
-  others { reference0 + "のところね。" }
+  case reference0 {
+    when "タケシ" { "タケシのところに行くのね。" }
+    when "所長たん" { "所長たんに呼ばれたの？" }
+    others { reference0 + "のところね。" }
+  }
 }
 
 OnGhostChanged_normal
 {
-  case reference0
-  when "タケシ" { "タケシから戻ってきたよ。" }
-  when "所長たん" { "所長たんから戻ってきたよ。" }
-  others { reference0 + "から戻ってきたよ。" }
+  case reference0 {
+    when "タケシ" { "タケシから戻ってきたよ。" }
+    when "所長たん" { "所長たんから戻ってきたよ。" }
+    others { reference0 + "から戻ってきたよ。" }
+  }
 }
 ```
 
@@ -33,8 +35,9 @@ OnGhostChanged_normal
 `when` はカンマ区切りで複数の値を同時にマッチさせられる：
 
 ```
-// 春（3〜5月）の処理
-when 3,4,5 { "春だよ。" }
+case _month {
+  when 3,4,5 { "春だよ。" }
+}
 ```
 
 ### 範囲指定
@@ -44,11 +47,12 @@ when 3,4,5 { "春だよ。" }
 ```
 GetSeasonSlot
 {
-  case GETTIME[1]
-  when 3-5  { "春" }
-  when 6-8  { "夏" }
-  when 9-11 { "秋" }
-  others    { "冬" }
+  case GETTIME[1] {
+    when 3-5  { "春" }
+    when 6-8  { "夏" }
+    when 9-11 { "秋" }
+    others    { "冬" }
+  }
 }
 ```
 

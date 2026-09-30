@@ -25,17 +25,19 @@ else
 
 ```
 case _value
-when 1
 {
-  // _value が 1 の場合
-}
-when 2, 3
-{
-  // _value が 2 または 3 の場合
-}
-others
-{
-  // どれにもマッチしない場合
+  when 1
+  {
+    // _value が 1 の場合
+  }
+  when 2, 3
+  {
+    // _value が 2 または 3 の場合
+  }
+  others
+  {
+    // どれにもマッチしない場合
+  }
 }
 ```
 

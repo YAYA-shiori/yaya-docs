@@ -19,6 +19,7 @@
 ## はじめての方へ
 
 - YAYA や AYA って何？ → [YAYAについて](other/yaya.md)
+- YAYA の書き方をざっと確認したい → [チートシート](startup/cheatsheet.md)
 - はじめてゴーストを作りたいんだけど？ → [ゴーストの作り方](startup/creating-ghost.md)
 - AYA でゴーストを作っていたけど、YAYA に移りたい → [AYAからの移行](startup/migration-from-aya.md)
 - 里々から YAYA に移りたい → [里々からの移行](startup/migration-from-satolili.md)
@@ -26,7 +27,7 @@
 ## 調べたいとき
 
 - プログラミングをしたことがない！ → [基本](#基本-basic)
-- YAYA の文法を知りたい → [文法](#文法-grammar)
+- YAYA の文法を知りたい → [文法](#文法-grammar)、[チートシート](startup/cheatsheet.md)
 - どんな組み込み（システム）関数があるの？ → [用途別の関数一覧](#システム関数組み込み関数-functions)
 - 関数を名前から探したい → [システム関数一覧](system/system-functions-index.md)
 - エラーを調べたい・処理したい → [エラー処理関数](system/error-handling-functions.md)
@@ -108,6 +109,7 @@
 
 | ファイル | 内容 |
 |---------|------|
+| [cheatsheet.md](startup/cheatsheet.md) | チートシート |
 | [creating-ghost.md](startup/creating-ghost.md) | ゴーストの作り方 |
 | [tutorial-01-preparation.md](startup/tutorial-01-preparation.md) | チュートリアル1: 準備 |
 | [tutorial-02-writing-dialogue.md](startup/tutorial-02-writing-dialogue.md) | チュートリアル2: セリフを書く |
