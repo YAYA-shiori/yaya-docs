@@ -1,71 +1,88 @@
 # 簡易配列からメニューを構築する
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-動的に要素数が変化する配列からメニューを構築し、選択判定を行う実装方法を説明します。
+動的に要素数が変化する配列からメニューを構築し選択判定します。
 
-## コード例
-
-### 初期化関数
+１）初期化用の関数を用意します。
 
 ```
-MyTestMenuItem {
-    testmenuitem1 = "てすと１,てすと２,てすと３"
-    testmenuitem2 = "テスト１,テスト２,テスト３,テスト４,テスト５"
+MyTestMenuItem
+{
+	testmenuitem1 = "てすと１,てすと２,てすと３"
+	testmenuitem2 = "テスト１,テスト２,テスト３,テスト４,テスト５"
 }
 ```
 
-### OpenMenu関数内でのメニュー表示
+２）OnFirstBootおよびOnBootでMyTestMenuItemを呼びます。
+
+３）既存の関数内に処理を埋め込みます。
 
 ```
-OpenMenu {
-    // ...（通常のメニュー項目）
-    "\q[メニュー１,TESTMENU1]\n"
-    "\q[メニュー２,TESTMENU2]\n"
-    // ...
+OpenMenu
+{
+	"\0\s[0]/
+		:
+		:
+	\q[メニュー１,TESTMENU1]\n/
+	\q[メニュー２,TESTMENU2]\n/
+		:
+		:
+	\e"
+}
+
+OnChoiceSelect
+{
+	//---- メニューアイテムIDを抽出する
+	_menuitemid = 0	// ずっと下でこの変数を参照できるように、定義だけ行っておく。
+	if STRSTR(reference0,"TESTMENUITEM1_",0) == 0
+	{
+		_menuitemid = TOINT(ERASE(reference0,0,STRLEN("TESTMENUITEM1_")))
+		reference0 = "TESTMENUITEM1"
+	}
+	if STRSTR(reference0,"TESTMENUITEM2_",0) == 0
+	{
+		_menuitemid = TOINT(ERASE(reference0,0,STRLEN("TESTMENUITEM2_")))
+		reference0 = "TESTMENUITEM2"
+	}
+
+	//---- メインメニュー
+	case reference0
+	{
+			:
+			:
+		when "TESTMENU1"
+		{
+			//---- メニュー１表示
+			_list = ""
+			for _i = 0 ; testmenuitem1[_i] != "" ; _i++
+			{
+				_list += "\q[%(testmenuitem1[_i]),TESTMENUITEM1_%(_i)]\n"
+			}
+			"\0\s[0]\b[2]%(_list)\e"
+		}
+		when "TESTMENU2"
+		{
+			//---- メニュー２表示
+			_list = ""
+			for _i = 0 ; testmenuitem2[_i] != "" ; _i++
+			{
+				_list += "\q[%(testmenuitem2[_i]),TESTMENUITEM2_%(_i)]\n"
+			}
+			"\0\s[0]\b[2]%(_list)\e"
+		}
+		when "TESTMENUITEM1"
+		{
+			//---- とりあえずはアイテム文字列を喋るだけ
+			"\0\s[0]%(testmenuitem1[_menuitemid])が選択されました。\e"
+		}
+		when "TESTMENUITEM2"
+		{
+			//---- とりあえずはアイテム文字列を喋るだけ
+			"\0\s[0]%(testmenuitem2[_menuitemid])が選択されました。\e"
+		}
+			:
+			:
+	}
 }
 ```
-
-### OnChoiceSelectでの選択判定
-
-`STRSTR`と`ERASE`関数を組み合わせてメニュー項目IDを抽出し、`case`文で処理を分岐します。
-
-```
-OnChoiceSelect {
-    if STRSTR(reference0, "TESTMENU") >= 0 {
-        _id = ERASE(reference0, "TESTMENU")
-        case _id {
-            when "1" {
-                // testmenuitem1の処理
-                _items = SPLIT(testmenuitem1, ",")
-                _i = 0
-                for _i < ARRAYSIZE(_items) {
-                    // 各要素を処理
-                    _i++
-                }
-            }
-            when "2" {
-                // testmenuitem2の処理
-            }
-        }
-    }
-}
-```
-
-## 実装手順
-
-1. `OnFirstBoot`および`OnBoot`イベントで初期化関数`MyTestMenuItem`を呼び出す
-2. `OpenMenu`関数内にメニュー選択肢タグを埋め込む
-3. `OnChoiceSelect`で選択されたIDを判定し、対応する配列を処理する
-4. `for`ループで配列の各要素を動的に処理する
-
-## 説明
-
-この実装パターンは、要素数が動的に変化する配列を扱う場合に適しています。カンマ区切り文字列を配列として扱い、`ARRAYSIZE`で要素数を取得して`for`ループで繰り返し処理することで、配列の要素数に依存しない汎用的なメニュー構築が可能です。
-
-## 関連項目
-
-- [配列の要素数を取得](get-array-size.md)
-- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)
-- [ARRAYSIZE](../functions/ARRAYSIZE.md)
-- [SPLIT](../functions/SPLIT.md)

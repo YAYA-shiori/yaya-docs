@@ -1,10 +1,13 @@
 # お気に入りを書きやすくする
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-お気に入りメニューのエントリを記述する際、`CHR(1)` や `CHR(2)` などの制御文字を直接書く必要があり冗長になる。ヘルパー関数を使ってより読みやすい記法で書けるようにするTips。
+いちいちCHR(1)CHR(2)などと書いてられんわボケ！という方向けTips。<br>
+**???`_string.dic`の改修が必要です。**
 
-## コア関数
+### 方法
+
+ということで、まずは関数追加。
 
 ```
 LinkMenuConvert
@@ -12,35 +15,53 @@ LinkMenuConvert
     _text = ''
     _data = IARRAY
     for _i = 0 ; _i < _argc ; _i++ {
-        _data = (RE_SPLIT(_argv[_i],'\[ \t\]*\|\[ \t\]*'),'','')
+        _data = (RE_SPLIT(_argv[_i],'[ \t]*\|[ \t]*'),'','') //ダミー
         _text += "%(_data[0])%(CHR(1))%(_data[1])%(CHR(1))%(_data[2])%(CHR(1))%(CHR(2))"
     }
     _text;
 }
 ```
 
-## 使い方
+どこでもいいので、まずはこれを追加します。
 
-制御文字を直接書く代わりに、パイプ文字 `|` で区切った読みやすい形式で定義する：
+次に、お気に入りメニューの書き方自体を変更します。<br>
+On_sakura.recommendsitesの例を挙げていますが、どれでも構いません。
 
 ```
-On_sakura.recommendsites_EX : array
+On_sakura.recommendsites
 {
-   'Site Name  | http://url.com/ | '
-   'Another    | http://other/   | '
+    "/
+    ごにょごにょ%(CHR(1))http://go.nyo/%(CHR(1))%(CHR(2))/
+    "
 }
 ```
 
-その後、`LinkMenuConvert(On_sakura.recommendsites_EX)` として呼び出す。
+元はこうなっています……が、編集が非常に面倒で目がちかちかします。<br>
+ということで書き直ししますと、
 
-パイプ文字（`|`）がフィールドの区切りとなり、前後の空白は無視される。
+```
+On_sakura.recommendsites
+{
+   LinkMenuConvert(On_sakura.recommendsites_EX)
+}
+ 
+On_sakura.recommendsites_EX : array
+{
+   'ごにょごにょ  | http://go.nyo/ | '
+   'ほげほげ      | http://ho.ge/  | '
+   "ふがふが      | http://fu.ga/  | "
+}
+```
 
-## 注意
+ | が区切りです。<br>
+半角スペースやタブをその左右に適当に入れて、適当に見やすくして構いません。
 
-このソリューションを実装するには `???_string.dic` ファイルへの修正が必要。
+なんたら`_EX`は適当な名前で構いませんが : array とつけるのを忘れないでください。
 
-## 関連項目
+サンプルは ' ' で囲んでいますが、別に " " でも全く問題ありません。<br>
+変数等を利用したい場合や、サイト名に ' が含まれて回避したい場合は " " を使ってください。
 
-- [IARRAY](../functions/IARRAY.md)
-- [RE_SPLIT](../functions/RE_SPLIT.md)
-- [CHR](../functions/CHR.md)
+Emily/Phase4などで利用しています。<br>
+わからない場合はそちらも参考にしてください。
+
+―― ぽな@ばぐとら

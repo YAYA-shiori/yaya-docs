@@ -1,50 +1,37 @@
 # 選択肢をいきなり独立した関数で書く
 
-## 概要
-
-YAYAゴーストスクリプトで、選択肢やアンカーの選択を処理する際に、選択肢の識別子と一致する独立した関数を作成することで、`OnChoiceSelect`内の条件分岐を省略できるテクニックを紹介します。
-
-## コード例
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
 ```
-OnChoiceSelect {
+ OnChoiceSelect
+ {
     if ISFUNC(reference0) {
-        EVAL(reference0)
+    EVAL(reference0)
     }
-}
-
-OnAnchorSelect {
+ }
+ 
+ OnAnchorSelect
+ {
     if ISFUNC(reference0) {
-        EVAL(reference0)
+    EVAL(reference0)
     }
-}
+ }
 ```
 
-## 説明
+こうしておけば、`\q[]`タグや`\_a[]`タグで作られた選択肢／アンカーの識別子そのままの名前で辞書に書くことができます。
 
-このアプローチにより、`\q[]`タグや`\\_a[]`タグで使用する識別子と同名の関数を辞書内に書くだけで、選択肢の処理が完結します。
+### 注意
 
-例えば、選択肢タグで `\q[はい,AnswerYes]` と書いた場合、以下の関数を作成するだけで対応できます。
+選択肢／アンカーの識別子がそのまま関数名となるので以下のルールのどれにもあてはまらない識別子名にしてください。
 
-```
-AnswerYes {
-    "\0\s[0]よかった！\e"
-}
-```
+- 数字0～9で始まる。
+- アンダースコア（"_"）で始まる。
+- 以下の文字を含む。
+空白　!　"　#　$　%　&　(　)　\*　+　,　-　/　:　;　&lt;　=　>　?　@　[　]　`　{　|　}　<br>
 
-`OnChoiceSelect`内で大量の`case`文を書く必要がなくなります。
+- 予約語と完全に一致する。
 
-## 関数識別子の命名制限
+## 関連ページ
 
-選択肢名（関数識別子）には以下のものを使用できません。
-
-- 数字またはアンダースコアで始まるもの
-- スペースや以下の特殊文字を含むもの: `! " # $ % & ( ) * + , - / : ; < = > ? @ [ ] \` { | } ~`
-- 予約語と一致するもの
-
-## 関連項目
-
-- [直前の会話をもう一度再生する](replay-last-talk.md)
-- [誕生日を覚える](remember-birthday.md)
-- [ISFUNC](../functions/ISFUNC.md)
-- [EVAL](../functions/EVAL.md)
+- [切り替え反応もいきなり独立した関数で書く](independent-switch-function.md)
+- [アンカータグからURLジャンプ](url-jump-from-anchor.md)

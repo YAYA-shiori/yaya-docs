@@ -1,0 +1,46 @@
+OnFileDrop2
+{
+	Filename = reference0
+	_file = TOLOWER(Filename)
+	//---- 壁紙変更
+	if ".png" _in_ _file || ".jpg" _in_ _file || ".jpeg" _in_ _file ||".bmp" _in_ _file
+	{
+		ChoiceWallchange
+	}
+	//---- 音楽再生
+	elseif ".mid" _in_ _file || ".mp3" _in_ _file || ".wav" _in_ _file || ".wma" _in_ _file
+	{
+		FUNCTIONEX("mciaudior.dll","stop")
+		FUNCTIONEX("mciaudior.dll", "load", "%Filename")
+		"\0\s[40]\![raise,OnPlayMusic]音楽ファイル再生中です。\w5\n演奏を止めたいときは、%keronameを\nダブルクリックしてください。\e"
+	}
+}
+
+//---- 壁紙変更
+ChoiceWallchange
+{
+	"/
+	\0\s[30]あ、画像ファイルですね。\n壁紙にしますか？\n\n[half]/
+	\![*]\q[中央に,ChoiceWallchange0]\n/
+	\![*]\q[並べて設定,ChoiceWallchange1]\n/
+	\![*]\q[拡大,ChoiceWallchange2]\n/
+	\![*]\q[やっぱりやめた,ChoiceCancel]\e"
+}
+
+ChoiceWallchange0
+{
+	_i = FUNCTIONEX("proxy.dll", "set_wall_paper.exe", "%ASC(34)%Filename%ASC(34)", "0")
+	"\0\s[0]壁紙にしました。\e"
+}
+
+ChoiceWallchange1
+{
+	_i = FUNCTIONEX("proxy.dll", "set_wall_paper.exe", "%ASC(34)%Filename%ASC(34)", "1")
+	"\0\s[0]壁紙にしました。\e"
+}
+
+ChoiceWallchange2
+{
+	_i = FUNCTIONEX("proxy.dll", "set_wall_paper.exe", "%ASC(34)%Filename%ASC(34)", "2")
+	"\0\s[0]壁紙にしました。\e"
+}

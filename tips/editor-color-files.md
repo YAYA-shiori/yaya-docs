@@ -1,28 +1,23 @@
 # エディタ色分けファイル
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYAスクリプト開発向けのエディタシンタックスハイライト設定ファイルを提供するページ。
+## [さくらエディタ](http://sakura-editor.sourceforge.net/download.html)向け
 
-## 対応エディタ
+- [mn2728_0.zip](../attachment/mn2728_0.zip) by AI9200さん
+- 設定→共通設定→強調ワードタブで、kwd インポートして
+- 設定→タイプ別設定→カラーでcolインポートして使えます。
 
-### 桜エディタ（Sakura Editor）
+## [EmEditor向け](http://jp.emeditor.com/text-editor-features/history/emeditor-free/)
 
-- 提供者: AI9200
-- ファイル: `mn2728_0.zip`（1.6KB、2009/03/28アップロード）
-- インストール方法:
-  1. 設定 → 共通設定 → 強調キーワードタブ から `.kwd` ファイルをインポート
-  2. 設定 → タイプ別設定 → カラー から `.col` ファイルをインポート
+- <http://ukiya.sakura.ne.jp/index.php?%E4%BC%BA%E3%81%8B%E9%96%A2%E9%80%A3%E3%83%84%E3%83%BC%E3%83%AB>
 
-### EmEditor
+## [JmEditor](http://www.hi-ho.ne.jp/jun_miura/jmedit.htm)向け
 
-- 外部サイト（ukiya.sakura.ne.jp）のドキュメントを参照
+- [jme_yaya.lzh](../attachment/jme_yaya.lzh)
+使い方は同梱readme.txt参照。
 
-### JmEditor
+## 添付ファイル
 
-- ファイル: `jme_yaya.lzh`（2.0KB、2009/03/28アップロード）
-- インストール方法: 同梱の `readme.txt` を参照
-
-## 関連項目
-
-- [C言語利用者のためのヒント](hints-for-c-users.md)
+- [jme_yaya.lzh](../attachment/jme_yaya.lzh)
+- [mn2728_0.zip](../attachment/mn2728_0.zip)

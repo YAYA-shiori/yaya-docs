@@ -1,61 +1,56 @@
 # 指定秒数経過後にイベントを実行
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYA で一定時間経過後にイベントを実行する方法を 2 通り解説します。システム辞書の `SetDelayEvent` 関数を使う方法と、`OnSecondChange` イベントを使って自作する方法があります。
+### SetDelayEvent関数での例
 
-## コード例
-
-### 方法 1: SetDelayEvent 関数を使用
+- はろーYAYAわーるどかSimpleYAYAテンプレートのyaya_shiori3.dicにある、[SetDelayEvent関数](../system/yaya-shiori3-dic.md)を使用しています。
 
 ```
 30秒待たせるイベント
 {
 	"\0\s[0]それでは30秒お待ち下さい。\e"
-	SHIORI3FW.SetDelayEvent('30秒待った', 30)
+　
+	SHIORI3FW.SetDelayEvent( '30秒待った' , 30 )
+}
+
+30秒待たせるイベント_残り時間確認
+{
+	"\0\s[0]残り%(SHIORI3FW.DelayEventTime)秒です。\e"
+}
+
+30秒待った
+{
+	"\0\s[0]お待たせしました。\e"
 }
 ```
 
-`SetDelayEvent` で指定秒数後に実行するイベント名を登録します。経過時間は `DelayEventTime` で確認できます。
-
-### 方法 2: OnSecondChange を使った自作実装
+### 自作関数での例
 
 ```
-// タイマー開始
-OnTimerStart
-{
-	_sec = _argv[0]
-	timer_count = _sec
-}
-
-// 毎秒実行（OnSecondChange から呼び出す）
-OnTimerCounter
-{
-	timer_count--
-	if timer_count <= 0 {
-		OnTimerEnd
+OnSecondChange { //これ以外は自作関数
+	if timerFlag == 1 {
+		OnTimerCounter
 	}
 }
 
-// タイマー終了時の処理
-OnTimerEnd
-{
-	"\0\s[0]時間になりました。\e"
+OnTimerStart { //OnTimerStart(60)とかで呼び出す。
+	timerFlag = 1
+	timerCount_s = _argv[0]//timerCount_sの現在値が残り時間。
+}
+
+OnTimerCounter { //計測中処理
+	timerCount_s--
+	if timerCount_s <= 0 { //タイマ終了処理
+			OnTimerEnd
+	}
+}
+
+OnTimerEnd {
+	timerFlag = 0
+	timerCount_s = 0
+	//タイマ終了時に何か処理する場合このへんに書く
 }
 ```
 
-## 説明
-
-### 方法 1 の特徴
-
-システム辞書（SHIORI3FW）に組み込まれた `SetDelayEvent` を使うシンプルな方法です。指定したイベント名が、指定秒数後に自動的に呼び出されます。
-
-### 方法 2 の特徴
-
-`OnSecondChange` イベント（毎秒発生）を利用してカウンターを実装します。より柔軟なカスタマイズが可能ですが、複数タイマーを同時計測する場合は追加の工夫が必要です。
-
-## 関連項目
-
-- OnSecondChange
-- SHIORI3FW.SetDelayEvent
-- GETSECCOUNT
+タイマを同時にいくつか計測したい場合は、もう少し工夫が必要です。

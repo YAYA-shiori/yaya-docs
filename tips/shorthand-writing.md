@@ -1,45 +1,27 @@
 # 関数・変数・さくらスクリプトを短縮して書く
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-`#define`や`#globaldefine`ディレクティブを使って、頻繁に使う関数名・変数名・さくらスクリプトの断片を短縮形で書く方法を説明します。
-
-## コード例
+以下の一行を入れるとそれ以降`reference[*]`を`Ref[*]`と短縮して記述できるようになります。<br>
+関数やさくらスクリプトなども同様に置換えできます。
 
 ```
 #define Ref reference
 
 OnGhostChanged
 {
-    "\0\s[0]%(Ref[0])さんから交代。\e"
+	"\\0\s[0]%(Ref[0])さんから交代。\e"
 }
 ```
 
-このように`#define Ref reference`と書くことで、辞書内で`Ref[*]`と書けば`reference[*]`として処理されます。
+書き方は「#define 置換え前テキスト 置換え後テキスト」。<br>
+有効範囲は#defineはその次の行から同じ辞書ファイルの終わりまで。<br>
+#globaldefineはその次の行から次以降に読み込む辞書ファイル全て（読み込む順番はyaya.txt/aya.txtに記述されてる順）。<br>
+#defineが#globaldefineより先に処理されます。<br>
+用途に応じて使い分けてください。
 
-## 説明
+OnTranslate内でREPLACE関数で置換えを行うとスクリプト（トーク）をバルーンに表示する直前にスクリプトのみ置換えますが、#defineは辞書を読み込むタイミングで辞書そのものが置換えられます。<br>
 
-### スコープの違い
+### 注意点
 
-| ディレクティブ | 有効範囲 |
-|--------------|---------|
-| `#define` | 次の行からそのファイルの末尾まで |
-| `#globaldefine` | 以降に読み込まれる全辞書ファイル（`yaya.txt`/`aya.txt`の読み込み順） |
-
-### 処理順序
-
-`#define`は`#globaldefine`よりも先に処理されます。
-
-### REPLACEとの違い
-
-`OnTranslate`内のREPLACE関数は表示直前にさくらスクリプトを変換しますが、`#define`は辞書読み込み時に辞書テキスト自体を置換します。目的に応じて使い分けてください。
-
-## 注意事項
-
-辞書内のすべてのテキストが置換対象になるため、既存のテキストと衝突しない置換文字列を慎重に選ぶ必要があります。
-
-## 関連項目
-
-- [プリプロセス](../grammar/08-preprocessor.md)
-- [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md)
-- [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md)
+<span style="color:Red">辞書に書かれてるテキストは全て置換え対象になるので、使用する場合はなるべく被らなそうなテキストに短縮してください。</span>

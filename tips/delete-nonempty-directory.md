@@ -1,74 +1,67 @@
 # 中身の残っているディレクトリを削除する
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-標準の `RMDIR` 関数は空のディレクトリしか削除できません。このページで提供される `DELTREE` 関数を使うと、ファイルが含まれているディレクトリも再帰的に削除できます。
+## 中身の残っているディレクトリを削除する方法
 
-**注意事項:**
-- 読み取り専用ファイルも強制削除される
-- ファイルはゴミ箱に入らず完全削除される
-- ディレクトリ指定を間違えると取り返しが付かない事態になることがある
+AYA/YAYAに標準で用意されているディレクトリ削除関数、RMDIRでは空のディレクトリしか削除できません。<br>
+なので、中身が残っていても削除が可能な関数を作ってみました(deltreeコマンドのようなもの)。
 
-作成者: せきやひろし
+なお、この関数では読み取り専用のファイルやディレクトリなども強制的に削除されます。<br>
+また、Windowsの削除コマンドを使っているわけではないので、削除したファイルやディレクトリがゴミ箱など、一時的なディレクトリに入ると言うこともありません。<br>
+したがって、ディレクトリ指定を間違うと、場合によっては取り返しが付かない事態になることがありますので、使用する場合は十分ご注意ください。
 
-## コード例
-
-```
-//ディレクトリ削除関数(再帰あり)
-DELTREE
-{
-	_dirname = _argv[0]
-
-	_attr_array = FATTRIB(_dirname)
-
-	if (_attr_array == -1) {
-		-1
-		return
-	} elseif (_attr_array[2] == 1) {
-		while 1 {
-			_files = FENUM(_dirname, '|')
-			_files = REPLACE(_files, '\', '/')
-			_file_array = SPLIT(_files, '|')
-
-			if (ARRAYSIZE(_file_array) == 0) {
-				RMDIR(_dirname)
-				return
-			} else {
-				foreach _file_array; _filename {
-					_targetfilename = "%(_dirname)/%(_filename)"
-					void DELTREE(_targetfilename)
-				}
-			}
-		}
-	} elseif (_attr_array[2] == 0) {
-		FDEL(_dirname)
-		return
-	} else {
-		0
-		return
-	}
-}
-```
-
-## 説明
-
-### 使用方法
+### 使い方
 
 ```
 DELTREE(削除したいディレクトリ・ファイル名)
 ```
 
-### 動作の流れ
+### DELTREE関数
 
-1. `FATTRIB` 関数でファイル属性を取得する
-2. ディレクトリの場合、`FENUM` 関数で内容を列挙する
-3. 再帰呼び出しで全ファイル・サブディレクトリを削除する
-4. 最後に `RMDIR` 関数でディレクトリ本体を削除する
-5. ファイルの場合は `FDEL` 関数で直接削除する
+```
+//ディレクトリ削除関数(再帰あり)
+DELTREE
+{
+	_dirname = _argv[0];	//引数を分かりやすい名前の変数に代入
 
-## 関連項目
+	_attr_array = FATTRIB(_dirname);	//ファイル属性を取得
 
-- RMDIR
-- FDEL
-- FATTRIB
-- FENUM
+	if (_attr_array == -1 ){
+		-1;	//ファイルが存在しない、などの場合は-1を返して終了
+		return;
+	} elseif (_attr_array[2]==1) {
+		//対象がディレクトリなら、ディレクトリ削除処理実行
+		while 1 {	//無限ループ(ディレクトリを確実に消去するため)
+			//ディレクトリ内ファイル・ディレクトリ一覧取得
+			_files = FENUM(_dirname,'|');		//┐
+			_files = REPLACE(_files,'\','/');	//├ここのスプリッタは必要に応じて変更
+			_file_array = SPLIT(_files,'|');	//┘
+
+			if (ARRAYSIZE(_file_array) == 0) {
+				//ディレクトリ内に何もなければディレクトリ削除実行。
+				//RMDIR関数を実行し、その結果をそのまま返す。
+				RMDIR(_dirname);
+				return;
+			} else {
+				//取得した一覧を元にファイル・ディレクトリ削除実行
+				foreach _file_array; _filename {
+					//処理すべきファイル・ディレクトリ名を生成
+					_targetfilename = "%(_dirname)/%(_filename)";
+					void DELTREE(_targetfilename);	//再帰呼び出し
+				}
+			}
+		}
+	} elseif (_attr_array[2]==0){
+		//普通のファイルなら単純に削除。FDEL関数の結果をそのまま返す。
+		FDEL(_dirname);
+		return;
+	} else {
+		//その他、状況が不明な場合は0を返して終了
+		0;
+		return;
+	}
+}
+```
+
+- せきやひろし

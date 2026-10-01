@@ -1,0 +1,131 @@
+//// 文 平行喋り用スクリプト（\0/\1のみ）
+//// 利用例：ParallelTalk("0番喋り","1ばんしゃべり")
+////
+//// v1.0-20031001：初版
+//// v1.1-20031002：長いほうのトークにあわせるように組み直し
+//// v1.2-20040315：AYA v5
+//// v2.0-20050422：Emily/Phase4組み込み版 \p2以降にも対応
+
+//**********この2つは利用例です。ゴーストに組み込む場合は不要です**********
+//v1.x系互換の書き方
+
+OnParallelTalk1
+{
+	"\0\s[5]\1\s[10]\_s成功の秘訣は、\_s\w9"
+	--
+	ParallelTalk("%msと毎日積み重ねる練習ですよね！","%ITkeypersonに見習うことだ。")
+	--
+	"\w9\w9\0\n\s[4]あれ？"
+}
+
+//v2.x系。ID,文字列,ID,文字列……で、0,1以外も可能
+
+OnParallelTalk2
+{
+	"\0\s[5]\1\s[10]\_s成功の秘訣は、\_s\w9"
+	--
+	ParallelTalk(1,"%msと毎日積み重ねる練習ですよね！",2,"%ITkeypersonに見習うことだ。")
+	--
+	"\w9\w9\0\n\s[4]あれ？"
+}
+
+//**********ParallelTalkメイン**********
+
+ParallelTalk
+{
+	_textarray  = IARRAY
+	_scopearray = IARRAY
+	_scopenum = 0
+	_maxlen = 0
+	_textlenarray = IARRAY
+	
+	for _i = 0 ; _i < _argc ; _i++ {
+		_type = GETTYPE(_argv[_i])
+		if _type == 1 { //整数
+			_scopearray[_scopenum] = _argv[_i]
+		}
+		elseif _type == 3 { //文字列
+			_textarray ,= _argv[_i]
+
+			_textlenarray[_scopenum] = STRLEN(_argv[_i])
+			if _maxlen < _textlenarray[_scopenum] {
+				_maxlen = _textlenarray[_scopenum]
+			}
+			
+			if ARRAYSIZE(_scopearray) <= _scopenum { //スコープ初期化
+				_scopearray[_scopenum] = _scopenum
+			}
+			_scopenum += 1
+		}
+	}
+	
+	_curposarray = IARRAY
+	for _i = 0 ; _i < _scopenum ; _i++ {
+		_curposarray ,= 0
+	}
+	
+	_nextpos = 0       //文字切り出し計算用
+	_j = 0             //内側ループ変数
+	_result = ''       //結果スクリプト
+	_lastscope = -1    //直前のスコープ
+	_temptext = IARRAY //分割後の文字列を一時保存
+	_outcount = 0      //クイックセッション制御用カウンタ
+	
+	_isreverse = 0     //出力スクリプト最適化のためのHack
+	_joinpos = 0           //同上
+	
+	for _i = 0 ; _i < _maxlen ; _i++ {
+		for _j = 0 ; _j < _scopenum ; _j++ {
+			_nextpos = (_i * _textlenarray[_j] / _maxlen) + 1
+			if _curposarray[_j] < _nextpos {
+				_temptext[_j] = SUBSTR(_textarray[_j],_curposarray[_j],1)
+				_curposarray[_j] = _nextpos
+			}
+			else {
+				_temptext[_j] = ''
+			}
+		}
+		
+		_outcount = 0
+		
+		for _j = 0 ; _j < _scopenum ; _j++ {
+			if _isreverse {
+				_joinpos = _scopenum - _j - 1
+			}
+			else {
+				_joinpos = _j
+			}
+			
+			if ! STRLEN(_temptext[_joinpos]) {
+				continue
+			}
+			
+			_outcount += 1
+			if _outcount == 2 { //2つめ以降はクイックセッションでウェイトなし
+				_result += '\_q'
+			}
+			
+			if _lastscope != _scopearray[_joinpos] {
+				_lastscope = _scopearray[_joinpos]
+				
+				if _lastscope == 0 {
+					_result += '\h'
+				}
+				elseif _lastscope == 1 {
+					_result += '\u'
+				}
+				else {
+					_result += "\p[%(_lastscope)]"
+				}
+			}
+			_result += _temptext[_joinpos]
+		}
+		
+		if _outcount >= 2 { //クイックセッション解除
+			_result += '\_q'
+		}
+		_isreverse = ! _isreverse
+	}
+	
+	_result
+}

@@ -140,6 +140,7 @@ def main():
     copy_md(os.path.join(ROOT, 'INDEX.md'), os.path.join(OUT, 'index.md'))
     shutil.copy(os.path.join(ROOT, '.pages'), os.path.join(OUT, '.pages'))
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
+    shutil.copytree(os.path.join(ROOT, 'attachment'), os.path.join(OUT, 'attachment'))
     for d in DIRS:
         for name in sorted(os.listdir(os.path.join(ROOT, d))):
             if name.endswith('.md'):

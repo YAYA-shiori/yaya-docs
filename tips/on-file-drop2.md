@@ -1,29 +1,22 @@
 # OnFileDrop2の使い方
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-ゴーストにファイルをドラッグ＆ドロップすると `OnFileDrop2` イベントが発生する。このイベントを利用することで、壁紙の変更や音楽データの再生などの機能を実装できる。
+ゴーストにファイルをドラッグ＆ドロップすると、OnFileDrop2イベントが発生します。<br>
 
-## 応用例
+これを利用すると、壁紙を変更したり、音楽データを再生したりすることが可能です。
 
-- 壁紙変更機能
-- 音楽データ再生機能
+[こちらにそのまま使えるサンプルを用意しています。](../attachment/OnFileDrop2.txt)
 
-## 必要なSAORI
+<span style="color:Red">※ここでは、OnChoiceSelectの選択肢をいきなり独立した関数で書いています。[選択肢をいきなり独立した関数で書く](independent-choice-function.md)を参照してください。</span>
 
-実装には以下の外部DLLが必要：
+[音を鳴らす](play-sound.md)に記述された関数を使っていますので、そちらも参照して下さい。<br>
 
-| SAORI | 作者 |
-|-------|------|
-| MCIAudioR | umeiさん |
-| set_wallpaper | 櫛ヶ浜やぎさん |
-| PROXY.DLL | 橋本孔明さん |
+また、事前に下記のSAORIを入手し、文のDLL（aya.dll、aya5.dllなど）と同じディレクトリにおいてください。<br>
+umeiciさん作 [MCIAudioR](http://umeici.hp.infoseek.co.jp/etcetera/)<br>
+櫛ヶ浜やぎさん作　[set_wallpaper](http://www.geocities.co.jp/SiliconValley-Cupertino/8536/)<br>
+橋本孔明さん作　[PROXY.DLL](http://homepage3.nifty.com/khsoft/cbs/)
 
-## 実装サンプル
+## 添付ファイル
 
-実装に必要なサンプルコード（OnFileDrop2.txt）がページの添付ファイルとして提供されている。
-
-## 関連項目
-
-- [SAORIの使い方](saori-usage.md)
-- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)（関連テクニック）
+- [OnFileDrop2.txt](../attachment/OnFileDrop2.txt)

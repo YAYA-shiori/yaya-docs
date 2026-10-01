@@ -1,71 +1,73 @@
 # 文バトラー
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYA スクリプトを使用してユーザーとゴーストが一対一でバトルを行うスクリプトの実装例です。そのまま使えるサンプルファイル「AyaBattler.dic」（10.4KB）が添付されています。
+ユーザーとゴーストとの一対一バトルを行うスクリプトです。<br>
 
-作成者: ひと:Couperin
+[こちらにそのまま使えるサンプルを用意しています。](../attachment/AyaBattler.dic)
 
-## コード例
+---
 
-### damage_value 関数（ダメージ計算）
+<span style="color:Red">※ここでは、OnChoiceSelectの選択肢をいきなり独立した関数で書いています。[選択肢をいきなり独立した関数で書く](independent-choice-function.md)を参照してください。</span>
+
+---
+
+Couperin
+
+---
+
+### サンプル：弱ってきたら攻撃力2倍の例
 
 ```
 damage_value
 {
-	// ゴースト側の処理
-	if _argv[0] == 0 {
-		// 弱攻撃: 1～14
-		_dmg = RAND(14) + 1
-		// 中攻撃: 11～22
-		_dmg = RAND(12) + 11
-		// 強攻撃: 21～30
-		_dmg = RAND(10) + 21
-
-		// 体力が20未満なら攻撃力2倍
-		if ghost_hp < 20 {
-			_dmg = _dmg * 2
-		}
-	}
-	// ユーザー側の処理
-	else {
-		// 弱攻撃: 1～14
-		_dmg = RAND(14) + 1
-		// 中攻撃: 11～22
-		_dmg = RAND(12) + 11
-		// 強攻撃: 21～30
-		_dmg = RAND(10) + 21
-
-		// 体力が20未満なら攻撃力2倍
-		if user_hp < 20 {
-			_dmg = _dmg * 2
-		}
-	}
-	_dmg
+   ///////ゴースト側///////
+   if _argv[1] {
+      _damage = 0
+      case _argv[0] {
+         when 1 { // 弱ダメージ(1～14)
+            _damage = RAND(13) + 1
+         }
+         when 2 { // 中ダメージ(11～22)
+            _damage = RAND(11)+11
+         }
+         when 3 { // 強ダメージ(21～30)
+            _damage = RAND(10)+21
+         }
+      }
+      
+      if ghost_HP < 20 {
+         _damage * 2
+      }
+      else {
+         _damage
+      }
+   }
+   ///////ユーザー側///////
+   else {
+      _damage = 0
+      case _argv[0] {
+         when 1 { // 弱ダメージ(1～14)
+            _damage = RAND(13) + 1
+         }
+         when 2 { // 中ダメージ(11～22)
+            _damage = RAND(11)+11
+         }
+         when 3 { // 強ダメージ(21～30)
+            _damage = RAND(10)+21
+         }
+      }
+      
+      if user_HP < 20 {
+         _damage * 2
+      }
+      else {
+         _damage
+      }
+   }
 }
 ```
 
-## 説明
+## 添付ファイル
 
-### ダメージシステム
-
-3 段階の攻撃力が設定されています。
-
-| 攻撃種別 | ダメージ範囲 |
-|---------|------------|
-| 弱攻撃 | 1〜14 |
-| 中攻撃 | 11〜22 |
-| 強攻撃 | 21〜30 |
-
-### 特殊メカニクス
-
-体力が 20 未満になると攻撃力が 2 倍になります。ピンチ状態での逆転要素として機能します。
-
-### サンプルファイル
-
-添付の「AyaBattler.dic」をそのまま辞書として使用できます。「選択肢をいきなり独立した関数で書く」の手法と組み合わせると、より効果的な実装が可能です。
-
-## 関連項目
-
-- RAND
-- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)
+- [AyaBattler.dic](../attachment/AyaBattler.dic)

@@ -1,42 +1,131 @@
 # YAYA as PLUGIN
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-yaya.dllのプラグイン規格対応用辞書セット。YAYA構文でプラグインを作成でき、SAORI連携もサポートする。PLUGIN/2.0仕様に対応し、主にSSP専用のプラグインシステムとして機能する。
+### 概要
 
-## 配布
+yaya.dllのプラグイン規格対応用辞書セットです。<br>
+YAYAの文法でプラグインを作成することができます。SAORIを使用することも可能です。<br>
+PLUGIN/2.0のため、ほぼSSP専用プラグインとなります。<br>
 
-[The Maintenance Shop](http://ms.shillest.net/yaya_as.xhtml) で入手可能。
+### 配布サイト
 
-## 作成されたプラグイン例
+[整備班 -The Maintenance Shop-](http://ms.shillest.net/yaya_as.xhtml)
 
-| プラグイン名 | 説明 |
-|-----------|------|
-| きょうの伺か+ | ゴースト向けTwitter連携 |
-| スタンプ帳 | スタンプコレクションプラグイン |
-| BalloonMaker | バルーン作成ユーティリティ |
-| BalloonSelector | バルーン選択サポート |
+### これを利用して作成されたプラグイン
 
-## プラグイン作成方法
+- [きょうの伺か+](http://nikolat.starfree.jp/recghost/)
+  - Twitterに起動中の「伺か」のゴーストに関することを気軽に投稿できるSSP専用プラグイン
 
-必要なファイルは3つ：
+- [スタンプ帳](http://navy.nm.land.to/post/)
+  - ゴーストさんがスタンプを押してくれます（いろいろ条件がある場合も）
+  - [対応ゴーストリスト](http://www10.atwiki.jp/postic/pages/13.html)
 
-### yaya_plugin_main.txt
-`OnMenuExec` イベントハンドラを含む。プラグインメニューアクセス時にどのイベントを起動するか、Reference値、対象ゴースト指定、バルーンマーカー、ダイアログスクリプトを記述。
+- [BalloonMaker](http://coderatte.ehoh.net/)
+  - バルーンを作れます。
 
-### descript.txt
-設定ファイル。文字コード（Shift_JIS）、プラグイン名、作者情報、ファイル名（yaya.dll）、プラグインID（UUIDツールで生成）、更新URLを記載。
+- [updater_yaya](http://home.384.jp/evidence/cgi-bin/archives/10.html)
+  - SHIORI, SAORI, PLUGIN, HEADLINE で使用するyaya.dllを一括コピーできます。
 
-### install.txt
-インストールメタデータ。プラグインの種類、名前、ディレクトリ指定を記載。
+- [daumaker](https://github.com/nikolat/daumaker)
+  - updates2.dauを作成します。
 
-## 注意事項
+- [BalloonSelector](https://github.com/nikolat/balloonselector)
+  - バルーン選択支援プラグイン。
 
-- イベント監視には yaya.txt のログを有効化する
-- 里々経由で値を送信する際、句読点に自動のwaitタグが付く場合がある
-- プラグインのリロードはプラグインエクスプローラーから無効化→有効化のサイクルで行う
+- [第弐版仮想道頓堀水泳拡張](http://ms.shillest.net/yaya_as.xhtml)
+  - バーチャル道頓堀プラグイン。
 
-## 関連
+- [第弐版仮想麦酒飛散拡張](http://ms.shillest.net/yaya_as.xhtml)
+  - バーチャルビールかけプラグイン。
 
-- [YAYA as SAORI](./yaya-as-saori.md)
-- PLUGIN/2.0仕様: http://ssp.shillest.net/ukadoc/manual/spec_plugin.html
+- [第弐版仮想実体化拡張](http://ms.shillest.net/yaya_as.xhtml)
+  - 実体化？プラグイン。
+
+### プラグイン作成法
+
+#### 「バーチャル道頓堀プラグイン」書き換え例
+
+- yaya_plugin_main.txt
+
+```
+//↓プラグインメニュー（SSP＞オーナードローメニュー＞プラグイン＞【このプラグインの名前】）をクリックすると発生するイベント
+OnMenuExec
+{
+	//★↓ここに発生させたいイベント名を書く
+	res_event = 'OnDive'
+
+	//★↓ここに発生させたいイベント中で返すReferenceを書く
+	//省略可。Reference1以降も同じように記述可。0から昇順に並べること。
+	res_reference[0] = '道頓堀'
+
+	//★↓ここでスクリプトやイベントを送るゴーストのSakura名を指定
+	//「__SYSTEM_ALL_GHOST__」で全起動中ゴースト
+	//省略するとプラグインメニューを実行したゴースト
+	//res_target = '__SYSTEM_ALL_GHOST__'
+
+	//★↓ここでバルーンのマーカー(下に小さく出るステータス表示)に表示する文字を指定
+	res_marker = 'バーチャル道頓堀プラグイン'
+	
+	//★↓ここにres_targetで指定したゴーストに喋らせるトークやさくらスクリプトを書く
+	'\h\s[5]どぼ～ん。\w9\w9\u\s[11]…\w5…\w5…\w5…\w5…。\e'
+}
+
+//プラグインのバージョン
+version
+{
+	'Tombori/1.1'
+}
+```
+
+他に何かやらせたい事があればプラグイン仕様書参照
+
+- descript.txt
+
+```
+//文字コード
+Charset,Shift_JIS
+
+//名前　（★絶対変更する）
+name,バーチャル道頓堀
+
+//作者　（★絶対変更する）
+//craftmanwは日本語も可、craftmanは英語のみ。どっちか片方でもOK
+craftman,SSP BUGTRAQ
+//craftmanw
+
+//PLUGIN DLL
+filename,yaya.dll
+
+//オプション指定-OnSecondChangeの通知頻度
+//0で無効、標準1
+secondchangeinterval,0
+
+//プラグインID　（★絶対変更する）
+//http://www.famkruithof.net/uuid/uuidgen とかで生成できます
+//一度書いたら変えないこと
+id,CBC695FA-4395-48d0-8ADB-0DBCE19BF34E
+
+//更新URL　（★絶対変更する、使わないなら削除）
+homeurl,http://ms.shillest.net/plugin/tombori/
+```
+
+- install.txt
+
+```
+type,plugin
+//プラグイン名　（★絶対変更する）
+name,バーチャル道頓堀
+//インストールディレクトリ名　（★絶対変更する）
+directory,TOMBORI
+```
+
+#### ほか
+
+- yaya.txtのiolog, offをコメントアウトしログ出力オンにすると、プラグインにどんなイベントが発生するのか把握可能（yaya.txtデフォルト設定ではOnSecondChangeは無視）ゴーストと同じように発生するイベントとしないイベントがあり。
+- 里々から`\![raiseplugin]`で値を送るとき「、」や「。」に自動的にウェイトタグが付く場合があり（「φ。」と書いても防げない）
+- プラグインエクスプローラーを開き、プラグイン無効→有効でプラグインリロード
+
+#### 参考サイト
+
+- [プラグイン仕様書](http://ssp.shillest.net/ukadoc/manual/spec_plugin.html)

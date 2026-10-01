@@ -1,0 +1,476 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+//　ユーザーvsゴーストバトルスクリプト「文バトラー」Ver1.00
+//   前提   : 文 version 5.7 fix3以降を搭載
+//   日時   : 2005/04/29
+//   作者   : くーぷらん
+//   機能   : ユーザーとゴーストとの一対一バトル。
+//   特徴   : 簡単に台詞を書き換え可能。
+//   　　   : 各種行動の発動確率もそこそこ簡単に変更可能。
+//   備考   : 耳の人氏作「美坂バトラー」Ver1.01を、文に移植したものです。
+//   パブリックドメインとして自由に改変、再配布可
+//
+//   すぺしゃるさんくす(敬称略) : 耳の人、C.Ponapalt
+//
+////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
+// スクリプトの解説
+////////////////////////////////////////////////////////////////////////////
+//
+//１．導入
+//　(1)このファイルを組み込みたいゴーストのghost/masterフォルダに入れ、aya5.txtに
+//　　　dic, Ayabattler.dic
+//　　の一行を追加。
+//　　そして台詞をゴーストに合うよう書き換える。
+//　(2)aya_menu.dic内のOnChoiceSelectの中身を
+//    OnChoiceSelect
+//    {
+//       EVAL(reference0)
+//    }
+//　　のようにに書き換える。
+//２．バトルを仕掛ける方法
+//　メニューに"\q[ゴーストと対戦,AyaBattler]"を追加する。
+//
+//３．対戦方法
+//　バトルはターン制でユーザーとゴーストは交互に攻撃を行う。
+//　選べる攻撃は"弱攻撃"、"中攻撃"、"強攻撃"の三つで、弱は命中率が高く、強は威力
+//が高い。
+//　攻撃を見切った(見切られた)場合はカウンターか防御をを選択。
+//　カウンターは相手の攻撃をそのまま返すが成功率は低く、防御は高い確率で/攻撃を
+//無効化する。
+//　どちらかのHPが０になるとバトルは終了。
+
+
+////////////////////////////////////////////////////////////////////////////////
+// 初期設定
+////////////////////////////////////////////////////////////////////////////////
+
+// 戦闘開始＆初期設定
+AyaBattler
+{
+	user_HP = 100
+	ghost_HP =100
+	"\t%(battle_start_sentence)\x\c%(Choice_user_turn)"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ユーザーのターン
+////////////////////////////////////////////////////////////////////////////////
+
+// ユーザーのコマンド選択
+Choice_user_turn
+{
+	"\q[弱攻撃,OnChoiceUserTurn,1]\n/
+	\q[中攻撃,OnChoiceUserTurn,2]\n/
+	\q[強攻撃,OnChoiceUserTurn,3]\e"
+}
+
+OnChoiceUserTurn
+{
+	Choice_user_attack(TOINT(reference0))
+}
+
+Choice_user_attack
+{
+	_u = RAND(100)
+	if _u <= attack_rate(_argv[0],0)
+	{
+		//攻撃成功
+		_damage = damage_value(_argv[0],1)
+		ghost_HP = ghost_HP - _damage
+		"\t\1%(user_attack_sentence(_argv[0]))\x\c\1%selfnameに%(_damage)のダメージを与えた！\x\c%(win_lose(1))\e"
+	}
+	else
+	{
+		//ゴーストが攻撃に反応
+		_g = RAND(100)
+		if _g <= (100 - attack_rate(_argv[0],1)) //成功率の逆で試みる
+		{
+			// ゴーストのカウンター
+			_c = RAND(100)
+			if _c <= attack_rate(_argv[0],1)
+			{
+				// カウンター成功
+				_damage = damage_value(_argv[0],0)
+				user_HP = user_HP - _damage
+				"\t%(ghost_reaction_sentence)\x\1%(ghost_counter_sentence(_argv[0]))\x\c\1%usernameに%(_damage)のダメージを与えた！\x\c%(win_lose(1))"
+			}
+			else
+			{
+				// カウンター失敗
+				_damage = damage_value(_argv[0],1)
+				ghost_HP = ghost_HP - _damage
+				"\t%(ghost_reaction_sentence)\x\1%(ghost_misscounter_sentence)\x\c\1%selfnameに%(_damage)のダメージを与えた！\x\c%(win_lose(1))"
+			}
+		}
+		else
+		{
+			// ゴーストが攻撃を防御
+			_d = RAND(100)
+			if _d <= 20
+			{
+				//防御成功
+				"\t%(ghost_defense_sentence)\x\c%(win_lose(1))"
+			}
+			else
+			{
+				//防御失敗
+				_damage = damage_value(_argv[0],1)
+				ghost_HP = ghost_HP - _damage
+				"\t%(ghost_reaction_sentence)\x\1%(ghost_missdefense_sentence)\x\c\1%selfnameに%(_damage)のダメージを与えた！\x\c%(win_lose(1))"
+			}
+		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// ゴーストのターン
+////////////////////////////////////////////////////////////////////////////////
+
+Choice_ghost_turn
+{
+	"\t\0%(ghost_sentence)\x\c%(ghost_action)"
+}
+
+ghost_action
+{
+	Choice_ghost_attack(RAND(3) + 1)
+}
+
+Choice_user_counter_select
+{
+	user_reaction_sentence
+	--
+	'\0\n\n'
+	--
+	"\q[カウンター,Choice_user_counter]\n"
+	--
+	"\q[防御,Choice_user_defence]\n"
+}
+
+// ゴースト攻撃
+Choice_ghost_attack
+{
+	_u = RAND(100)
+	if _u <= attack_rate(_argv[0],1)
+	{
+		//攻撃成功
+		_damage = damage_value(_argv[0],0)
+		user_HP = user_HP - _damage
+		"\t\1%(ghost_attack_sentence(_argv[0]))\x\c\1%usernameに%(_damage)のダメージを与えた！\x\c%(win_lose(0))\e"
+	}
+	else
+	{
+		last_ghost_attack = _argv[0]
+		Choice_user_counter_select
+	}
+}
+
+
+// ユーザーのカウンター
+Choice_user_counter
+{
+	_c = RAND(100)
+	if _c <= attack_rate(last_ghost_attack,0)
+	{
+		// カウンター成功
+		_damage = damage_value(last_ghost_attack,1)
+		ghost_HP = ghost_HP - _damage
+		"\t\1%(user_counter_sentence(last_ghost_attack))\x\c\1%selfnameに%(_damage)のダメージを与えた！\x\c%(win_lose(0))"
+	}
+	else
+	{
+		// カウンター失敗
+		_damage = damage_value(last_ghost_attack,0)
+		user_HP = user_HP - _damage
+		"\t\1%(user_misscounter_sentence)\x\c\1%usernameに%(_damage)のダメージを与えた！\x\c%(win_lose(0))"
+	}
+}
+
+// ユーザーが攻撃を防御
+Choice_user_defence
+{
+	_d = RAND(100)
+	if _d <= 20
+	{
+		//防御成功
+		"\t%(user_defense_sentence)\x\c%(win_lose(0))"
+	}
+	else
+	{
+		//防御失敗
+		_damage = damage_value(last_ghost_attack,0)
+		user_HP = user_HP - _damage
+		"\t\1%(user_missdefense_sentence)\x\c\1%usernameに%(_damage)のダメージを与えた！\x\c%(win_lose(0))"
+	}
+}
+////////////////////////////////////////////////////////////////////////////////
+// 勝敗
+////////////////////////////////////////////////////////////////////////////////
+
+// 勝敗判定
+// _argv[0] = 0 -> 次ユーザーターン   = 1 -> 次ゴーストターン
+win_lose
+{
+	if user_HP <= 0
+	{
+		ghost_win_sentence
+		ERASEVAR('last_ghost_attack')
+		return
+	}
+	if ghost_HP <= 0
+	{
+		user_win_sentence
+		ERASEVAR('last_ghost_attack')
+		return
+	}
+	
+	if _argv[0] {
+		"\t\1%usernameのHP：%(user_HP)/100\n%selfnameのHP：%(ghost_HP)/100\x\c%(Choice_ghost_turn)"
+	}
+	else {
+		"\t\1%usernameのHP：%(user_HP)/100\n%selfnameのHP：%(ghost_HP)/100\x\c%(Choice_user_turn)"
+	}
+}
+
+
+//
+// ↓文にあまり詳しくない人はこれ以降のデータだけを書き換えるといいかも。
+//
+
+////////////////////////////////////////////////////////////////////////////////
+// ダメージ数値定義
+////////////////////////////////////////////////////////////////////////////////
+
+//_argv[0] = 1で弱 2で中 3で強
+//_argv[1] = 0でユーザー 1でゴースト
+
+damage_value
+{
+	///////ゴースト側///////
+	if _argv[1] {
+		case _argv[0] {
+			when 1 { // 弱ダメージ(1～14)
+				RAND(13) + 1
+			}
+			when 2 { // 中ダメージ(11～22)
+				RAND(11)+11
+			}
+			when 3 { // 強ダメージ(21～30)
+				RAND(10)+21
+			}
+		}
+	}
+	///////ユーザー側///////
+	else {
+		case _argv[0] {
+			when 1 { // 弱ダメージ(1～14)
+				RAND(13) + 1
+			}
+			when 2 { // 中ダメージ(11～22)
+				RAND(11)+11
+			}
+			when 3 { // 強ダメージ(21～30)
+				RAND(10)+21
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// 攻撃成功率の定義
+////////////////////////////////////////////////////////////////////////////////
+
+//_argv[0] = 1で弱 2で中 3で強
+//_argv[1] = 0でユーザー 1でゴースト
+
+attack_rate
+{
+	///////ゴースト側///////
+	if _argv[1] {
+		case _argv[0] {
+			when 1 { // 弱％
+				90
+			}
+			when 2 { // 中％
+				60
+			}
+			when 3 { // 強％
+				30
+			}
+		}
+	}
+	///////ユーザー側///////
+	else {
+		case _argv[0] {
+			when 1 { // 弱％
+				90
+			}
+			when 2 { // 中％
+				60
+			}
+			when 3 { // 強％
+				30
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// 台詞(全般)
+////////////////////////////////////////////////////////////////////////////////
+
+// バトル開始
+battle_start_sentence
+{
+	"\1バトルスタート！\w8\0さあいくよ！"
+}
+// ユーザー勝利
+user_win_sentence
+{
+	"\1あなたの勝ちです。\w8\0くやし～！\e"
+}
+// ゴースト勝利
+ghost_win_sentence
+{
+	"\1%selfnameの勝ちです。\w8\0やったー！\e"
+}
+// ユーザーのターン開始(攻撃コマンド選択時)
+user_sentence
+{
+	"\0さあ来いっ！"
+}
+// ゴーストのターン開始
+ghost_sentence
+{
+	"\0今度はこっちの番だよ！"
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// 台詞(ユーザーの行動)
+////////////////////////////////////////////////////////////////////////////////
+
+// ユーザー攻撃
+user_attack_sentence
+{
+	case _argv[0] {
+		when 1 { //弱攻撃
+			"\1%usernameの弱攻撃。\w8\0むむっ、やったわね！"
+		}
+		when 2 { //中攻撃
+			"\1%usernameの中攻撃。\w8\0痛っ！"
+		}
+		when 3 { //強攻撃
+			"\1%usernameの強攻撃。\w8\0きゃぁぁぁぁ！"
+		}
+	}
+}
+
+// ユーザーカウンター攻撃
+user_counter_sentence
+{
+	case _argv[0] {
+		when 1 { //弱カウンター攻撃
+			"\1%usernameの弱カウンター攻撃。\w8\0むむっ、やったわね！"
+		}
+		when 2 { //中カウンター攻撃
+			"\1%usernameの中カウンター攻撃。\w8\0痛っ！"
+		}
+		when 3 { //強カウンター攻撃
+			"\1%usernameの強カウンター攻撃。\w8\0きゃぁぁぁぁ！"
+		}
+	}
+}
+
+// ユーザーカウンター失敗
+user_misscounter_sentence
+{
+	"\1%usernameはカウンターに失敗。\w8\0隙だらけだよ！"
+}
+
+// ユーザー防御
+user_defense_sentence
+{
+	"\1%usernameは%selfnameの攻撃をかわした。\w8\0ああっ、惜しい！"
+}
+
+// ユーザー防御失敗
+user_missdefense_sentence
+{
+	"\1%usernameは防御に失敗した。\w8\0そんなガード、無駄だよ！"
+}
+
+// ユーザーが攻撃に反応
+user_reaction_sentence
+{
+	"\1しかし%usernameは%selfnameの攻撃に反応していた。\w8\0!?"
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// 台詞(ゴーストの行動)
+////////////////////////////////////////////////////////////////////////////////
+
+// ゴースト攻撃
+ghost_attack_sentence
+{
+	case _argv[0] {
+		when 1 { //弱攻撃
+			"\1%selfnameの弱攻撃。\w8\0それ、パンチ、パンチ、キック！"
+		}
+		when 2 { //中攻撃
+			"\1%selfnameの中攻撃。\w8\0波動拳！"
+		}
+		when 3 { //強攻撃
+			"\1%selfnameの強攻撃。\w8\0しんくぅ～、波動拳！"
+		}
+	}
+}
+
+// ゴーストカウンター攻撃
+ghost_counter_sentence
+{
+	case _argv[0] {
+		when 1 { //弱カウンター攻撃
+			"\1%selfnameの弱カウンター攻撃。\w8\0それ、パンチ、パンチ、キック！"
+		}
+		when 2 { //中カウンター攻撃
+			"\1%selfnameの中カウンター攻撃。\w8\0波動拳！"
+		}
+		when 3 { //強カウンター攻撃
+			"\1%selfnameの強カウンター攻撃。\w8\0しんくぅ～、波動拳！"
+		}
+	}
+}
+
+// ゴーストカウンター失敗
+ghost_misscounter_sentence
+{
+	"\1%selfnameはカウンターに失敗。\w8\0しまった！"
+}
+
+// ゴースト防御
+ghost_defense_sentence
+{
+	"\1%selfnameは%usernameの攻撃をかわした。\w8\0そんなの当たらないよ！"
+}
+
+// ゴースト防御失敗
+ghost_missdefense_sentence
+{
+	"\1%selfnameは防御に失敗。\w8\0避けたと思ったのに～！"
+}
+
+// ゴーストが攻撃に反応
+ghost_reaction_sentence
+{
+	"\1しかし%selfnameは%usernameの攻撃に反応していた。\w8\0見切った！"
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// えんいー
+////////////////////////////////////////////////////////////////////////////////

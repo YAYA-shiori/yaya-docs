@@ -1,49 +1,156 @@
 # OnTranslateの使い方
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-`OnTranslate` は、ゴーストがしゃべるスクリプトをまとめて後処理で置き換える際に使うイベント。語尾の変更や敬称の重複回避に有用。
+質問があったので、使い方の簡単な例を書いてみました。
 
-## 基本実装例
+<span style="color:red">aya_aitalk.dic</span>の先頭あたりの
+
+```
+//OnTranslate
+//{
+//	REPLACE(reference0, "。", "にゅ。")
+//}
+```
+
+とコメントにして無効化している部分を以下に置き換えます。
 
 ```
 OnTranslate
 {
+   //とりあえず最初のおまじない(一時変数にとりあえず代入)
    _text = reference0
-
+   
+   //勝手にスクリプトにウエイトをかける例
    _text = REPLACE(_text, "、", "、\w5")
    _text = REPLACE(_text, "。", "。\w5")
    _text = REPLACE(_text, "…", "…\w5")
-
+   
+   //敬称置換の例
+   //例外は先に書いておく
    _text = REPLACE(_text, "たん殿", "たん")
+   
+   //「さん殿」とかだぶりそうなのを置換
    _text = RE_REPLACE(_text,"(ちゃん|くん|さん|殿)殿","殿")
-
+   
+   //ここはおまじないのつもりで。消しちゃだめです。
+   //(一時変数で置き換え処理したものを結果として返す)
    _text
 }
 ```
 
-## 説明
+## 解説
 
-### 置換の仕組み
-
-`REPLACE(_text, "置換前", "置換後")` でテキストを変換する。上記例では句読点の後に自動ウエイト `\w5` を挿入している。
-
-### 正規表現の活用
-
-`RE_REPLACE` を使えば複数パターンを一括処理できる。括弧と `|` で複数の選択肢を指定できる：
+OnTranslateは、ゴーストがしゃべるスクリプトをまとめて後で置き換える際に使うものです。<br>
+語尾を変えてみたり、敬称をつける際にだぶる現象を回避してみたり。
 
 ```
-RE_REPLACE(_text, "(ちゃん|くん|さん|殿)殿", "殿")
+_text = REPLACE(_text, "たん殿", "たん")
 ```
 
-これにより「ちゃん殿」「くん殿」「さん殿」「殿殿」をまとめて「殿」に変換する。
+「たん殿」を「たん」に置換しています。<br>
+後ろの2つの " " はそれぞれ、置き換え前、置き換え後の言葉です。何に変えてもかまいません。
 
-### TextOnlyTranslator
+```
+_text = RE_REPLACE(_text,"(ちゃん|くん|さん|殿)殿","殿")
+```
 
-タグ内部を誤って置換しないよう、テキスト部分のみを処理する `TextOnlyTranslator` 関数の実装も紹介されている。
+「ちゃん殿」「くん殿」「さん殿」「殿殿」とだぶってマズそうなものを置換しています。
 
-## 関連項目
+## 改造メモ
 
-- [OnTranslateイベント](on-translate-event.md)
-- [REPLACE](../functions/REPLACE.md)
-- [RE_REPLACE](../functions/RE_REPLACE.md)
+### 敬称がらみ
+
+ほかにも、たとえば「様殿」もなんとかしたい場合は、
+
+```
+(ちゃん|くん|さん|殿)
+```
+
+と、括弧でくくって | 区切りにしてある部分に追加して
+
+```
+(ちゃん|くん|さん|殿|様)
+```
+
+とすると良いでしょうし、また、うちのゴーストでは「殿」を追加するのではなくて「さま」を追加してるんだ！という場合は、
+
+```
+_text = RE_REPLACE(_text,"(ちゃん|くん|さん|殿|様|さま)さま","さま")
+```
+
+と、こんな感じでしょうか。
+
+### 自動ウエイトもどきがらみ
+
+たとえば
+
+```
+_text = REPLACE(_text, "！", "！\w5")
+_text = REPLACE(_text, "？", "？\w5")
+```
+
+とした場合に、<br>
+「！！！」や「？？？」が<br>
+！`\w5`！`\w5`！`\w5`　？`\w5`？`\w5`？`\w5`<br>
+……に置換されてしまい、なんだか微妙です。
+
+```
+_text = RE_REPLACE(_text ,'！(?=[^！\\])', '！\w5')
+_text = RE_REPLACE(_text ,'？(?=[^？\\])', '？\w5')
+```
+
+ちょっとややこしい正規表現なので解説は控えますが、これで解決できます。
+
+### 自動ウエイト：さらにパーフェクトな方法
+
+上記方法ですとタグ内部などまで置換されてひどい目に遭います。
+そのへんを解決した関数を以下に用意しました。
+
+2020/3/29更新 EVAL内部での不要な変数展開を削除
+
+```
+TextOnlyTranslator
+{
+	_string = RE_SPLIT(_argv[0],'\\(\\|q\[.*?\]\[.*?\]|[!&8cfijmpqsn]\[.*?\]|[-*+014567bcehntuvxz]|_[ablmsuvw]\[.*?\]|__(t|[qw]\[.*?\])|_[!?+nqsV]|[sipw][0-9])')
+	_n = ARRAYSIZE(_string)
+	_tag = RE_GETSTR()
+	_tr = ''
+	_qs = 0
+	
+	for _i = 0 ; _i < _n ; _i++ {
+		_tr += EVAL("%(_argv[1])(_string[_i],_qs)")
+		_tr += _tag[_i]
+		if '\_q' _in_ _tag[_i] {
+			_qs = ! _qs
+		}
+	}
+	
+	_tr
+}
+
+TextOnlyTranslatorFunc
+{
+	//_argv[0] = 置換対象テキスト
+	//_argv[1] = クイックセクション内か否か
+	
+	_text = _argv[0]
+	if ! _argv[1] {
+		_text = REPLACE(_text, "、", "、\w5")
+		_text = REPLACE(_text, "。", "。\w9")
+		_text = REPLACE(_text, "…", "…\w9")
+		_text = REPLACE(_text, "？", "？\w9")
+		_text = RE_REPLACE(_text , '\n\n(?=[^\[])', '\w9\n\n')
+		_text = RE_REPLACE(_text ,'！(?=[^！])', '！\w9')
+	}
+	_text
+}
+```
+
+使い方は以下のコードを一番上のOnTranslateの中に（自動ウエイト部分を一旦消して）仕込むだけです。
+
+```
+ _text = TextOnlyTranslator(_text,'TextOnlyTranslatorFunc')
+```
+
+正規表現は、[ukiya:正規表現講座/おまけ１](http://ukiya.sakura.ne.jp/index.php?正規表現講座/おまけ１)を使っています。

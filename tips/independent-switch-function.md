@@ -1,18 +1,7 @@
 # 切り替え反応もいきなり独立した関数で書く
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-ゴーストの切り替え時（OnGhostChanged, OnGhostCalled など）のメッセージを、「選択肢をいきなり独立した関数で書く」の手法と同様に独立した関数として実装する方法です。
+関連：[選択肢をいきなり独立した関数で書く](independent-choice-function.md)
 
-最終更新: 2006年12月9日
-
-## 説明
-
-このページは「[選択肢をいきなり独立した関数で書く](independent-choice-function.md)」と「[ゴースト切替えメッセージを変化させる(新)](ghost-switch-message-new.md)」を前提とした内容です。
-
-ゴースト切り替えメッセージを独立した関数として記述することで、辞書ファイルの構造をより整理しやすくなります。選択肢の場合と同様の手法が適用できます。
-
-## 関連項目
-
-- [選択肢をいきなり独立した関数で書く](independent-choice-function.md)
 - [ゴースト切替えメッセージを変化させる(新)](ghost-switch-message-new.md)

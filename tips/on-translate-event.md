@@ -1,29 +1,22 @@
 # OnTranslateイベント
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-`OnTranslate` イベントを使用すると、ゴーストが出力するすべての文字列を事後的に書き換えることができる。特に敬称の重複（「さん様」「さま様」など）を回避するのに役立つ。
+## OnTranslateの使い方
 
-## コード例
+OnTranslateを使うと、特定の文字列を書き換えることができます。<br>
+敬称の重なり（さん様、さま様etc.）などを回避することが出来ます。<br>
+
+(記述例)
 
 ```
 OnTranslate
 {
+　// 順次変換して、結果を次へ渡していく
 　reference0 = REPLACE(reference0, "ちゃんさん", "ちゃん")
 　reference0 = REPLACE(reference0, "くんさん", "くん")
 　reference0 = REPLACE(reference0, "さんさん", "さん")
+　// 最終結果のみ出力
 　reference0
 }
 ```
-
-## 説明
-
-`reference0` にはゴーストが出力しようとしているスクリプトテキストが格納されている。`REPLACE` 関数を使って置換処理を順次実行し、最終的な文字列を出力する。
-
-複数の `REPLACE` 呼び出しを連続して記述することで、複数のパターンを順番に処理できる。
-
-## 関連項目
-
-- [OnTranslateの使い方](on-translate-usage.md)
-- [REPLACE](../functions/REPLACE.md)
-- [RE_REPLACE](../functions/RE_REPLACE.md)

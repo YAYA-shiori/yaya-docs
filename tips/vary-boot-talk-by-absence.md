@@ -1,55 +1,35 @@
 # 起動してなかった時間により起動トークを変える
 
-## 概要
-
-ゴーストが終了していた時間の長さに応じて、起動時のトークを変える実装方法を説明します。`GETSECCOUNT()`を使って終了時と起動時の時刻を記録・比較することで、文脈に応じた反応が可能になります。
-
-## コード例
-
-### 終了時のタイムスタンプ保存
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
 ```
-OnGhostUnload {
-    LastCloseSecCount = GETSECCOUNT()
+//ゴーストアンロード時に呼ばれるイベント
+OnGhostUnload
+{
+	//最後に終了した時の、1970/1/1 00:00:00からの経過秒取得
+	LastCloseSecCount = GETSECCOUNT()
+}
+
+//OnBootやOnGhostChanged等から使う
+起動イベント
+{
+	//最後に終了してから再起動までの経過秒取得
+	_SecCount= GETSECCOUNT() - LastCloseSecCount
+
+	//最後に終了してから再起動までの経過日数取得
+	_DayCount = _SecCount/60/60/24
+	
+		//終了後10分以内に起動した
+		if _SecCount < 600 {
+			"\0あれ、帰ったと思ったらもう来たの？\e"
+		}
+		//終了後一週間以上経過して起動した
+		elseif _DayCount > 7 {
+			"\0%(_DayCount)日ぶりだね～！おひさし～！\e"
+		}
+		//それ以外の時の通常トーク
+		else {
+			"\0こんにちは！\e"
+		}
 }
 ```
-
-### 起動時のトーク分岐
-
-```
-OnBoot {
-    _elapsed = GETSECCOUNT() - LastCloseSecCount
-    _days = _elapsed / (60 * 60 * 24)
-
-    if _elapsed < 60 * 10 {
-        // 10分未満
-        "\0\s[0]あれ、もう戻ってきたの？\e"
-    }
-    elseif _days >= 7 {
-        // 7日以上
-        "\0\s[0]%(_days)日ぶりだね！久しぶり！\e"
-    }
-    else {
-        // 通常
-        "\0\s[0]おかえり。\e"
-    }
-}
-```
-
-## 説明
-
-実装のポイント：
-
-| 処理 | 内容 |
-|------|------|
-| `GETSECCOUNT()` | 現在のシステム時刻を秒数として取得 |
-| `LastCloseSecCount` | 終了時のタイムスタンプを保存するグローバル変数 |
-| `_elapsed` | 経過秒数 |
-| `_days` | 経過日数（秒数 ÷ 86400） |
-
-経過時間を条件として分岐させることで、短時間の離席と長期間の不在で異なるトークを実現できます。7日以上の不在では具体的な日数を表示するなど、より個性的な演出が可能です。
-
-## 関連項目
-
-- [GETSECCOUNT](../functions/GETSECCOUNT.md)
-- [GETTIME](../functions/GETTIME.md)

@@ -1,58 +1,79 @@
 # シェルの自由移動
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-SSP/CROW ベースのシェルをデスクトップ上で自由に移動させる機能の実装方法を説明しています。
+**(注意)**<br>
+SSP/CROWのみで使えます。Materiaでは自由移動になりません。
 
-> **注意:** SSP/CROW でのみ使用できます。Materia では自由移動になりません。
-
-## コード例
-
-### 基本: 起動時に自由移動を有効にする
-
-会話スクリプト内で以下を実行する:
+ゴースト側でシェルの自由移動を定義する場合、下記を会話スクリプトに組み込んでください。
 
 ```
 \0\1\_s\![set,alignmenttodesktop,free]\_s
 ```
 
-`OnBoot` に組み込む例:
+(例)紺野あやめのOnBootに組み込む場合
 
 ```
 OnBoot
 {
-    "\0\s[0]\1\s[10]\0\1\_s\![set,alignmenttodesktop,free]\_s"
-    _timeslot = GetTimeSlot
-    if _timeslot == "朝"
-    ...
+	//---- まず双方のサーフィスを表示
+	"\0\s[0]\1\s[10]\0\1\_s\![set,alignmenttodesktop,free]\_s" // ←ここに組み込む
+	--
+	//---- 起動時間を確認してあいさつを変化
+	_timeslot = GetTimeSlot
+	if _timeslot == "朝"
+	(以下省略)
+```
+
+- 応用編。
+
+シェルの自由移動、画面下固定を切り替える場合。<br>
+
+```
+Free_movement
+{
+	"\0\s[0]どうされますか？\n\n[half]<br>/
+	\![*]\q[自由に動いて,Free_movement_On]\n/
+	\![*]\q[一番下にいて,Free_movement_Off]\e"
+}
+
+Free_movement_On
+{
+	movement = 1
+	"\0\s[5]はい、分かりました。\0\1\_s\![set,alignmenttodesktop,free]\_s\e"
+}
+
+Free_movement_Off
+{
+	movement = 0
+	"\0\s[0]はい、分かりました。\0\1\_s\![set,alignmenttodesktop,bottom]\_s\e"
+}
+
+// 起動時用
+movement_status
+{
+	CALLBYNAME("movement_status%movement")
+}
+
+movement_status0
+{
+	"\0\1\_s\![set,alignmenttodesktop,bottom]\_s"
+}
+
+movement_status1
+{
+	"\0\1\_s\![set,alignmenttodesktop,free]\_s"
 }
 ```
 
-### 応用: 自由移動と画面下固定の切り替え
+このスクリプトを記述したあと、%movement_statusを<br>
+OnBoot、OnGhostChanged、OnShellChangedに追加してください。<br>
+(例)
 
 ```
-Free_movement { "\0\s[0]どうされますか？..." }
-Free_movement_On  { movement = 1; "\0\1\_s\![set,alignmenttodesktop,free]\_s\e" }
-Free_movement_Off { movement = 0; "\0\1\_s\![set,alignmenttodesktop,bottom]\_s\e" }
-
-movement_status  { CALLBYNAME("movement_status%movement") }
-movement_status0 { "\0\1\_s\![set,alignmenttodesktop,bottom]\_s" }
-movement_status1 { "\0\1\_s\![set,alignmenttodesktop,free]\_s" }
+OnShellChanged
+{
+	"\0\s[0]%reference0シェルに替わりました。どうですか？/
+	\w6\1\s[10]イイ！%movement_status\e"
+}
 ```
-
-`OnBoot`、`OnGhostChanged`、`OnShellChanged` などのイベントで `%movement_status` を呼び出して状態を反映させる:
-
-```
-OnShellChanged { "\0\s[0]%reference0シェルに替わりました...%movement_status\e" }
-```
-
-## 説明
-
-- `alignmenttodesktop,free` : デスクトップ上を自由に移動できるモード
-- `alignmenttodesktop,bottom` : 画面下部に固定するモード
-- グローバル変数 `movement` で現在のモードを管理する（0: 下固定, 1: 自由移動）
-- `movement_status` 関数はモードに応じたスクリプトを返すヘルパー関数
-
-## 関連項目
-
-- CALLBYNAME

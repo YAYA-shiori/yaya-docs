@@ -1,49 +1,41 @@
 # SAKURAスクリプトタグをエスケープする
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-中身に何が入っているかわからない変数をバルーンに表示するとき、SAKURAスクリプトタグをそのまま表示させる（無効化する）方法。「中身に何が入ってるかわからない変数をバルーンに表示するときはこの関数を使っておいた方が安心」とされている。
+- 削除するのではなくそのままバルーンに表示させたい時向け。「`\s[]`0」の場合「\\`\s[0]`」と変換します。
+- 基本的に「中身に何が入ってるかわからない」変数をバルーンに表示するときはこの関数を使っておいたほうが安心。
 
-## 関数
+### 全てのさくらスクリプトをエスケープ
 
-エスケープ関数は `yaya_optional.dic`（はろーYAYAわーるど / SimpleYAYAテンプレート）に収録されている。
-
-### EscapeAllTags
-
-```
-EscapeAllTags(エスケープしたい文字列)
-```
-
-すべてのSAKURAスクリプトタグを無効化する。
-
-### EscapeDangerousTags
+- はろーYAYAわーるどやSimpleYAYAテンプレートにある、[Escape～関数](../system/yaya-optional-dic.md)を使用
 
 ```
-EscapeDangerousTags(エスケープしたい文字列)
+EscapeAllTags( エスケープしたい文字列 )
 ```
 
-「実行されたら困る」タグ（`vanishbymyself` など）のみを処理する。外部トークンの実行時に推奨。
-
-## コード例
+#### 使用例
 
 ```
 OnGhostChanged
 {
-  _name = EscapeAllTags(reference[0])
-  "%(\_name)さんから交代したよ～。\e"
+_name = EscapeAllTags( reference[0] )
+"%(_name)さんから交代したよ～。\e"
 }
 ```
 
-`reference[0]` には交代前ゴーストの名前が入るが、その名前にSAKURAスクリプトタグが含まれていても安全に表示できる。
+こうすると仮に「青い`\105`のノート」なんて名前のゴーストから交代したとしても、そのまんま「青い`\105`のノートさんから交代したよ～。」とバルーンに表示されるように。
 
-## 方針の選択
+### 危険なさくらスクリプトだけエスケープ
 
-| 状況 | 推奨関数 |
-|------|---------|
-| 内容が完全に不明な変数を表示する | `EscapeAllTags` |
-| 外部ゴーストや外部トークンのテキストを処理する | `EscapeDangerousTags` |
+- はろーYAYAわーるどやSimpleYAYAテンプレートにある、[Escape～関数](../system/yaya-optional-dic.md)を使用
 
-## 関連項目
+```
+EscapeDangerousTags( エスケープしたい文字列 )
+```
+
+vanishbymyself等の実行されたら困るさくらスクリプトだけエスケープ。
+どっかから拾ってきたさくらスクリプト付きトークを実行する時など。
+
+### エスケープじゃなく取り除きたい
 
 - [SAKURAスクリプトタグを取り除く](remove-sakura-tags.md)
-- システム辞書/yaya_optional.dic

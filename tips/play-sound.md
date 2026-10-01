@@ -1,69 +1,52 @@
 # 音を鳴らす
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYAでSAORI「MCIAudioR」（作者: umeici）を使って音声・MIDIを再生する方法を説明します。
+### 基礎編
 
-## 前提条件
+umeiciさん作のSAORI「MCIAudioR」を利用すると便利です。<br>
 
-`mciaudior.dll`と`aya.dll`を同じフォルダに配置してください。
+MIDIデータをロードする→再生する→演奏を止める、という流れになります。<br>
+（mciaudior.dllとaya.dllは同じフォルダにおいてください）<br>
 
-## 基本的な使い方
-
-### MIDIの読み込みと再生
+(例)mciaudior.dllと同じフォルダにある、fuga.midを再生する場合<br>
 
 ```
-// MIDIデータの読み込み
 FUNCTIONEX("mciaudior.dll", "load", "fuga.mid")
-
-// 再生開始
 FUNCTIONEX("mciaudior.dll", "play")
 ```
 
-### 再生停止
+<br>
+
+### 応用編
+
+ゴーストが会話している最中に効果音を流す場合は、
 
 ```
-FUNCTIONEX("mciaudior.dll", "stop")
+\![raise](ユーザー定義イベントの発生)
 ```
 
-## 応用: トーク中に音を鳴らす
+で呼び出します。<br>
 
-`\\![raise]`コマンドを使って、ゴーストのトーク中にユーザー定義イベントを発火させ、音を再生させます。
-
-### 関数の作成
+まず、mciaudior.dllを呼び出す関数を作成します。<br>
 
 ```
-OnPlayMusic {
-    FUNCTIONEX("mciaudio.dll", "play")
+OnPlayMusic // （データ再生用の関数）
+{
+　FUNCTIONEX("mciaudio.dll", "play")
 }
 
-OnStopMusic {
-    FUNCTIONEX("mciaudio.dll", "stop")
-}
-```
-
-### トーク内での使用
-
-```
-SomeTalk {
-    // MIDIを読み込んでからトークを開始
-    FUNCTIONEX("mciaudio.dll", "load", "bgm.mid")
-    "\0\s[0]音楽が流れ始めました。\![raise,OnPlayMusic]\e"
+OnStopMusic // （再生停止用の関数）
+{
+　FUNCTIONEX("mciaudio.dll", "stop")
 }
 ```
 
-### 停止
+実際に曲を呼び出し、再生する場合。<br>
 
-マウス操作など適切なタイミングで`OnStopMusic`を呼び出して再生を停止します。
+```
+FUNCTIONEX("mciaudior.dll", "load", "fuga.mid")　// fuga.midをロード
+"\0\s[25]\![raise,OnPlayMusic]fuga.midの演奏中です。\e"
+```
 
-## 説明
-
-`FUNCTIONEX`はSAORI（外部DLL）を呼び出すための関数です。`mciaudior.dll`はWindows MCI（Media Control Interface）を使って音声を再生するSAORIです。
-
-**最終更新:** 2006-12-09
-
-## 関連項目
-
-- [FUNCTIONEX](../functions/FUNCTIONEX.md)
-- [高速化](optimization.md)
-- [SAORIの使い方（その他）](../other/saori-usage.md)
+再生を止める場合は、マウス反応でOnStopMusicを呼び出すようにしてください。

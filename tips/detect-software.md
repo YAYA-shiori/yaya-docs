@@ -1,10 +1,8 @@
 # 使用しているソフトを判別
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYA でゴーストが動作しているベースウェア（実行環境）を判別する方法を説明します。`basewarename` 変数または `basewarenameex` 変数を利用します。
-
-## コード例
+使用しているソフト（ベースウェア）を判別します。
 
 ```
 BwName
@@ -32,29 +30,12 @@ BwName
 }
 ```
 
-## 説明
+これを応用して、トークネタを変えたり、機能を制限したりと…。<br>
+一工夫してみると、面白いかもしれません。(猫夢紗)
 
-### basewarename と basewarenameex
+## basewarenameについて
 
-`basewarename` は必ずしもベースウェアの正確な名前を返すとは限りません。そのため `basewarenameex` に置き換えることが推奨されています。
-
-`basewarenameex` は「はろーYAYAわーるど」や「SimpleYAYAテンプレート」などに含まれていますが、全てのテンプレートに存在するわけではありません。
-
-### 活用方法
-
-- トークネタ（会話内容）をベースウェアごとに変更する
-- ベースウェアごとに機能を制限する
-- ベースウェア固有の機能を条件付きで使用する
-
-### 主なベースウェア名
-
-| 変数値 | ベースウェア |
-|--------|------------|
-| `"embryo"` | 伺か (MATERIA) |
-| `"SSP"` | SSP |
-| `"crow"` | CROW |
-
-## 関連項目
-
-- basewarename
-- basewarenameex
+変数basewarenameは必ずしもベースウェアの名前が入っているという訳ではないため
+basewarenameをbasewarenameexに書き換えたほうが安全です。<br>
+（変数「basewarenameex」は[はろーYAYAわーるど](http://ms.shillest.net/yayame.xhtml)、[SimpleYAYAテンプレート](../other/simple-yaya-template.md)などにあります。
+他のテンプレートでは存在しない可能性があります）

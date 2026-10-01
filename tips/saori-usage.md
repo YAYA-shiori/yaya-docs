@@ -1,54 +1,76 @@
 # SAORIの使い方
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-YAYA/03 でSAORI（外部DLL）を使う方法の解説。SAORI-universal（DLL形式）とSAORI-basic（EXE形式）の2種類がある。
+## SAORI(SAORI-universal)の使い方
 
-## SAORI-universal（DLL形式）
+SAORI-universal(dll形式のSAORI)は2種類の返り値(ResultとValue0,Value1...)を持つ。
+FUNCTIONEX()自身の返り値はこのResultで、FUNCTIONEX実行後にValue0,Value1...はvalueex0,valueex1...に格納される。
+なお、このvalueex\*は同名の汎用配列にも格納される。つまり`valueex[0]`,`valueex[1]`...としてもよい。
 
-`FUNCTIONEX()` を使って呼び出す。戻り値は2種類：
-
-- **Result:** `FUNCTIONEX()` 自体の戻り値
-- **Value0, Value1, ...:** 実行後に `valueex0`, `valueex1` 変数に格納される
-
-### 基本構文
+サンプル:
 
 ```
-Test
-{
-  _Result = FUNCTIONEX('SAORI\saori.dll', Argument0, Argument1, ...)
-  valueex0
+Test{
+ _Result = FUNCTIONEX('SAORI\saori.dll',Argument0,Argument1,...)
+ valueex0
 }
 ```
 
-第1引数は `yaya.dll` からの相対パスで指定する。
+FUNCTIONEXの第一引数はyaya.dllからの相対パスを指定する(上の例ではyaya.dllが置かれているフォルダの中のSAORIフォルダにsaori.dllが置かれている)。
+Argument0,Argument1...はsaori.dllの引数。
 
-### 実装例（形態素解析）
+これにより`_Result`にsaori.dllのResultが格納され、Testはvalueex0に格納されている値、つまりValue0を返す。
 
-`kisaragi.dll` を使った形態素解析の例：
+### サンプル
+
+mecabを使って形態素解析を行うSAORI-universalである[kisaragi.dll](https://drive.google.com/drive/folders/0B0yCcgxQctDAblpzWXg1bC1fUGM)を使って解説します。
+
+まず解凍後にkisaragiフォルダをghost`\master`以下に配置してください。複数のSAORIを使う場合はSAORIフォルダを作成し、その中に入れておくと管理し易くなります。以下ではghost`\master\SAORI`に配置されているとして説明します。
+
+形態素解析を行う関数は
 
 ```
-MorphAnalysis
-{
-  _text = "今日はいい天気だ"
-  _Rank = FUNCTIONEX('SAORI\kisaragi\kisaragi.dll', 'parse', _text)
-  for _i = 0; _i<_Rank; _i++ {
-    valueex[_i]+"\n"
-  }
+MorphAnalysis{
+ _text = "今日はいい天気だ"
+ _Rank = FUNCTIONEX('SAORI\kisaragi\kisaragi.dll','parse',_text)
+ for _i = 0; _i<_Rank; _i++{
+   valueex[_i]+"\n"
+ }
 }
 ```
 
-## SAORI-basic（EXE形式）
+のように書けます。FUNCTIONEXの第一引数はyaya.dllからの相対パスであることに注意してください。kisaragi.dllの場合、前述した"Result"の返り値は形態素の数、valueexに自動的に格納される"Value"の返り値は解析結果の配列となります。
+この関数の場合、実行すると形態素解析結果が改行されて出力されます。
 
-コマンドライン引数と標準出力を使うEXEファイル形式。`proxy_ex.dll` を仲介として使う必要がある。
+## SAORI-basicの使い方および解説
 
-## 注意事項
+SAORI-basicはコマンドライン引数(main関数がとる引数)を引数とし、標準出力を返す.exeのことを指します。
+例えばC++で
 
-- SAORIはSAKURAスクリプト再生中に呼び出す場合、別途考慮が必要（音声出力などのTipsページを参照）
+```
+#include <iostream>
+using namespace std;
+int main(int argc,char *argv[]){
+ //argv[0]にはプログラム名前(ほにゃらら.exe)が入り、入力したコマンドライン引数はargv[1]からになります
+ cout<<"入力は"<<argv[1]<<endl;
+}
+```
 
-## 関連項目
+のようなプログラムをexeファイルとしてコンパイルすれば、これだけでSAORI-basicになります(コンパイル時には静的ビルドなどで依存環境を切っておくことを推奨します)
 
-- [FUNCTIONEX](../functions/FUNCTIONEX.md)
-- [LOADLIB](../functions/LOADLIB.md)
-- [UNLOADLIB](../functions/UNLOADLIB.md)
-- [SAORIの使い方（その他）](../other/saori-usage.md)
+ゴーストでこのSAORI-basicを使いたい場合は[proxy_ex.dll](https://github.com/ponapalt/csaori/releases/tag/saori_proxy_ex_v1.0)を通して使います。
+SAORI-basicの場合、FUNCTIONEXの返り値はmain関数の標準出力のみとなります。使い方は
+
+```
+_結果 = FUNCTIONEX('SAORI\proxy_ex.dll', '(プログラム名).exe', Argument0, Argument1,...)
+```
+
+このようになりますが、第二引数はyaya.dllではなくproxy_ex.dllからの相対パスであることに注意してください。この例では両者が同じ階層に置かれていることを想定しています。
+
+※注：ここでのArgument\*は、(プログラム名).exeのコマンドライン引数(すなわち前述のC++の例ではargv)を指します
+
+## サクラスクリプト再生中にSAORIを使う
+
+こちらのページに解説があります。<br>
+[音を鳴らす](play-sound.md)

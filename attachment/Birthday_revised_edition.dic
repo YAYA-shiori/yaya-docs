@@ -1,0 +1,98 @@
+\![open,inputbox,OnInputBirthday,-1]
+
+//---------------------------------------
+OnInputBirthday
+{
+	userBD = ""
+	inputBD = reference0
+	TOSTRING(inputBD)
+	"\![raise,OnBdArrangement]"
+}
+OnBdArrangement
+{
+	if SUBSTR(inputBD, 0, 1) == "0"{userBD = userBD + "0";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "1"{userBD = userBD + "1";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "2"{userBD = userBD + "2";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "3"{userBD = userBD + "3";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "4"{userBD = userBD + "4";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "5"{userBD = userBD + "5";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "6"{userBD = userBD + "6";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "7"{userBD = userBD + "7";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "8"{userBD = userBD + "8";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 1) == "9"{userBD = userBD + "9";inputBD = ERASE(inputBD, 0, 1)}
+
+	elseif SUBSTR(inputBD, 0, 2) == "０"{userBD = userBD + "0";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "１"{userBD = userBD + "1";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "２"{userBD = userBD + "2";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "３"{userBD = userBD + "3";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "４"{userBD = userBD + "4";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "５"{userBD = userBD + "5";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "６"{userBD = userBD + "6";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "７"{userBD = userBD + "7";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "８"{userBD = userBD + "8";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 2) == "９"{userBD = userBD + "9";inputBD = ERASE(inputBD, 0, 2)}
+
+	elseif SUBSTR(inputBD, 0, 1) == "/" || SUBSTR(inputBD, 0, 1) == "-" || SUBSTR(inputBD, 0, 1) == "," || SUBSTR(inputBD, 0, 1) == "." || SUBSTR(inputBD, 0, 1) == "-"{userBD = userBD + ",";inputBD = ERASE(inputBD, 0, 1)}
+	elseif SUBSTR(inputBD, 0, 2) == "年" || SUBSTR(inputBD, 0, 2) == "月" || SUBSTR(inputBD, 0, 2) == "・"{userBD = userBD + ",";inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 4) == "ねん" || SUBSTR(inputBD, 0, 4) == "がつ"{userBD = userBD + ",";inputBD = ERASE(inputBD, 0, 4)}
+
+	elseif SUBSTR(inputBD, 0, 2) == "日"{inputBD = ERASE(inputBD, 0, 2)}
+	elseif SUBSTR(inputBD, 0, 4) == "にち"{inputBD = ERASE(inputBD, 0, 4)}
+	else{inputBD = ERASE(inputBD, 0, 1)}
+	--
+	if inputBD != ""
+	{
+		"\![raise,OnBdArrangement]\e"
+	}
+	else
+	{
+		if ARRAYSIZE(userBD) == 1
+		{
+			userBD = INSERT(userBD, 4, ",")
+			userBD = INSERT(userBD, 7, ",")
+		}
+		elseif ARRAYSIZE(userBD) != 3
+		{
+			"変な入力してませんか？\e"
+		}
+	}
+	--
+	if TONUMBER2(userBD[2]) >= 32 || TONUMBER2(userBD[1]) >= 13
+	{
+		"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nそんな日付はないです。\e"
+	}
+	elseif TONUMBER2(userBD[2]) >= 31
+	{
+		if TONUMBER2(userBD[1]) == 2 || TONUMBER2(userBD[1]) == 4 || TONUMBER2(userBD[1]) == 6 || TONUMBER2(userBD[1]) == 9 || TONUMBER2(userBD[1]) == 11
+		{
+			"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nそんな日付はないです。\e"
+		}
+	}
+	elseif TONUMBER2(userBD[2]) >= 30
+	{
+		if TONUMBER2(userBD[1]) == 2
+		{
+			"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nそんな日付はないです。\e"
+		}
+	}
+	elseif TONUMBER2(userBD[0]) > year
+	{
+		"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nまだその日付になってないです。\e"
+	}
+	elseif TONUMBER2(userBD[0]) == year
+	{
+		if TONUMBER2(userBD[1]) > month
+		{
+			"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nまだその日付になってないです。\e"
+		}
+		elseif TONUMBER2(userBD[1]) == month
+		{
+			if TONUMBER2(userBD[2]) > day
+			{
+				"%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日？\nまだその日付になってないです。\e"
+			}
+		}
+	}
+	--
+	"\0%TONUMBER2(userBD[0])年%TONUMBER2(userBD[1])月%TONUMBER2(userBD[2])日だね。\nわかったよ。\e"
+}

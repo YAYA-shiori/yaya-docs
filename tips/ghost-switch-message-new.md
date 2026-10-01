@@ -1,100 +1,154 @@
 # ゴースト切替えメッセージを変化させる(新)
 
-## 概要
+> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載
 
-複数ゴーストへの切り換え反応を管理する際の可読性を向上させた実装方法。従来の `OnGhostChanging` と `OnGhostChanged` を専用ヘルパー関数に置き換え、ゴーストごとに個別の関数を定義できるようにします。
+切換反応をつけるゴーストの数が増えてくると、どんどん見通しが悪くなってきます。<br>
+そんな時はこちら。
 
-ゴースト名に含まれる特殊文字（`!`, `%`, `"`, `#`, `$`, `&`, `(`, `)`, `*`, `+`, `,`, `-`, `/`, `:`, `;`, `<`, `=`, `>`, `?`, `@`, `[`, `]`, `` ` ``, `{`, `|`, `}`, `~` など）はすべてアンダースコア `_` に置換されます。
+**更新-20061023**：<http://acronotes.seesaa.net/article/25705192.html> の報告反映
 
-例: `+Emily+` → 関数名 `OnGhostChanged__Emily_`
+### １）OnGhostChangingとOnGhostChangedを消して、これに入れ換え。
 
-## コード例
+通常、aya_bootend.dicの後ろのほうにあります。<br>
+ばっさり消してしまうのは不安だという人は、すでに存在する2つを
 
-### ヘルパー関数（辞書の末尾に追加）
+| 前 | 後 |
+|---|---|
+| OnGhostChanging | OnGhostChanging<span style="color:red">Other</span> |
+| OnGhostChanged | OnGhostChanged<span style="color:red">Other</span> |
+
+のように書きかえて、辞書のいちばん最後に下の囲みのすべてを貼りつけてください。
 
 ```
 TranslateSystemChar
 {
-    _text = TOSTR(_argv[0])
-    _text = RE_REPLACE(_text,"[ !%(CHR(0x22))%(CHR(0x25))#$&()*+,\-/:;<=>?@\[\]`{|}~]","_")
-    _text
+  _text = TOSTR(_argv[0])
+  _text = RE_REPLACE(_text,"[ !%(CHR(0x22))%(CHR(0x25))#$&()*+,\-/:;<=>?@\[\]`{|}~]","_")
+  _text
 }
 
 ExecuteChangeCallTalk
 {
-    _ghostname = TranslateSystemChar(reference0)
-    _funcname = "%(_argv[0])_%(_ghostname)"
-    if ISFUNC(_funcname) {
-        _script = EVAL(_funcname)
-        if STRLEN(_script) != 0 {
-            _script
-            return
-        }
+  _ghostname = TranslateSystemChar(reference0)
+  
+  _funcname = "%(_argv[0])_%(_ghostname)"
+  if ISFUNC(_funcname) {
+    _script = EVAL(_funcname)
+    if STRLEN(_script) != 0 {
+      _script
+      return
     }
-    _funcname = "%(_argv[0])Other"
-    if ISFUNC(_funcname) {
-        _script = EVAL(_funcname)
-        if STRLEN(_script) != 0 {
-            _script
-            return
-        }
+  }
+
+  _funcname = "%(_argv[0])Other"
+  if ISFUNC(_funcname) {
+    _script = EVAL(_funcname)
+    if STRLEN(_script) != 0 {
+      _script
+      return
     }
-    if _argc >= 2 {
-        _script = EVAL(_argv[1])
-        if STRLEN(_script) != 0 {
-            REPLACE(_script,"\\-","")
-            return
-        }
+  }
+
+  if _argc >= 2 {
+    _script = EVAL(_argv[1])
+    if STRLEN(_script) != 0 {
+      REPLACE(_script,"\-","")
+      return
     }
+  }
+}
+ 
+OnGhostChanging
+{
+  ExecuteChangeCallTalk("OnGhostChanging","OnClose")
 }
 
-OnGhostChanging { ExecuteChangeCallTalk("OnGhostChanging","OnClose") }
-OnGhostChanged  { ExecuteChangeCallTalk("OnGhostChanged","OnBoot") }
-OnGhostCalling  { ExecuteChangeCallTalk("OnGhostCalling") }
-OnGhostCalled   { ExecuteChangeCallTalk("OnGhostCalled","OnBoot") }
-OnGhostCallComplete { ExecuteChangeCallTalk("OnGhostCallComplete") }
-OnOtherGhostClosed  { ExecuteChangeCallTalk("OnOtherGhostClosed") }
+OnGhostChanged
+{
+  ExecuteChangeCallTalk("OnGhostChanged","OnBoot")
+}
+
+OnGhostCalling
+{
+  ExecuteChangeCallTalk("OnGhostCalling")
+}
+
+OnGhostCalled
+{
+  ExecuteChangeCallTalk("OnGhostCalled","OnBoot")
+}
+
+OnGhostCallComplete
+{
+  ExecuteChangeCallTalk("OnGhostCallComplete")
+}
+
+OnOtherGhostClosed
+{
+  ExecuteChangeCallTalk("OnOtherGhostClosed")
+}
 ```
 
-### ゴースト専用関数の定義（命名規則: `[イベント名]_[Sakura名]`）
+### ２）新たにゴースト専用の関数をつくる
+
+```
+OnGhostChanging_和音
+{
+  "ごにょごにょ"
+}
+
+OnGhostChanged_和音
+{
+  "ごにょごにょ"
+}
+```
+
+| 書くべき名前 | 機能 |
+|---|---|
+| OnGhostChanging | 他のゴーストに切り替え |
+| OnGhostChanged | 他のゴーストから切り替え |
+| OnGhostCalling | 他のゴーストを呼び出し開始[SSP] |
+| OnGhostCallComplete | 他のゴーストを呼び出し完了[SSP] |
+| OnGhostCalled | 他のゴーストから呼び出された[SSP] |
+| OnOtherGhostClosed | 他のゴーストが終了した[SSP] |
+
+- OnGhostChanged<span style="color:red">_(Sakura側の名前)</span>　のようなものをつくってください。
+  - 上の表の名前 ＋ "_"(アンダースコア) ＋ Sakura名
+  - ゴースト名ではなくSakura名です。気をつけてください。
+
+- 名前にスペースや+-などが含まれる特殊な場合は、すべて _ に置換されます。
+  - 例：`+Emily+`  ==>  `OnGhostChanged__Emily_`
+  - 例：`○|￣|_`  ==>  `OnGhostChanged_○_￣__`
+
+- 該当するゴーストが辞書にない時は、OnGhostChangedOtherなどというように、Otherが後ろについたものを喋り、それもない場合は通常の起動・終了処理となります。
+
+```
+OnGhostChangingOther
+OnGhostChangedOther
+OnGhostCallingOther
+OnGhostCalledOther
+OnGhostCallCompleteOther
+OnOtherGhostClosedOther
+```
+
+### サンプル
+
+たとえば、[ゴースト切替えメッセージを変化させる](ghost-switch-message.md)の例を書き直すとこうなります。
 
 ```
 OnGhostChanged_ゴーストA
 {
-    if "お料理" _in_ reference1 {
-        "(文章1)"
-    }
-    elseif "薬" _in_ reference1 {
-        "(文章2)"
-    }
-    else {
-        "(文章3)"
-    }
+  if "お料理" _in_ reference1 // （ここでキーワード「お料理」を指定）
+  {
+    "(文章1)"
+  }
+  elseif "薬" _in_ reference1 // （ここでキーワード「薬」を指定）
+  {
+    "(文章2)"
+  }
+  else // （キーワード「お料理」がなかったときの反応）
+  {
+    "(文章3)"
+  }
 }
 ```
-
-## 説明
-
-### 対応イベント一覧
-
-| 関数名 | 機能 |
-|--------|------|
-| `OnGhostChanging` | 他ゴーストへ切り替え時 |
-| `OnGhostChanged` | 他ゴーストから切り替えられた時 |
-| `OnGhostCalling` | ゴースト呼び出し開始時 |
-| `OnGhostCallComplete` | ゴースト呼び出し完了時 |
-| `OnGhostCalled` | 他ゴーストから呼び出された時 |
-| `OnOtherGhostClosed` | 他ゴースト終了時 |
-
-### `ExecuteChangeCallTalk` の動作
-
-1. `reference0`（ゴースト名）の特殊文字をアンダースコアに変換
-2. `[イベント名]_[ゴースト名]` の関数があれば実行
-3. なければ `[イベント名]Other` の関数があれば実行
-4. それもなければフォールバック（OnClose / OnBoot 等）を実行
-
-## 関連項目
-
-- [ゴースト切替えメッセージを変化させる](ghost-switch-message.md)
-- ISFUNC
-- EVAL

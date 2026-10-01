@@ -3,6 +3,8 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 このリポジトリが YAYA マニュアルの正本です。旧 wiki（emily.shillest.net/ayaya）への参照やページ名は書かないこと。
 
+例外として、`other/` と `tips/` のうち旧 wiki の原文を転載したページは、見出し直下に `> [AYAYA Wiki](https://emily.shillest.net/ayayaold/) より転載` と明記している。これらのページは原文に寄せて書いてあるので、書き換えるときも原文の文面・構成を勝手に要約しない。添付ファイルは `attachment/` にまとめ、ページからは `../attachment/ファイル名` で参照する（`scripts/prepare_site.py` がサイトにも写す）。
+
 ## 書式
 
 - UTF-8、LF
