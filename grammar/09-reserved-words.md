@@ -17,7 +17,10 @@ YAYAシステムで予約されている名前。ユーザー定義の変数名�
 ```
 if  elseif  else  case  when  others  switch
 while  for  break  continue  return  foreach
+void  parallel
 ```
+
+`void` と `parallel` は関数の出力を制御するキーワード（[配列](05-arrays.md#並列出力)）。
 
 ## 演算子
 
