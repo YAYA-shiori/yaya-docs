@@ -1,7 +1,8 @@
 # READFMO
 **Category:** システム情報
 
-> **【Windows専用】** この関数はWindows用にコンパイルされたyayaでしか動作しません。
+!!! warning "Windows専用"
+    この関数はWindows用にコンパイルされたyayaでしか動作しません。
 
 ## Signature
 ```
