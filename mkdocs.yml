@@ -11,6 +11,8 @@ site_dir: _site
 
 theme:
   name: material
+  # Zensical の既定は modern（新デザイン）。従来の見た目は classic
+  variant: classic
   # OGP などの <head> の追加（overrides/main.html）
   custom_dir: overrides
   language: ja
@@ -39,10 +41,10 @@ theme:
         icon: material/brightness-4
         name: ライトモードに切り替え
 
-# ページごとの OGP（overrides/main.html が使う）。キーは原稿のパス、image は site_url からの相対パス（1200x630）
+# ページごとの OGP（overrides/main.html が使う）。キーはページの URL（トップは ""）、image は site_url からの相対パス（1200x630）
 extra:
   ogp:
-    other/yaya6-launch.md:
+    other/yaya6-launch/:
       title: YAYA 6 登場 ─ これまでで最も賢い YAYA。
       description: ハッシュ、入れ子、JSON / XML / YAML / TOML の読み書き、SQLite。YAYA 600 系、初の正式版 Tc603 の一般提供を開始しました。
       image: assets/yaya6/ogp.png
@@ -53,7 +55,7 @@ extra_css:
 plugins:
   - search:
       lang: ja
-  - awesome-pages
+  - awesome-nav
 
 markdown_extensions:
   - tables
