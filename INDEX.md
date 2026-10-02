@@ -14,7 +14,7 @@
 - [steve green氏](https://github.com/steve02081504)の開発ブランチを取り込み、互換性を調整し、大幅強化版としてリリースしたものです。
 - 変数の柔軟性、高速ヘッダ解析、XML/JSONなどのパーサ、DB(SQLite)など、500系と高い互換性を保ちながら大幅な改修が行われています。
 - まずはざっくり知りたい → [YAYA 6 登場](other/yaya6-launch.md)
-- YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)
+- YAYA Tc5xx-x から Tc6xx-x (v5系からv6系) に移行したい →[600 での変更点](other/changes-600.md)（`yaya.dll` を置き換えるだけで、辞書もセーブファイルもそのまま動きます。気をつける点は関数名の衝突など数点だけです）
 
 ## はじめての方へ
 
