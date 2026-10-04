@@ -159,6 +159,7 @@
 | [CVAUTOEX.md](functions/CVAUTOEX.md) | CVAUTOEX |
 | [PARSEJSON.md](functions/PARSEJSON.md) | PARSEJSON |
 | [PARSEXML.md](functions/PARSEXML.md) | PARSEXML |
+| [PARSEHTML.md](functions/PARSEHTML.md) | PARSEHTML |
 | [PARSEHEADER.md](functions/PARSEHEADER.md) | PARSEHEADER |
 | [DUMPJSON.md](functions/DUMPJSON.md) | DUMPJSON |
 | [DUMPXML.md](functions/DUMPXML.md) | DUMPXML |
@@ -285,6 +286,7 @@
 | [FREADBIN.md](functions/FREADBIN.md) | FREADBIN |
 | [FREADJSON.md](functions/FREADJSON.md) | FREADJSON |
 | [FREADXML.md](functions/FREADXML.md) | FREADXML |
+| [FREADHTML.md](functions/FREADHTML.md) | FREADHTML |
 | [FREADYAML.md](functions/FREADYAML.md) | FREADYAML |
 | [FREADTOML.md](functions/FREADTOML.md) | FREADTOML |
 | [FWRITE.md](functions/FWRITE.md) | FWRITE |

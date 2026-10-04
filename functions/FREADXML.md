@@ -85,5 +85,6 @@ foreach _x["children"]; _item {
 ## See Also
 - [PARSEXML](PARSEXML.md)
 - [FWRITEXML](FWRITEXML.md)
+- [FREADHTML](FREADHTML.md)
 - [FREADJSON](FREADJSON.md)
 - [値の入れ子と多次元代入](../grammar/13-nesting.md)
