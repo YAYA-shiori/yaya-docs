@@ -87,7 +87,7 @@ foreach _ghost ; _id, _g {
 
 ### 🌐 マルチフォーマット理解
 
-![JSON・XML・YAML・TOML・SQLite・ヘッダ形式と YAYA 6 のハッシュを行き来する図](../assets/yaya6/formats.svg)
+![JSON・XML・YAML・TOML・SQLite・HTML と YAYA 6 のハッシュを行き来する図](../assets/yaya6/formats.svg)
 
 JSON も XML も YAML も TOML も、読み込めば入れ子のハッシュと配列に。いじったら、そのまま書き戻せます。設定ファイルも、ほかのツールや SAORI が吐き出したデータも、もう `STRSTR` と `SUBSTR` で切り刻む必要はありません。
 
@@ -96,6 +96,16 @@ _conf = FREADJSON("config.json")
 _name = _conf["user"]["name"]
 _conf["boot"] += 1
 FWRITEJSON("config.json", _conf, "UTF-8", 1)   // 整形して書き戻す
+```
+
+HTML も読み込めます（読み込みのみ）。閉じタグが抜けた壊れた HTML でも、ブラウザと同じ規則で補ってタグの木にするので、Web ページから欲しい部分だけを取り出すのも簡単です。
+
+```
+_h = PARSEHTML(_raw)
+_body = _h["children"][1]                // <body>
+foreach _body["children"]; _e {
+    // _e["name"]（タグ名）、_e["attr"]（属性）、_e["text"]（テキスト）
+}
 ```
 
 さらに `PARSEHEADER` は、SHIORI や SSTP、HTTP のような「`キー: 値`」形式の文字列を一瞬でハッシュに分解します。
