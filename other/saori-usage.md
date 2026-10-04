@@ -28,6 +28,9 @@ int main(int argc,char *argv[]){
 
 YAYAでSAORI-basicを使うにはFUNCTIONEX関数とproxy_ex.dll(配布元は <https://github.com/ponapalt/csaori/releases/> )を利用する。これはパイプとしてSHIORI(YAYA)とSAORIの間を繋ぐプログラムである。
 
+!!! note "Tc604-1以降"
+    YAYA 本体が SAORI-basic を直接実行するので、proxy_ex.dll は要らない。FUNCTIONEX の第一引数に yaya.dll から SAORI-basic 本体への相対パスを指定し、第二引数以降に SAORI-basic に渡す引数を書く（例: `FUNCTIONEX('SAORI/sample1_1.exe', "はろーわーるど")`）。標準出力が複数行のときは `valueex[0]`, `valueex[1]`... で1行ずつ取り出せる。詳しくは [LOADLIB](../functions/LOADLIB.md#saori-basic) を参照。
+
 ```
 Sample_1_1{
   _result = FUNCTIONEX('SAORI/proxy_ex.dll', 'sample1_1.exe', "はろーわーるど")

@@ -70,6 +70,15 @@ _結果 = FUNCTIONEX('SAORI\proxy_ex.dll', '(プログラム名).exe', Argument0
 
 ※注：ここでのArgument\*は、(プログラム名).exeのコマンドライン引数(すなわち前述のC++の例ではargv)を指します
 
+!!! note "Tc604-1以降"
+    YAYA 本体が SAORI-basic を直接実行するので、proxy_ex.dll は要りません。FUNCTIONEX の第一引数に yaya.dll からの相対パスで実行ファイルを指定します。
+
+    ```
+    _結果 = FUNCTIONEX('SAORI\(プログラム名).exe', Argument0, Argument1,...)
+    ```
+
+    標準出力が複数行のときは、`valueex[0]`, `valueex[1]`... で1行ずつ取り出せます。詳しくは [LOADLIB](../functions/LOADLIB.md#saori-basic) を参照してください。
+
 ## サクラスクリプト再生中にSAORIを使う
 
 こちらのページに解説があります。<br>
