@@ -225,6 +225,10 @@ YAYA 6 は、[steve green 氏](https://github.com/steve02081504) の開発ブラ
 
 紺野ややめをもとにしていないゴーストにも、Vibe Coding 道具箱だけを入れられます（[別の YAYA ゴーストに開発キットを入れる](https://github.com/YAYA-shiori/konnoyayame/blob/master/DEVKIT-GUIDE.md#別の-yaya-ゴーストに開発キットを入れる)）。
 
+## 不具合を見つけたら
+
+500 系と違う動きになったもの、書いたとおりに動かないものを見つけたら、[整備班BTS](https://bts.shillest.net/)（報告フォーム）で教えてください。GitHub に慣れている方は、[yaya-shiori の Issues](https://github.com/YAYA-shiori/yaya-shiori/issues) や Pull Request でも構いません。
+
 ## 関連
 
 - [600 での変更点](changes-600.md)

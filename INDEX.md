@@ -2,7 +2,7 @@
 
 伺か（ukagaka）の SHIORI「YAYA」の使い方と仕様をまとめたマニュアルです。YAYA と、その前身である AYA に関する情報や Tips も集めています。
 
-プログラミングをしたことがない方にもわかるように書くことを目指しています。わかりにくいところや間違いを見つけたら、[Issues](https://github.com/YAYA-shiori/yaya-docs/issues) で気軽に教えてください。
+プログラミングをしたことがない方にもわかるように書くことを目指しています。わかりにくいところや間違いを見つけたら、[整備班BTS](https://bts.shillest.net/)（報告フォーム）で気軽に教えてください。GitHub に慣れている方は、[Issues](https://github.com/YAYA-shiori/yaya-docs/issues) や Pull Request でも構いません。
 
 ## ダウンロード
 
@@ -45,7 +45,7 @@
 
 - いろいろなノウハウを知りたい → [Tips](#tips-tips)
 - 作っていて困ったことがあったら → [トラブルシューティング](other/troubleshooting.md)
-- それでも解決しないときは → [整備班BTS](https://bts.shillest.net/) で聞いてみましょう
+- それでも解決しないときや、YAYA の不具合らしいときは → [整備班BTS](https://bts.shillest.net/)（報告フォーム）で聞いてみましょう。GitHub に慣れている方は、[yaya-shiori の Issues](https://github.com/YAYA-shiori/yaya-shiori/issues) や Pull Request でも構いません
 - [開発情報検索](http://ukadev.shillest.net/) で検索すると、答えが見つかるかもしれません
 
 ## 関連ツール
