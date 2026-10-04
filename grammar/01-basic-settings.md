@@ -62,6 +62,7 @@ log, executelog.txt
 | `include, ファイル名` | 外部設定ファイルのインクルード |
 | `save.encode, [on\|off]` | セーブファイルの暗号化 |
 | `save.auto, [on\|off]` | 変数の自動保存を有効化 |
+| `embed.lazy, [on\|off]` | 文字列のカッコなし `%` 埋め込みの名前を実行時に探す（デフォルト: on）。off で辞書の読み込み時に確定する（Tc604-1以降。[詳細](06-string-embedding.md#名前を読み込み時に確定する)） |
 | `maxlognum, [数]` | エラーログの最大エントリ数（デフォルト: 256） |
 
 ## 緊急設定
