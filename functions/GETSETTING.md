@@ -30,9 +30,17 @@ GETSETTING( string )
 | `coreinfo.author`  | 4 | DLL作者 | `"umeici/The Maintenance Shop"` |
 | `coreinfo.savefile` | — | セーブファイルのパス | `"d:/ghost/konno_yayame/..."` |
 | `coreinfo.mode`    | — | 実行モード | `"normal"` または `"emergency"` |
+| `coreinfo.locale`   | — | OSのユーザー設定の地域（数値や日付の書式）のロケール | `"ja-JP"` |
+| `coreinfo.uilocale` | — | OSのユーザー設定の表示言語のロケール | `"ja-JP"` |
+
+`coreinfo.locale` / `coreinfo.uilocale` は `言語-地域` の形式（BCP 47）の名前を返す。取得できないときは空文字列になる。
+
+- Windows: ユーザーの既定のロケール名（`coreinfo.uilocale` は表示言語）
+- Linux / macOS: 環境変数から求める。`coreinfo.locale` は `LC_ALL` → `LC_NUMERIC` → `LANG`、`coreinfo.uilocale` は `LANGUAGE`（先頭の言語）→ `LC_ALL` → `LC_MESSAGES` → `LANG` の順に最初に設定されているもの。`ja_JP.UTF-8` は `ja-JP` にする。`C` / `POSIX` や未設定は空文字列
+- 返した名前は [TOUPPER](TOUPPER.md) / [TOLOWER](TOLOWER.md) のロケール引数にそのまま渡せる
 
 ## Compatibility
-- YAYA: 初期バージョンから使用可能。`coreinfo.mode`はTc556-2で追加
+- YAYA: 初期バージョンから使用可能。`coreinfo.mode`はTc556-2で、`coreinfo.locale` / `coreinfo.uilocale`はTc605-3で追加
 - AYA: バージョン5.8以降（数値引数0〜4のみ対応）
 
 ## See Also
