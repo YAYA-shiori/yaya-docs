@@ -336,6 +336,7 @@
 | ファイル | 関数 |
 |---------|------|
 | [GETTIME.md](functions/GETTIME.md) | GETTIME |
+| [GETTIMEZONE.md](functions/GETTIMEZONE.md) | GETTIMEZONE |
 | [GETTICKCOUNT.md](functions/GETTICKCOUNT.md) | GETTICKCOUNT |
 | [GETSECCOUNT.md](functions/GETSECCOUNT.md) | GETSECCOUNT |
 | [GETMEMINFO.md](functions/GETMEMINFO.md) | GETMEMINFO |

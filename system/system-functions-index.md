@@ -111,6 +111,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [GETSYSTEMFUNCLIST](../functions/GETSYSTEMFUNCLIST.md) | システム関数一覧を取得 |
 | [GETTICKCOUNT](../functions/GETTICKCOUNT.md) | ティックカウントを取得 |
 | [GETTIME](../functions/GETTIME.md) | 現在時刻を取得 |
+| [GETTIMEZONE](../functions/GETTIMEZONE.md) | ローカルタイムゾーンの情報を取得 |
 | [GETTYPE](../functions/GETTYPE.md) | 変数の型を返す |
 | [GETTYPEEX](../functions/GETTYPEEX.md) | 変数の型を詳細に返す |
 | [GETVARLIST](../functions/GETVARLIST.md) | グローバル変数一覧を取得 |
