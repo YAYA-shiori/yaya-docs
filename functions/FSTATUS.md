@@ -24,9 +24,9 @@ FSTATUS(path)
 | -1 | エラー発生 |
 | 1 | ファイル末尾（EOF）に達した |
 
-## Availability
+## Compatibility
 
-Tc573-3 以降
+- YAYA: Tc573-3 以降
 
 ## See Also
 

@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-CVAUTOEX(_var_)
+CVAUTOEX(var)
 ```
 
 ## Parameters

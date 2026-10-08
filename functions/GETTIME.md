@@ -50,6 +50,18 @@ GETTIME( [ sec [, timezone ] ] )
 固定のオフセットを指定したときは夏時間を考慮せず、夏時間フラグ（インデックス8）は常に0になる。解釈できない指定は警告 W0012（GETLASTERROR は 12）を出し、ローカルタイムとして扱う。
 
 ## Example
+
+現在時刻の `sec` は [GETSECCOUNT](GETSECCOUNT.md) で取得できる。これを活用すると、「今現在から○日後 / 前の時刻」を手軽に計算できる。
+
+```
+//10日後は何月何日？
+_array = GETTIME()
+"今は%(_array[0])年%(_array[1])月%(_array[2])日　%(_array[4])時%(_array[5])分%(_array[6])秒／"
+--
+_array = GETTIME(GETSECCOUNT(_array[0],_array[1],_array[2] + 10,0,_array[4],_array[5],_array[6]))
+"10日後は%(_array[0])年%(_array[1])月%(_array[2])日　%(_array[4])時%(_array[5])分%(_array[6])秒\n"
+```
+
 ```
 // UTCでの日時
 _utc = GETTIME(GETSECCOUNT(), 'UTC')

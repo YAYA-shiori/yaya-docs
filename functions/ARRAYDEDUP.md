@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-ARRAYDEDUP(_array_)
+ARRAYDEDUP(array)
 ```
 
 ## Parameters

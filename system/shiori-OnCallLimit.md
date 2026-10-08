@@ -25,6 +25,7 @@ shiori.OnCallLimit(_filename_, _linenum_)
 
 - 実装は任意。エラー処理が不要な場合は辞書に書かなくても良い
 - `GETCALLSTACK` 関数を使って問題箇所を特定できる
+- 呼び出しの深さの上限は基礎設定の [`fncdepth`](../grammar/01-basic-settings.md#fncdepth-depth) で変更できる（デフォルト: 32 階層）
 
 ## Compatibility
 

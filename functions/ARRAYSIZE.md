@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-ARRAYSIZE(_var_)
+ARRAYSIZE(var)
 ```
 
 ## Parameters
@@ -18,6 +18,10 @@ ARRAYSIZE(_var_)
 
 成功時：要素数
 失敗時：0
+
+## Description
+
+簡易配列、もしくは汎用配列の要素数を返す。
 
 ## Example
 

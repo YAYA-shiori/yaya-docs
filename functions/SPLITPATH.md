@@ -21,8 +21,8 @@ SPLITPATH(string)
 ## Example
 ```
 // 例1: Windowsの絶対パス
-_i = SPLITPATH("C:\\umeici\\sample\\readme.txt")
-// 結果: "C:", "\\umeici\\sample\\", "readme", ".txt"
+_i = SPLITPATH("C:\umeici\sample\readme.txt")
+// 結果: "C:", "\umeici\sample\", "readme", ".txt"
 
 // 例2: 相対パス
 _j = SPLITPATH("../../../aa/bb/cc.ddd")

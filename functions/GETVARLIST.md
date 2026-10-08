@@ -19,29 +19,23 @@ GETVARLIST( [ prefix ] )
 現在保持している変数のリストを返す。`prefix` を指定すると、その文字列で始まる変数名のみが返される。
 
 ## Example
+
+指定した名前で始まる変数をすべて消去する関数と、正規表現にマッチする変数をすべて消去する関数の例。
+
 ```
-// 指定したプレフィックスを持つ全変数を削除する関数
-ERASEALLVARBEGINAS
-{
-    _prefix = _argv[0]
-    _varlist = GETVARLIST(_prefix)
-    foreach _varlist ; _v
-    {
-        ERASEVAR(_v)
-    }
+ERASEALLVARBEGINAS {
+	_L= GETVARLIST(_argv[0])
+	foreach _L;_V {
+		ERASEVAR(_V)
+	}
 }
 
-// 正規表現にマッチする全変数を削除する関数
-ERASEALLVARINRE
-{
-    _varlist = GETVARLIST
-    foreach _varlist ; _v
-    {
-        if RE_MATCH(_v, _argv[0])
-        {
-            ERASEVAR(_v)
-        }
-    }
+ERASEALLVARINRE {
+	_L= GETVARLIST
+	foreach _L;_V {
+		if RE_GREP(_V,_argv[0])
+			ERASEVAR(_V)
+	}
 }
 ```
 

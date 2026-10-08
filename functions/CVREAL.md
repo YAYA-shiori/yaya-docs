@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-CVREAL(_var_)
+CVREAL(var)
 ```
 
 ## Parameters

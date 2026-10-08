@@ -25,7 +25,7 @@ shiori.OnLoopLimit(_filename_, _linenum_)
 
 - 実装は任意。エラー処理が不要な場合は辞書に書かなくても良い
 - `GETCALLSTACK` 関数を使って問題箇所を特定できる
-- ループ上限は基礎設定の `looplimit` で変更可能（デフォルト: 10000）
+- ループ上限は基礎設定の [`looplimit`](../grammar/01-basic-settings.md#looplimit-count) で変更できる（デフォルト: 10000）。`foreach` は対象外
 
 ## Compatibility
 

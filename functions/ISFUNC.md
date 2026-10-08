@@ -28,7 +28,21 @@ if ( ISFUNC("DebugMenu") )
 }
 ```
 
-デバッグモードの状態確認と組み合わせて、デバッグ用関数の存在チェックをすることも可能。これにより、開発ツールを含まないゴースト配布版でも問題なく動作させることができる。
+デバッグ用のメニューなどを配布ファイルに含めたくない場合に有用。
+
+`On_enable_debug` イベントと組み合わせて、開発用パレットの「SHIORIデバッグモード有効」時のみ項目を追加する場合は、次のようにする。
+
+```
+if ( ISFUNC("DebugMenu") && debug_mode )
+{
+    AYATEMPLATE.MenuItem( "【デバッグメニュー】","DebugMenu")
+}
+
+On_enable_debug
+{
+    debug_mode = reference[0]
+}
+```
 
 ## Compatibility
 - YAYA: 初期から利用可能

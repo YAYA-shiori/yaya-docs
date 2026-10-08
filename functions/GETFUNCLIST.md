@@ -21,19 +21,24 @@ GETFUNCLIST( [prefix] )
 `prefix`を指定すると、その文字列で始まる関数名のみがフィルタリングされて返される。省略した場合はすべての関数が返される。
 
 ## Example
+
+指定した名前で始まる関数をすべて実行する関数と、正規表現にマッチする関数をすべて実行する関数の例。
+
 ```
-// すべての関数を列挙する例
-_funclist = GETFUNCLIST()
-foreach _funclist ; _func
-    "%(\_func)"
-endforeach
+CALLALLFUNCTIONBEGINAS {
+	_L= GETFUNCLIST(_argv[0])
+	foreach _L;_V {
+		EVAL(_V)
+	}
+}
 
-// "On"で始まる関数のみを取得する例
-_on_funcs = GETFUNCLIST('On')
-
-// RE_GREPで特定パターンの関数をフィルタリングする例
-_all = GETFUNCLIST()
-_filtered = RE_GREP(_all, '^On.*Event$')
+CALLALLFUNCTIONINRE {
+	_L= GETFUNCLIST
+	foreach _L;_V {
+		if RE_GREP(_V,_argv[0])
+			EVAL(_V)
+	}
+}
 ```
 
 ## Compatibility

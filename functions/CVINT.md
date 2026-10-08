@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-CVINT(_var_)
+CVINT(var)
 ```
 
 ## Parameters

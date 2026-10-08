@@ -5,7 +5,7 @@
 ## Signature
 
 ```
-CVSTR(_var_)
+CVSTR(var)
 ```
 
 ## Parameters

@@ -26,7 +26,7 @@ RE_GETSTR()
 
 ## Example
 ```
-RE_MATCH("x > 15.7", "x *> *([\\d\\.]+)")
+RE_MATCH("x > 15.7", "x *> *([\d\.]+)")
 _array = RE_GETSTR
 // _array は ("x > 15.7", "15.7") になる
 ```

@@ -11,7 +11,7 @@ FWRITEDECODE( path, string [, type] )
 |-----------|-------------|
 | path | FOPENで指定したファイル名 |
 | string | 書き込むエンコードされた文字列 |
-| type | デコード方式: `"base64"`, `"url"`, `"form"` のいずれか（省略時はbase64） |
+| type | デコード方式: `"base64"`, `"url"`, `"form"` のいずれか（省略時はbase64。詳細は [STRDECODE](STRDECODE.md) を参照）。Tc554-1 は実装ミスで省略できなかった |
 
 ## Returns
 なし
@@ -19,7 +19,7 @@ FWRITEDECODE( path, string [, type] )
 ## Description
 base64またはURLエンコードからデコードしながらデータを書き込む関数。FREADENCODEの逆操作を行う。
 
-事前にFOPENでファイルを開いておく必要がある。バイナリアクセスのため改行コード変換は行われず、0x00（nullバイト）も書き込める。
+事前にFOPENでファイルを開いておく必要がある。FOPENをバイナリアクセスで開かない場合は、改行コード変換が行われる。デコード結果にバイト値0（0x00）が含まれていても、正常に書き込める。
 
 ## Compatibility
 Tc554-1以降
