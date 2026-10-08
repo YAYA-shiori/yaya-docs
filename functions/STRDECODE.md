@@ -18,10 +18,10 @@ STRDECODE(string [, code] [, type])
 - 失敗時: 0
 
 ## Description
-指定した文字コードとエンコード形式で文字列をデコードします。文字コードIDについてはマニュアルの文字コード一覧を参照してください。
+指定した文字コードとエンコード形式で文字列をデコードします。文字コードIDについては[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)を参照してください。
 
 ## Compatibility
-- YAYA: Tc521-1以降（Tc532-1で `GETSTRURLDE­CODE` から改名）
+- YAYA: Tc521-1以降（Tc532-1で `GETSTRURLDECODE` から改名）
 - Tc574-8 / Tc603-1: 知らない文字コードの名前を渡すと、警告 W0012 を出して0 を返すようにした（それまでは警告を出さずに OS デフォルトとして扱っていた）
 
 ## See Also

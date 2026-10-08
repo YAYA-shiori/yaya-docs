@@ -20,6 +20,8 @@ RE_SPLIT( string , regexp [, max] )
 ## Description
 処理対象文字列を正規表現パターンで分割し、結果を汎用配列として返します。
 
+`max` を指定した場合、その数で分割を打ち切り、残りの部分は最後の要素にまとめられます（`RE_SPLIT('a,b,c,d', ',', 2)` は `a` と `b,c,d`）。
+
 分割結果の詳細は RE_GETSTR、RE_GETPOS、RE_GETLEN で取得できます。
 
 ## Compatibility

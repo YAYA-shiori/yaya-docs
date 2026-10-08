@@ -56,7 +56,7 @@ ClearErrorListVar{
 ```
 
 ## Compatibility
-Tc555-1以降
+- YAYA: Tc555-1 以降
 
 ## See Also
 - CLEARERRORLOG

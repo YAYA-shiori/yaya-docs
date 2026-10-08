@@ -29,7 +29,7 @@ BITWISE_XOR( var1 , var2 )
 ```
 _val1 = 28 // binary: 11100
 _val2 = 9  // binary: 01001
-BITWISE_XOR( _val1, _val2 ) // returns 21 (binary: 10101)
+BITWISE_XOR( _val1, _val2 ) // 21 を返す（2進数: 10101）
 ```
 
 ## Compatibility

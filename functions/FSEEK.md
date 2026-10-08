@@ -23,6 +23,10 @@ FSEEK(path, offset, origin)
 
 非バイナリモードでは改行コードの自動変換により FSEEK/FTELL が期待通りに動作しない場合がある。これらの関数を使用する場合は FOPEN でバイナリモードを指定することを推奨する。
 
+## Description
+
+ファイル読み書きの際の位置（ファイル位置指示子）を移動する。
+
 ## See Also
 
 - FTELL

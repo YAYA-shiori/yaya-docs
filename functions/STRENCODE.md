@@ -18,7 +18,7 @@ STRENCODE(string [, code] [, type])
 - 失敗時: 0
 
 ## Description
-指定した文字コードとエンコード形式で文字列をエンコードします。文字コードIDについてはマニュアルの文字コード一覧を参照してください。
+指定した文字コードとエンコード形式で文字列をエンコードします。文字コードIDについては[文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)を参照してください。
 
 ## Compatibility
 - YAYA: Tc521-1以降（Tc532-1で `GETSTRURLENCODE` から改名）

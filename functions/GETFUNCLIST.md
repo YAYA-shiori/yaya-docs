@@ -42,7 +42,7 @@ CALLALLFUNCTIONINRE {
 ```
 
 ## Compatibility
-YAYAの初期バージョンから使用可能
+- YAYA: 初期から利用可能
 
 ## See Also
 - GETVARLIST

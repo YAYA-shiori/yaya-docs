@@ -19,6 +19,10 @@ CHARSETIDTOTEXT(id)
 成功時：文字コードを表す文字列
 失敗時："default" という文字列
 
+## Description
+
+文字コード ID を、文字コードを表す文字列に変換する。
+
 ## Example
 
 ```

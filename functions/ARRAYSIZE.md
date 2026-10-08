@@ -12,7 +12,7 @@ ARRAYSIZE(var)
 
 | Parameter | Description |
 |-----------|-------------|
-| var | 単純配列（文字列）または汎用配列 |
+| var | 簡易配列（文字列）または汎用配列 |
 
 ## Returns
 

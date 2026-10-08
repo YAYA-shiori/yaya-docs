@@ -13,7 +13,7 @@ ASORT(option, array)
 | Parameter | Description |
 |-----------|-------------|
 | option | ソート動作をカンマ区切りで指定する文字列。比較型（`string`（デフォルト）・`int`・`double`・`length`）、順序（`ascending`（デフォルト）・`descending`）、大文字小文字の区別（`case`）、戻り値形式（`index`）を組み合わせて指定 |
-| array | ソート対象の汎用配列（単純配列は使用不可） |
+| array | ソート対象の汎用配列（簡易配列は使用不可） |
 
 ## Returns
 

@@ -24,6 +24,10 @@ FSTATUS(path)
 | -1 | エラー発生 |
 | 1 | ファイル末尾（EOF）に達した |
 
+## Description
+
+ファイル読み書き関数（FOPEN・FREAD 系・FWRITE 系・FSEEK・FTELL）の直前の操作の状態を取得する。
+
 ## Compatibility
 
 - YAYA: Tc573-3 以降

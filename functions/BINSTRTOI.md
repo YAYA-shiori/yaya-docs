@@ -19,6 +19,10 @@ BINSTRTOI(string)
 成功時：変換後の数値
 失敗時：0
 
+## Description
+
+2進数を表す文字列を整数に変換する。
+
 ## Example
 
 ```

@@ -13,7 +13,7 @@ ASEARCH(key, array)
 | Parameter | Description |
 |-----------|-------------|
 | key | 検索するキー値（文字列） |
-| array | 汎用配列（単純配列は使用不可） |
+| array | 汎用配列（簡易配列は使用不可） |
 
 ## Returns
 

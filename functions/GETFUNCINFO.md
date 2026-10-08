@@ -51,7 +51,7 @@ OnTextDrop{
 ```
 
 ## Compatibility
-YAYA: Tc558-1以降
+- YAYA: Tc558-1 以降
 
 ## See Also
 - GETFUNCLIST

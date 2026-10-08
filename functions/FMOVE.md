@@ -20,6 +20,10 @@ FMOVE( path , dir )
 - 成功時: 1
 - 失敗時: 0
 
+## Description
+
+ファイルを移動する。パスはフルパスで指定できる。相対パスの場合は DLL load で渡された位置（多くの場合、DLL のある位置）が基準になる。
+
 ## Compatibility
 
 - YAYA: 初回リリースから利用可能

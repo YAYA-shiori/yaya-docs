@@ -24,7 +24,7 @@ FWRITEBIN( path, string [, char] )
 `char`に指定した文字は、YAYAが文字列中にnullバイトを持てないという制限により、バイト値0に変換される。
 
 ## Compatibility
-Tc516-901以降
+- YAYA: Tc516-901 以降
 
 ## See Also
 - FWRITE
