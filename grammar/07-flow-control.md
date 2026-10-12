@@ -192,7 +192,7 @@ request
 
 `while`、`for`、`foreach` の 3 種類のループ構造がある。
 
-[基礎設定ファイルの `looplimit`](01-basic-settings.md#looplimit-count) でループ回数の上限を設定できる。足りない場合は変更すること。標準は 10000 回。限界に到達したときは [shiori.OnLoopLimit](../system/shiori-OnLoopLimit.md)(関数名, 行) が呼ばれる。
+[基礎設定ファイルの `looplimit`](01-basic-settings.md#looplimit-count) でループ回数の上限を設定できる。足りない場合は変更すること。標準は 1000000 回（Tc574-10 / Tc606-4以降。それまでは 10000 回）。限界に到達したときは [shiori.OnLoopLimit](../system/shiori-OnLoopLimit.md)(関数名, 行) が呼ばれる。
 
 ### while ループ
 

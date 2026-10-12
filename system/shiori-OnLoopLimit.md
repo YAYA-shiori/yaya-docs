@@ -25,11 +25,14 @@ shiori.OnLoopLimit(_filename_, _linenum_)
 
 - 実装は任意。エラー処理が不要な場合は辞書に書かなくても良い
 - `GETCALLSTACK` 関数を使って問題箇所を特定できる
-- ループ上限は基礎設定の [`looplimit`](../grammar/01-basic-settings.md#looplimit-count) で変更できる（デフォルト: 10000）。`foreach` は対象外
+- ループ上限は基礎設定の [`looplimit`](../grammar/01-basic-settings.md#looplimit-count) で変更できる（デフォルト: 1000000）。`foreach` は対象外
+- 上限に達して打ち切ったときだけ呼ばれる。ちょうど上限回数で自然に終わった `for` / `while` では呼ばれない
 
 ## Compatibility
 
 - YAYA: Tc564-2 以降
+- ループ上限のデフォルトは Tc574-10 / Tc606-4 で 10000 から 1000000 になった
+- Tc574-10 / Tc606-4 より前は、上限の直前から上限回数までで自然に終わる（または `break` / `return` する）`for` / `while` でも呼ばれることがあった
 
 ## See Also
 
