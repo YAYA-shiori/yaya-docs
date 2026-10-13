@@ -31,6 +31,8 @@ _result = FUNCTIONEX('SAORI\sample.exe', 'はろーわーるど')
 
 それより前のバージョンでは、proxy_ex.dll などのSAORI-universalを経由して呼び出す（pathにproxy_ex.dllのパス、Argument0にSAORI-basicのパス、以降にSAORI-basicへの引数を指定する）。
 
+`path` が `internal_` で始まるとき（`internal_crypto` など）は、DLLを読み込まず、DIRECTSSTPでベースウェア（SSP 2.9.13以降）の内蔵モジュールを呼ぶ（SAORI over DirectSSTP）。使えないときは0を返す。詳しくは [yaya_shiori3.dic](../system/yaya-shiori3-dic.md#ベースウェアの内蔵モジュールsaori-over-directsstp) を参照。
+
 SAORIの具体的な使い方については、Tips「SAORIの使い方」を参照のこと。
 
 ## Compatibility

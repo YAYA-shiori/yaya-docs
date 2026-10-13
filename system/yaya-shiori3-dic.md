@@ -159,9 +159,24 @@ _result = FUNCTIONEX('kawari8.dll', 'こんにちは')
 
 詳しくは [FUNCTIONEX](../functions/FUNCTIONEX.md) を参照。
 
+#### ベースウェアの内蔵モジュール（SAORI over DirectSSTP）
+
+`dllname` が `internal_` で始まるとき（`internal_crypto`、`internal_time.dll` など。大文字小文字は区別せず、末尾の `.dll` は付いていてもよい）は、DLL を読み込まず、`DIRECTSSTP` でベースウェア（SSP 2.9.13 以降）の内蔵モジュールを呼ぶ。書き方、返り値、`valueex`、`LIB.STATUSCODE` は、DLL の SAORI と同じ。モジュールと関数は [SAORI over DirectSSTP](https://ssp.shillest.net/ukadoc/manual/spec_saori_ex.html) を参照。
+
+```
+_hash = FUNCTIONEX('internal_crypto', 'Digest', 'sha256', 'abc')
+_text = FUNCTIONEX('internal_time', 'Format', 0, '%Y/%m/%d', '--tz=+09:00')
+```
+
+- そのモジュールが使えないとき（旧 SSP、SSP 以外のベースウェア、知らないモジュール）は 0 を返す。使えるかどうかは、モジュールごとに最初の 1 回だけ `GET Version SAORI/1.0` で確かめて覚える。ゴーストの窓（`SHIORI3FW.HWnd[0]`）がまだ分からない起動直後は、覚えずに 0 を返す
+- 失敗したとき（400、500）の Result は空で、`LIB.STATUSCODE` に `400 Bad Request` などが入る。失敗の理由（`ErrorDescription`）は `var.lib.key` / `var.lib.value` から読める
+- 引数に改行（CR・LF）が含まれるときは、ヘッダを書き足せてしまうので送らず、0 を返す。改行や前後の空白を含むデータは、`--data-in=base64` などの形式で渡す
+- 文字コードは UTF-8 で固定
+- 時間のかかる処理（`DeriveKey`、`HashPassword` など）には `--async=識別子` を付ける。結果はあとでイベント（`OnInternalSaoriComplete` など）で届き、`FUNCTIONEX` の返り値は空（`LIB.STATUSCODE` は `204 No Content`）になる
+
 ### SAORI
 
-`FUNCTIONEX` のシノニム（別名）。書き方は `FUNCTIONEX` と同じ。一段下駄が入る分、`FUNCTIONEX` より低速になるが、気にするほどではない。
+`FUNCTIONEX` のシノニム（別名）。書き方は `FUNCTIONEX` と同じ（`internal_` の内蔵モジュールも同じ）。一段下駄が入る分、`FUNCTIONEX` より低速になるが、気にするほどではない。
 
 ### FUNCTIONLOAD
 
@@ -177,10 +192,11 @@ FUNCTIONLOAD('kawari8.dll')
 
 ## ベースウェアプロパティ関数
 
-SSP など、DIRECTSSTP に対応したベースウェアのプロパティを読み書きする。
+SSP など、DIRECTSSTP に対応したベースウェアのプロパティを読み書きしたり、EXECUTE SSTP のコマンドを実行したりする。
 
 | 関数 | 説明 |
 |------|------|
+| `EXECUTE_SSTP(コマンド名, 引数0, 引数1, ...)` | ベースウェアに `EXECUTE SSTP/1.1` を送り、結果（追加データ）を返す |
 | `GET_PROPERTY(プロパティ名)` | プロパティ値を取得する。成功時はプロパティ値の文字列、失敗時は空文字列を返す |
 | `SET_PROPERTY(プロパティ名, 値)` | プロパティに値を設定する。成功時は 1、失敗時は 0 を返す |
 
@@ -188,6 +204,32 @@ SSP など、DIRECTSSTP に対応したベースウェアのプロパティを�
 _vol = GET_PROPERTY('volume')
 SET_PROPERTY('volume', '80')
 ```
+
+### EXECUTE_SSTP
+
+```
+EXECUTE_SSTP( コマンド名 [, 引数0 , 引数1 , ... ] )
+```
+
+DIRECTSSTP でベースウェアに `EXECUTE SSTP/1.1` のリクエストを送り、結果を返す。2 つめ以降の引数は `Reference0`、`Reference1`、… として送られる。使えるコマンドはベースウェアの SSTP 仕様（`GetVersion`、`GetGhostNameList`、`GetStatus`、`GetCookie` など）を参照。
+
+- 返り値: 成功時（ステータスが 2xx）は、空行より後ろの追加データ（末尾の改行は取り除く）。失敗時は空文字列。一覧を返すコマンドの結果は `C_CRLF` 区切りの文字列になる
+- 結果の変数: `SSTP.STATUSCODE` にステータス行の結果（`200 OK`、`501 Not Implemented` など）、`SSTP.STATUS` にその数値が入る。送信できなかったときは `''` と 0
+- コマンドや引数に改行（CR・LF）が含まれるときは、ヘッダを書き足せてしまうので送らず、空文字列を返す（`SSTP.STATUS` は 0）
+
+追加データの無いコマンドは、成功しても空文字列を返すので、成否は `SSTP.STATUS` で確かめる。
+
+```
+_ver = EXECUTE_SSTP('GetShortVersion')
+_ghosts = SPLIT(EXECUTE_SSTP('GetGhostNameList'), C_CRLF)
+
+_dummy = EXECUTE_SSTP('SetCookie', 'mykey', 'value')
+if SSTP.STATUS == 200 || SSTP.STATUS == 204 {
+	// 成功
+}
+```
+
+`GET_PROPERTY` は `EXECUTE_SSTP('GetProperty', プロパティ名)`、`SET_PROPERTY` は `EXECUTE_SSTP('SetProperty', プロパティ名, 値)` と同じで、`SSTP.STATUSCODE` と `SSTP.STATUS` も同じように入る。
 
 ## 配列操作
 
