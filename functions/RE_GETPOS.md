@@ -32,3 +32,4 @@ RE_GETPOS()
 ## See Also
 - RE_GETSTR
 - RE_GETLEN
+- [正規表現](../grammar/14-regular-expressions.md)

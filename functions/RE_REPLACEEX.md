@@ -25,6 +25,7 @@ RE_REPLACEEX を使用した場合、RE_GETSTR、RE_GETPOS、RE_GETLEN は、n�
 
 ## Compatibility
 - YAYA: 初期バージョンより対応（count パラメータは Tc548-1 以降）
+- Tc606-6: 正規表現エンジンを uka_regexp に変更（PCRE2 に近い構文）。パターン中のサブルーチン呼び出しを変数・関数で解決できる（[正規表現](../grammar/14-regular-expressions.md)）
 
 ## See Also
 - REPLACE
@@ -32,3 +33,4 @@ RE_REPLACEEX を使用した場合、RE_GETSTR、RE_GETPOS、RE_GETLEN は、n�
 - RE_GETSTR
 - RE_GETPOS
 - RE_GETLEN
+- [正規表現](../grammar/14-regular-expressions.md)

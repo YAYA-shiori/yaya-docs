@@ -38,3 +38,4 @@ _array = RE_GETSTR
 ## See Also
 - RE_GETPOS
 - RE_GETLEN
+- [正規表現](../grammar/14-regular-expressions.md)

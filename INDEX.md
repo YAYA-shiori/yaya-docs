@@ -74,6 +74,7 @@
 | [11-character-encoding.md](grammar/11-character-encoding.md) | 文字コード |
 | [12-hash.md](grammar/12-hash.md) | ハッシュ（Tc600-3以降） |
 | [13-nesting.md](grammar/13-nesting.md) | 値の入れ子と多次元代入（Tc600-3以降） |
+| [14-regular-expressions.md](grammar/14-regular-expressions.md) | 正規表現 |
 
 ---
 
