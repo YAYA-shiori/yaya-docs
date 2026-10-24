@@ -4,6 +4,8 @@
 
 プログラミングをしたことがない方にもわかるように書くことを目指しています。わかりにくいところや間違いを見つけたら、[整備班BTS](https://bts.shillest.net/)（報告フォーム）で気軽に教えてください。GitHub に慣れている方は、[Issues](https://github.com/YAYA-shiori/yaya-docs/issues) や Pull Request でも構いません。
 
+> AI エージェント向けに、探し方の案内 [llms.txt](https://yaya-shiori.github.io/yaya-docs/llms.txt) を用意しています。各ページの Markdown 原稿は、リポジトリと同じパスの `.md`（例: `https://yaya-shiori.github.io/yaya-docs/startup/cheatsheet.md`）で取得できます。
+
 ## ダウンロード
 
 - [ダウンロード（GitHub Releases）](https://github.com/YAYA-shiori/yaya-shiori/releases)
