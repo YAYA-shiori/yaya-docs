@@ -258,6 +258,11 @@ def read(rel):
         return f.read()
 
 
+def join_items(head, items):
+    # 項目の切れ目がわかるよう、つないだ項目の間に水平線を入れる（先頭の見出しと導入文の後ろには入れない）
+    return '\n\n'.join([head] + ['\n\n---\n\n'.join(items)] if items else [head])
+
+
 def write(rel, text):
     path = os.path.join(OUT, rel)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -336,7 +341,7 @@ def build_functions(cats):
             text = re.sub(r'^\*\*Category:\*\*.*\n', '', read(src), count=1, flags=re.M)
             # 関数名は H2。その下の節（Signature など）は H4 にして、右の目次を関数名だけにする
             parts.append(render(src, text, page, lambda level: 2 if level == 1 else level + 2).strip('\n'))
-        write(page, '\n\n'.join(parts) + '\n')
+        write(page, join_items(parts[0], parts[1:]) + '\n')
     overview = [f'# {FUNCTIONS_TITLE}', '', 'YAYA に組み込まれている関数を、分類ごとのページにまとめています。関数名から探すときは'
                 ' [システム関数一覧](../system/system-functions-index.md) か、サイト上部の検索を使ってください。']
     for cat, names in cats.items():
@@ -362,7 +367,7 @@ def build_grammar(chapters):
     for name in chapters:
         src = f'grammar/{name}'
         parts.append(render(src, read(src), 'grammar/index.md', lambda level: level + 1).strip('\n'))
-    write('grammar/index.md', '\n\n'.join(parts) + '\n')
+    write('grammar/index.md', join_items(parts[0], parts[1:]) + '\n')
     for name in chapters:
         write_redirect(f'grammar/{name}', *MERGED[f'grammar/{name}'])
 
