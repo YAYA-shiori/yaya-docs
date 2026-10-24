@@ -29,6 +29,8 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 `main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が Zensical（Material for MkDocs の後継。Material テーマ互換）でビルドし、https://yaya-shiori.github.io/yaya-docs/ に公開する。ビルドは `zensical build --strict` で、リンク切れ・アンカー切れがあると失敗する。
 
 - 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする（`assets/` の画像・CSS も写す）。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる
+- 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `INDEX.md` の表で決まる。新しい関数は `INDEX.md` の表に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも `../functions/IHASH.md` や `05-arrays.md#範囲外の要素` と従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
+- まとめた元ページの URL（`functions/IHASH/` など）には、移動先へ飛ばすだけの HTML を `prepare_site.py` が置く。まとめたページでは関数名が H2、その下の節（書式・引数など）が H4 で、右の目次は `toc_depth: 3` により関数名だけになる
 - 設定は `mkdocs.yml` をそのまま読ませている。左メニューの章立ては `.nav.yml`（mkdocs-awesome-nav）、各ページの名前は H1 から決まる
 - GitHub では表示できても MkDocs（Python-Markdown）では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
 - `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも MkDocs でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する

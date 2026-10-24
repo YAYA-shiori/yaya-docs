@@ -306,6 +306,7 @@
 | [FENUM.md](functions/FENUM.md) | FENUM |
 | [FCHARSET.md](functions/FCHARSET.md) | FCHARSET |
 | [FATTRIB.md](functions/FATTRIB.md) | FATTRIB |
+| [FSTATUS.md](functions/FSTATUS.md) | FSTATUS |
 | [FDIGEST.md](functions/FDIGEST.md) | FDIGEST |
 | [FSEEK.md](functions/FSEEK.md) | FSEEK |
 | [FTELL.md](functions/FTELL.md) | FTELL |
@@ -361,7 +362,6 @@
 | [GETFUNCINFO.md](functions/GETFUNCINFO.md) | GETFUNCINFO |
 | [GETVARLIST.md](functions/GETVARLIST.md) | GETVARLIST |
 | [GETSYSTEMFUNCLIST.md](functions/GETSYSTEMFUNCLIST.md) | GETSYSTEMFUNCLIST |
-| [GETCALLSTACK.md](functions/GETCALLSTACK.md) | GETCALLSTACK |
 | [CHARSETTEXTTOID.md](functions/CHARSETTEXTTOID.md) | CHARSETTEXTTOID |
 | [CHARSETIDTOTEXT.md](functions/CHARSETIDTOTEXT.md) | CHARSETIDTOTEXT |
 | [EXECUTE.md](functions/EXECUTE.md) | EXECUTE |
@@ -394,6 +394,7 @@
 | [GETLASTERROR.md](functions/GETLASTERROR.md) | GETLASTERROR |
 | [SETLASTERROR.md](functions/SETLASTERROR.md) | SETLASTERROR |
 | [GETERRORLOG.md](functions/GETERRORLOG.md) | GETERRORLOG |
+| [GETCALLSTACK.md](functions/GETCALLSTACK.md) | GETCALLSTACK |
 | [CLEARERRORLOG.md](functions/CLEARERRORLOG.md) | CLEARERRORLOG |
 | [DUMPVAR.md](functions/DUMPVAR.md) | DUMPVAR |
 | [SLEEP.md](functions/SLEEP.md) | SLEEP |

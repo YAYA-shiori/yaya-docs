@@ -67,6 +67,8 @@ markdown_extensions:
   - pymdownx.superfences
   - toc:
       permalink: true
+      # 右の目次は H3 まで（関数ページは関数名だけ、文法ページは章と節だけにする）
+      toc_depth: 3
       # GitHub と同じく日本語の見出しをそのままアンカーにする
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
