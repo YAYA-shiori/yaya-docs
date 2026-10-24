@@ -37,7 +37,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 注意書きは `!!! note "タイトル"` / `!!! warning "タイトル"`（admonition）で書く。本文は 4 スペース字下げ。転載ページの `> [AYAYA Wiki](...) より転載` は引用のまま
 - 本文や See Also に書いた関数名（`functions/` にページがあるもの。素の `FOPEN` でもコードスパンの `` `FOPEN` `` / `` `FOPEN(...)` `` でもよい）は、`prepare_site.py` がサイト用に関数ページへのリンクにする（旧 wiki の自動リンクの代わり）。見出し・コードブロック・既存のリンクの中と、関数ページ自身の名前はリンクにしない。原稿には書き込まれないので GitHub 上ではリンクにならない
 - 関数ページの見出し（Signature / Parameters / Returns など）は原稿では英語のまま書く。サイトでは `prepare_site.py` の `HEADING_JA` で日本語に置き換える
-- ヘッダの色は `mkdocs.yml` の `theme.palette` の `primary`（現在は black）で決まる
+- ヘッダの色は `assets/extra.css` の `--md-primary-fg-color` で決める（`mkdocs.yml` の `theme.palette` の `primary` は `custom`）。ukatech.shillest.net の YAYA の主色（`#9b3f3a`、ダークモードは `#d0736b`）に合わせている
 - OGP / Twitter カードのタグは `overrides/main.html` が全ページに出す。ページごとのタイトル・説明・画像（1200x630 の PNG）は `mkdocs.yml` の `extra.ogp` にページの URL（`other/yaya6-launch/` のように末尾が `/`。トップは空文字）をキーにして書く（原稿に front matter は書かない。GitHub で表として表示されてしまうため）
 - Zensical は 0.0.x の版を固定している（`requirements.txt`）。Material for MkDocs は 2026-11-05 にサポート終了のため移行した（MkDocs 2.0 はプラグインや Material テーマと互換性が無い）
 - Zensical のテンプレートは MiniJinja で、`page.file` や `page.is_homepage` が無い。`overrides/main.html` はページの URL（`page.url`）で判定する

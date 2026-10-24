@@ -28,14 +28,14 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: black
+      primary: custom
       accent: indigo
       toggle:
         icon: material/brightness-7
         name: ダークモードに切り替え
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: black
+      primary: custom
       accent: indigo
       toggle:
         icon: material/brightness-4
