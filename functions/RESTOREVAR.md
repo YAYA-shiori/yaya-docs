@@ -25,3 +25,5 @@ VOID（戻り値なし）
 
 ## See Also
 - SAVEVAR
+- SERIALIZEVAR
+- DESERIALIZEVAR

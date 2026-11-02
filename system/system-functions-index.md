@@ -45,6 +45,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 
 | 関数 | 説明 |
 |------|------|
+| [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) | SERIALIZEVAR の文字列から変数を復元（Tc607-3以降） |
 | [DICLOAD](../functions/DICLOAD.md) | 辞書ファイルを読み込む |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | 辞書ファイルをアンロード |
 | [DUMPJSON](../functions/DUMPJSON.md) | 値をJSONの文字列にする（Tc602-1以降） |
@@ -185,6 +186,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [RMDIR](../functions/RMDIR.md) | ディレクトリを削除 |
 | [ROUND](../functions/ROUND.md) | 四捨五入 |
 | [SAVEVAR](../functions/SAVEVAR.md) | 変数を保存 |
+| [SERIALIZEVAR](../functions/SERIALIZEVAR.md) | 変数の値をセーブファイルの書式の文字列にする（Tc607-3以降） |
 | [SETDELIM](../functions/SETDELIM.md) | デリミタを設定 |
 | [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md) | グローバル定義を設定 |
 | [SETLASTERROR](../functions/SETLASTERROR.md) | 最後のエラーコードを設定 |

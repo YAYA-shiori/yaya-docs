@@ -261,6 +261,7 @@ log, executelog.txt
 | 文字列 | [STRLEN](../functions/STRLEN.md) [SUBSTR](../functions/SUBSTR.md) [STRSTR](../functions/STRSTR.md) [REPLACE](../functions/REPLACE.md) |
 | 式を文字列から実行 | [EVAL](../functions/EVAL.md) |
 | 変数を消す | [ERASEVAR](../functions/ERASEVAR.md) |
+| 変数を文字列にする・文字列から戻す | [SERIALIZEVAR](../functions/SERIALIZEVAR.md) [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) |
 | 乱数 | [RAND](../functions/RAND.md) |
 | ファイル | [FOPEN](../functions/FOPEN.md) [FREAD](../functions/FREAD.md) [FCLOSE](../functions/FCLOSE.md) |
 

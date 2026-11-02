@@ -358,6 +358,8 @@
 | [LSO.md](functions/LSO.md) | LSO |
 | [SAVEVAR.md](functions/SAVEVAR.md) | SAVEVAR |
 | [RESTOREVAR.md](functions/RESTOREVAR.md) | RESTOREVAR |
+| [SERIALIZEVAR.md](functions/SERIALIZEVAR.md) | SERIALIZEVAR |
+| [DESERIALIZEVAR.md](functions/DESERIALIZEVAR.md) | DESERIALIZEVAR |
 | [GETSETTING.md](functions/GETSETTING.md) | GETSETTING |
 | [SETSETTING.md](functions/SETSETTING.md) | SETSETTING |
 | [GETFUNCLIST.md](functions/GETFUNCLIST.md) | GETFUNCLIST |

@@ -310,7 +310,7 @@ TOSTR(_h)    // "l=1,2,m=x=1"
 |---|---|
 | 変数をファイルに保存して復元する | [SAVEVAR](../functions/SAVEVAR.md) / [RESTOREVAR](../functions/RESTOREVAR.md)。入れ子は `IARRAY{...}` / `IHASH{...}` の形で保存される（[保存形式](../functions/SAVEVAR.md#保存形式)） |
 | 中身を確認する | [DUMPVAR](../functions/DUMPVAR.md)（Tc600-4以降）。入れ子は `(array)[ ... ]` / `(hash){ ... }` で表示される。[LOGGING](../functions/LOGGING.md)（Tc602-8以降）も、入れ子の配列を `( )`、ハッシュを `{ }` で囲んで書き出す |
-| 文字列にして受け渡す | [DUMPJSON](../functions/DUMPJSON.md) と [PARSEJSON](../functions/PARSEJSON.md)。ただし JSON で表せない区別（整数のキーと文字列のキー、VOID と空文字列など）は失われる |
+| 文字列にして受け渡す | [DUMPJSON](../functions/DUMPJSON.md) と [PARSEJSON](../functions/PARSEJSON.md)。ただし JSON で表せない区別（整数のキーと文字列のキー、VOID と空文字列など）は失われる。区別を保つなら [SERIALIZEVAR](../functions/SERIALIZEVAR.md) と [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md)（Tc607-3以降）。セーブファイルと同じ書式の文字列になる |
 
 ## 制限
 
