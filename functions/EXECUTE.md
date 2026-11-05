@@ -41,3 +41,4 @@ Yahoo のホームページを Internet Explorer で開きます。
 ## See Also
 
 - EXECUTE_WAIT
+- [EXECUTE_CAPTURE](EXECUTE_CAPTURE.md)

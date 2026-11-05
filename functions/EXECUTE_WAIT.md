@@ -44,4 +44,5 @@ C コンパイラで HELLOWORLD.C をコンパイルし、完了を待ちます�
 ## See Also
 
 - EXECUTE
+- [EXECUTE_CAPTURE](EXECUTE_CAPTURE.md)（標準出力・標準エラー出力を取り込む。標準入力も渡せる）
 - THREADSTART

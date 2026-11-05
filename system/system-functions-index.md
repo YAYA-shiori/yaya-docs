@@ -57,6 +57,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [ERASEVAR](../functions/ERASEVAR.md) | 変数を削除 |
 | [EVAL](../functions/EVAL.md) | 文字列を式や文の並びとして評価 |
 | [EXECUTE](../functions/EXECUTE.md) | 外部プログラムを実行 |
+| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | 外部プログラムを実行し、標準入力を渡して標準出力・標準エラー出力を取り込む（Tc608-3以降） |
 | [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | 外部プログラムを実行して完了を待つ |
 | [FATTRIB](../functions/FATTRIB.md) | ファイル属性を取得・設定 |
 | [FCHARSET](../functions/FCHARSET.md) | ファイルの文字コードを設定 |
