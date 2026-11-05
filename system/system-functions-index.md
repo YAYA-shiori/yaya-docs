@@ -217,6 +217,12 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 |------|------|
 | [TAN](../functions/TAN.md) | タンジェントを返す |
 | [TANH](../functions/TANH.md) | 双曲線タンジェントを返す |
+| [THREADCLOSE](../functions/THREADCLOSE.md) | スレッドの記録を捨てる（Tc608-1以降） |
+| [THREADJOIN](../functions/THREADJOIN.md) | スレッドが終わるのを待つ（Tc608-1以降） |
+| [THREADRESULT](../functions/THREADRESULT.md) | 終わったスレッドの関数の返り値を返す（Tc608-1以降） |
+| [THREADSTART](../functions/THREADSTART.md) | 関数を別スレッドで実行する（Tc608-1以降） |
+| [THREADSTATE](../functions/THREADSTATE.md) | スレッドの状態を返す（Tc608-1以降） |
+| [THREADSTOP](../functions/THREADSTOP.md) | スレッドに中断を求める（Tc608-1以降） |
 | [TOAUTO](../functions/TOAUTO.md) | 値を自動的に適切な型に変換 |
 | [TOAUTOEX](../functions/TOAUTOEX.md) | TOAUTOの拡張版 |
 | [TOBINSTR](../functions/TOBINSTR.md) | 整数を2進数文字列に変換 |

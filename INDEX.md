@@ -390,6 +390,17 @@
 |---------|------|
 | [DIRECTSSTP.md](functions/DIRECTSSTP.md) | DIRECTSSTP |
 
+### スレッド
+
+| ファイル | 関数 |
+|---------|------|
+| [THREADSTART.md](functions/THREADSTART.md) | THREADSTART |
+| [THREADSTATE.md](functions/THREADSTATE.md) | THREADSTATE |
+| [THREADSTOP.md](functions/THREADSTOP.md) | THREADSTOP |
+| [THREADJOIN.md](functions/THREADJOIN.md) | THREADJOIN |
+| [THREADRESULT.md](functions/THREADRESULT.md) | THREADRESULT |
+| [THREADCLOSE.md](functions/THREADCLOSE.md) | THREADCLOSE |
+
 ### デバッグ
 
 | ファイル | 関数 |

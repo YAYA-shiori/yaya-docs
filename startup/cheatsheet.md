@@ -263,6 +263,7 @@ log, executelog.txt
 | 変数を消す | [ERASEVAR](../functions/ERASEVAR.md) |
 | 変数を文字列にする・文字列から戻す | [SERIALIZEVAR](../functions/SERIALIZEVAR.md) [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) |
 | 乱数 | [RAND](../functions/RAND.md) |
+| 時間のかかる処理を別スレッドで動かす | [THREADSTART](../functions/THREADSTART.md) [THREADSTATE](../functions/THREADSTATE.md) [THREADJOIN](../functions/THREADJOIN.md) [THREADRESULT](../functions/THREADRESULT.md) [THREADSTOP](../functions/THREADSTOP.md) [THREADCLOSE](../functions/THREADCLOSE.md) |
 | ファイル | [FOPEN](../functions/FOPEN.md) [FREAD](../functions/FREAD.md) [FCLOSE](../functions/FCLOSE.md) |
 
 ## 関連

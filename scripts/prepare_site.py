@@ -41,6 +41,7 @@ CATEGORY_PAGES = {
     'システム情報': 'sysinfo',
     'メタ操作・特殊関数': 'meta',
     '通信・プロセス間通信': 'ipc',
+    'スレッド': 'thread',
     'デバッグ': 'debug',
 }
 FUNCTIONS_TITLE = 'システム関数(組み込み関数)'

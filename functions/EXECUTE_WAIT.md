@@ -33,11 +33,15 @@ _val = EXECUTE_WAIT('CL.EXE','HELLOWORLD.C')
 
 C コンパイラで HELLOWORLD.C をコンパイルし、完了を待ちます。
 
+[THREADSTART](THREADSTART.md) で起動したスレッドから呼ぶと、外部アプリケーションの終了を待つ間も、SSP からの `request` や他のスレッドが止まりません。Windows では、スレッドが [THREADSTOP](THREADSTOP.md) や `unload` で中断を求められると、待つのをやめて -1 を返します（起動したアプリケーションはそのまま動き続けます）。POSIX では、終わるまで待ちます。
+
 ## Compatibility
 
 - YAYA: TC532-1以降
 - Tc604-1: 第3引数 dir（作業ディレクトリ）を追加。返値を終了コードにした（以前は Windows では成功時に 1、POSIX 環境では system() の返値をそのまま返していた）
+- Tc608-1: 待つ間にほかのスレッドが動けるようにした（`THREADSTART` のスレッドがあるとき）
 
 ## See Also
 
 - EXECUTE
+- THREADSTART
