@@ -12,6 +12,8 @@
 - まとめた元ページ（functions/NAME.md、grammar/NN-xxx.md）へのリンクは、まとめたページの見出しへのリンクに
   書き換える。元ページの URL には移動先へ飛ばすだけの HTML を置く（外部からのリンクを切らないため）
 - 生の Markdown 原稿を _raw/ に写す（ビルド後に _site へ重ねる。llms.txt から INDEX.md などを辿れるようにする）
+- 見た目のための目印（attr_list の class）を、原稿の写しに付ける。まとめたページの関数の名前（H2）に
+  bundle-item、トップページの節（H2）に top-section（見た目は assets/extra.css）
 原稿そのものは書き換えない。
 """
 import os
@@ -313,6 +315,23 @@ def site_url():
         return re.search(r'^site_url: *(\S+)', f.read(), re.M).group(1)
 
 
+def mark_item(text):
+    """まとめたページの項目の名前（先頭の H2。{#id} を持つ）に、役の class（bundle-item）を付ける"""
+    return re.sub(r'^(## .+ \{#[^}\s]+)\}', r'\1 .bundle-item}', text, count=1, flags=re.M)
+
+
+def mark_top(text):
+    """トップページの節（H2）の見出しに、役の class（top-section）を付ける"""
+    lines = text.split('\n')
+    in_fence = False
+    for i, line in enumerate(lines):
+        if FENCE.match(line):
+            in_fence = not in_fence
+        elif not in_fence and re.match(r'^## +\S', line):
+            lines[i] = f'{line.rstrip()} {{: .top-section }}'
+    return '\n'.join(lines)
+
+
 def write_redirect(old, page, frag):
     """まとめる前のページ old（.md）の URL に置く、まとめたページの見出しへ飛ばす HTML"""
     base = old[:-3] + '/'
@@ -342,7 +361,8 @@ def build_functions(cats):
             src = f'functions/{name}.md'
             text = re.sub(r'^\*\*Category:\*\*.*\n', '', read(src), count=1, flags=re.M)
             # 関数名は H2。その下の節（Signature など）は H4 にして、右の目次を関数名だけにする
-            parts.append(render(src, text, page, lambda level: 2 if level == 1 else level + 2).strip('\n'))
+            item = render(src, text, page, lambda level: 2 if level == 1 else level + 2).strip('\n')
+            parts.append(mark_item(item))
         write(page, join_items(parts[0], parts[1:]) + '\n')
     overview = [f'# {FUNCTIONS_TITLE}', '', 'YAYA に組み込まれている関数を、分類ごとのページにまとめています。関数名から探すときは'
                 ' [システム関数一覧](../system/system-functions-index.md) か、サイト上部の検索を使ってください。']
@@ -406,7 +426,7 @@ def main():
     chapters = register_grammar()
     build_functions(cats)
     build_grammar(chapters)
-    write('index.md', render('INDEX.md', read('INDEX.md'), 'index.md'))
+    write('index.md', mark_top(render('INDEX.md', read('INDEX.md'), 'index.md')))
     shutil.copy(os.path.join(ROOT, '.nav.yml'), os.path.join(OUT, '.nav.yml'))
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
     shutil.copytree(os.path.join(ROOT, 'attachment'), os.path.join(OUT, 'attachment'))
