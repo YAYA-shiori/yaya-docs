@@ -4,7 +4,7 @@
 
 ## 探し方
 
-- 最初に [INDEX.md](INDEX.md) を開く。「はじめての方へ」「調べたいとき」と、分野ごとのページ表から各ページへ辿れる。
+- 最初に [INDEX.md](INDEX.md) を開く。「はじめての方へ」「調べたいとき」と、分野ごとのページ一覧から各ページへ辿れる。
 - システム関数（組み込み関数）は 1 関数 1 ファイルで、`functions/<関数名>.md`（関数名は大文字。例: `functions/IHASH.md`）。名前から探すなら [system/system-functions-index.md](system/system-functions-index.md)、用途別に探すなら INDEX.md の「システム関数(組み込み関数)」の表を見る。
 - 書き方をざっと確認したいときは [startup/cheatsheet.md](startup/cheatsheet.md)。
 

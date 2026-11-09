@@ -204,38 +204,28 @@ def flatten(node, out):
     return out
 
 
-def first_page(node):
-    if node.page:
-        return node.page
-    for c in node.children:
-        p = first_page(c)
-        if p:
-            return p
-    return None
-
-
 def index_anchors():
-    """トップページの「## 基本 (basic/)」のような節 → ディレクトリ名: 見出しの id。ページの無い節は、ここへ案内する"""
-    anchors = {}
+    """トップページの H2（「## 基本」のような節）の見出しの id の集まり。ページの無い章は、同じ題の節へ案内する"""
+    ids = set()
     for line in read(os.path.join(SRC, 'index.md')).split('\n'):
-        m = re.match(r'^## +(.+?) +\(([^)/]+)/\) *$', line)
-        if m:
-            anchors[m.group(2)] = prepare_site.heading_slug(line[3:].strip())
-    return anchors
+        if line.startswith('## '):
+            ids.add(prepare_site.heading_slug(line[3:].strip()))
+    return ids
 
 
-ANCHORS = {}
+ANCHORS = set()
 
 
 def target(node):
-    """メニュー・パンくずがその項目へ向かう先 (URL, フラグメント)。ページの無い節は、トップページの対応する節"""
+    """メニュー・パンくずがその項目へ向かう先 (URL, フラグメント)。ページの無い章は、トップページの同じ題の節"""
     if node.page:
         return node.url, ''
-    first = first_page(node)
-    if first:
-        frag = ANCHORS.get(posixpath.dirname(first).split('/')[0])
-        if frag:
-            return '', frag
+    top = node
+    while top.parent is not None and top.parent.depth >= 1:
+        top = top.parent
+    frag = prepare_site.heading_slug(top.title)
+    if frag in ANCHORS:
+        return '', frag
     return None
 
 
@@ -449,12 +439,22 @@ def add_contents(tree, levels):
     heads[0].addprevious(box)
 
 
+def mark_index_grid(tree):
+    """トップページの「文法」以降の一覧（ul）に class を付ける。CSS で 3 列のグリッド（狭いと 1 列）にする"""
+    start = next((h for h in tree.iter('h2') if h.get('id') == '文法'), None)
+    if start is not None:
+        for ul in start.itersiblings('ul'):
+            ul.set('class', 'index-grid')
+
+
 def render(md, from_url):
     text = read(os.path.join(SRC, md))
     html = markdown.Markdown(extensions=MD_EXTENSIONS, extension_configs=MD_CONFIG, output_format='html').convert(text)
     tree = lxml.html.fragment_fromstring(html, create_parent='div')
     rewrite_links(tree, md, from_url)
     add_contents(tree, (2,) if md == 'index.md' else (2, 3))
+    if md == 'index.md':
+        mark_index_grid(tree)
     return tree
 
 

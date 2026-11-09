@@ -59,11 +59,11 @@ menu:
     page: INDEX.md#調べたいとき
     children:
       - title: 基本
-        page: INDEX.md#基本-basic
+        page: INDEX.md#基本
       - title: 文法
         page: grammar/index.md
       - title: システム辞書
-        page: INDEX.md#システム辞書-system
+        page: INDEX.md#システム辞書
       - title: 用途別関数一覧
         page: functions/index.md
       - title: 名前順関数一覧
@@ -72,7 +72,7 @@ menu:
         page: system/error-handling-functions.md
 
   - title: Tips
-    page: INDEX.md#tips-tips
+    page: INDEX.md#tips
     children:
       - title: 困ったときの対処法
         page: other/troubleshooting.md

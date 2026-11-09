@@ -274,9 +274,9 @@ def write(rel, text):
 
 
 def function_categories():
-    """分類名 → 関数名の並び。並びは INDEX.md の表、分類は各ページの **Category:** 行。食い違いや漏れは止める"""
+    """分類名 → 関数名の並び。並びは INDEX.md の一覧、分類は各ページの **Category:** 行。食い違いや漏れは止める"""
     index = read('INDEX.md')
-    section = index.split(f'## {FUNCTIONS_TITLE} (functions/)', 1)[1].split('\n## ', 1)[0]
+    section = index.split(f'\n## {FUNCTIONS_TITLE}\n', 1)[1].split('\n## ', 1)[0]
     cats = {}
     current = None
     for line in section.split('\n'):

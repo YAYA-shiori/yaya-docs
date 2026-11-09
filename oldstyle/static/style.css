@@ -404,6 +404,19 @@ html {
 	margin: 0;
 }
 
+/* トップページの「文法」以降の一覧: 3 列のグリッド。幅が狭くなると、列が減って 1 列になる */
+ul.index-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(max(13em, calc((100% - 3em) / 3)), 1fr));
+	gap: .3em 1.5em;
+	margin: .5em 0 1em;
+	padding-left: 1.5em;
+}
+ul.index-grid li {
+	margin: 0;
+	line-height: 130%;
+}
+
 /* ページ先頭の目次（旧版の div.contents） */
 .contents {
 	margin: 0 0 1em 0;
