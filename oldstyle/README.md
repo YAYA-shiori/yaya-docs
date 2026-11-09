@@ -37,5 +37,5 @@ body[data-root]
 - 前後のページは `.nav.yml` の深さ優先の順。Home は、そのページのある章（無ければトップページ）
 - menu.yml が無いときは、.nav.yml から自動でメニューを作る（開いているページのある章だけ展開。ページの無い章は、トップページの `## 基本 (basic/)` のような節へのリンク）
 - 見出しの末尾の `†` は、その見出しへのリンク。ページ先頭の `div.contents` は、H2・H3 の目次
-- OGP は `build.py` の `OGP`、`other/yaya6-launch.md` の暗い装いは `style.css` の `body.y6` と `.y6-*`
+- OGP は `build.py` の `OGP`、`other/yaya6-launch.md` の部品（ヒーロー画像・ボタン・数字のカードなど）は `style.css` の `.y6-*`（配色はほかのページと同じ）
 - ヘッダの画像 `skin/title.png` は旧 wiki のもの。ロゴ画像 `skin/logo.png` は、このサイト用に作り直したもの（旧版のロゴは「Wiki」「PukiWiki Plus!」の文字入りだった）

@@ -588,98 +588,19 @@ nav.navi .navi_right {
 	display: none;
 }
 
-/* ---- YAYA 6 の紹介ページ（other/yaya6-launch.md）だけの装い。本文の領域だけ暗い配色にする ---- */
-body.y6 #body {
-	--y6-accent: #b39dff;
-	color: rgba(232, 234, 255, .87);
-	background-color: #07080f;
-	padding-top: 1em;
-}
-body.y6 #body a:link,
-body.y6 #body a:visited {
-	color: var(--y6-accent);
-	background-color: transparent;
-}
-body.y6 #body a:hover {
-	color: #d4c6ff;
-	background-color: transparent;
-	text-decoration: underline;
-}
-body.y6 #body h1,
-body.y6 #body h2,
-body.y6 #body h3,
-body.y6 #body h4 {
-	color: #ffffff;
-	background-color: transparent;
-	border: 0;
-	font-weight: 800;
-}
-body.y6 #body h1 {
-	margin: 0 0 1em;
-	font-size: 2em;
-}
-body.y6 #body h2 {
-	margin-top: 2.4em;
-	font-size: 1.5em;
-}
-body.y6 #body h3 {
-	font-size: 1.2em;
-}
-body.y6 #body hr {
-	border-color: rgba(255, 255, 255, .16);
-}
-body.y6 #body table strong {
-	color: var(--y6-accent);
-}
-body.y6 #body pre {
-	margin: .5em 0 1em;
-	color: #dfe3ff;
-	background-color: #11132a;
-	border: 1px solid rgba(255, 255, 255, .08);
-	border-radius: 12px;
-}
-body.y6 #body :not(pre) > code {
-	color: #dfe3ff;
-	background-color: #11132a;
-}
-body.y6 #body p > img {
-	border-radius: 18px;
-}
-body.y6 #body .admonition {
-	color: inherit;
-	background-color: rgba(255, 255, 255, .05);
-	border-color: rgba(255, 255, 255, .18);
-}
-body.y6 #body table {
-	background-color: rgba(232, 234, 255, .12);
-}
-body.y6 #body th {
-	color: inherit;
-	background-color: #11132a;
-}
-body.y6 #body td {
-	color: inherit;
-	background-color: #0d0f1f;
-}
-body.y6 nav.navi a:link,
-body.y6 nav.navi a:visited {
-	color: var(--y6-accent);
-}
+/* ---- YAYA 6 の紹介ページ（other/yaya6-launch.md）の部品。配色は、ほかのページと同じ旧版の配色 ---- */
 .y6-hero img {
 	display: block;
 	width: 100%;
-	border-radius: 20px;
-	box-shadow: 0 0 0 1px rgba(255, 255, 255, .08);
+	border-radius: 8px;
 }
 .y6-lead {
 	max-width: 40em;
-	margin: 2.4em auto 1em;
+	margin: 1.6em auto 1em;
 	text-align: center;
-	font-size: 1.05em;
 }
 .y6-lead p:first-child strong {
-	font-size: 1.45em;
-	color: #ffffff;
+	font-size: 1.3em;
 }
 .y6-cta p {
 	display: flex;
@@ -687,67 +608,52 @@ body.y6 nav.navi a:visited {
 	gap: .8em;
 	justify-content: center;
 }
-body.y6 #body .y6-cta a {
-	padding: .65em 1.5em;
-	border: 1px solid rgba(255, 255, 255, .22);
-	border-radius: 999px;
+.y6-cta a {
+	padding: .5em 1.2em;
+	border: 1px solid #888899;
+	background-color: #eef5ff;
+	font-weight: bold;
+}
+.y6-cta a:first-child:link,
+.y6-cta a:first-child:visited {
+	border-color: #215dc6;
+	background-color: #215dc6;
 	color: #ffffff;
-	font-weight: 700;
-	text-decoration: none;
-	transition: transform .15s;
 }
-body.y6 #body .y6-cta a:first-child {
-	border-color: transparent;
-	background: var(--y6-accent);
-	color: #0b0b14;
-}
-body.y6 #body .y6-cta a:hover {
-	transform: translateY(-2px);
-	text-decoration: none;
+.y6-cta a:first-child:hover {
+	background-color: #4a7fdc;
 }
 .y6-stats ul {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
 	gap: .8em;
-	margin: 2em 0;
+	margin: 1.5em 0;
 	padding: 0;
 	list-style: none;
 }
 .y6-stats li {
 	margin: 0;
-	padding: 1.1em 1em;
-	border: 1px solid rgba(255, 255, 255, .08);
-	border-radius: 16px;
-	background: rgba(255, 255, 255, .04);
-	color: rgba(232, 234, 255, .62);
+	padding: .8em .6em;
+	border: 1px solid #ccd5dd;
+	background-color: #eef5ff;
 	font-size: .9em;
 	text-align: center;
 }
 .y6-stats li strong {
 	display: block;
-	margin-bottom: .2em;
-	color: #ffffff;
-	font-size: 2.4em;
-	font-weight: 800;
-	line-height: 1.15;
+	font-size: 2em;
+	line-height: 1.2;
 }
 .y6-byline {
-	margin-top: 3em;
-	font-size: 1.05em;
+	margin-top: 2em;
 	text-align: center;
 }
 .y6-byline strong {
-	font-size: 1.3em;
-}
-.y6-card {
-	border: 1px solid rgba(255, 255, 255, .14);
-	border-radius: 16px;
-	overflow: hidden;
+	font-size: 1.2em;
 }
 .y6-card table {
 	width: 100%;
 	margin: 0;
-	border-spacing: 0;
 }
 
 /* ---- 幅が狭いとき: ヘッダ → 本文 → 目次の縦並びにする ---- */

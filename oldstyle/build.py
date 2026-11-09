@@ -550,7 +550,7 @@ def build_pages(root):
         content = inner_html(tree)
         write(posixpath.join(url, 'index.html'), template.substitute(
             title=esc(page_title if not url else f'{page_title} - {SITE_NAME}'), description=esc(description), head=head,
-            root=root_of(url), home=rel_url(url, ''), body_attr=' class="y6"' if 'y6-hero' in content else '',
+            root=root_of(url), home=rel_url(url, ''), body_attr='',
             breadcrumb=breadcrumb_html(node, url), menu=menu_html(root, node, url), content=content,
             navigation_top=navigation_html(node, prev, nxt, url, False),
             navigation_bottom=navigation_html(node, prev, nxt, url, True)))
