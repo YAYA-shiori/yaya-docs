@@ -200,6 +200,10 @@ td {
 td p, th p {
 	padding: 0;
 }
+/* body の overflow-wrap: anywhere は表の最小幅を 1 文字にしてしまうので、表のセルでは break-word（長い語だけ折る） */
+th, td {
+	overflow-wrap: break-word;
+}
 
 /* ---- 注（!!! note / warning）。旧 wiki の blockquote（橙の枠）と同じ配色 ---- */
 .admonition {
