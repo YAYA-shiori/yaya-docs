@@ -229,6 +229,7 @@ td p, th p {
 /* ---- ヘッダ（旧版: 左にタイトル画像、右の黒い帯にロゴとパンくず）。検索欄と翻訳ボタンは帯の右。
    スクロールしても上に残す（狭い画面を除く）。ロゴ画像の地色は #212121 ---- */
 html {
+	--side-w: 220px;           /* ヘッダ左のタイトル画像（skin/title.png）と、左のメニューの幅 */
 	scroll-padding-top: 90px;   /* 固定のヘッダに、#アンカーの見出しが隠れないように */
 }
 #header {
@@ -244,7 +245,7 @@ html {
 }
 #site-logo {
 	flex: none;
-	width: 170px;
+	width: var(--side-w);
 	height: 80px;
 	background-color: #ffffff;
 	line-height: 0;
@@ -352,12 +353,12 @@ html {
 	align-items: flex-start;
 	min-height: calc(100vh - 81px);
 	/* 左のメニューの地色と枠線を、ページの高さいっぱいに伸ばす（旧版は table のセルだった） */
-	background: linear-gradient(to right, #dcdcdc 0 1px, #f4f4f4 1px 169px, #dcdcdc 169px 170px, #ffffff 170px);
+	background: linear-gradient(to right, #dcdcdc 0 1px, #f4f4f4 1px calc(var(--side-w) - 1px), #dcdcdc calc(var(--side-w) - 1px) var(--side-w), #ffffff var(--side-w));
 }
 #menubar {
 	flex: none;
 	box-sizing: border-box;
-	width: 170px;
+	width: var(--side-w);
 	position: sticky;
 	top: 81px;                       /* 固定のヘッダの下 */
 	max-height: calc(100vh - 81px);
