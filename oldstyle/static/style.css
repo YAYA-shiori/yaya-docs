@@ -807,3 +807,8 @@ body.y6 #body .y6-cta a:hover {
 		display: none;
 	}
 }
+
+/* 左のメニューの最上位の項目どうしは、旧版の MenuBar と同じく、間を空ける */
+#menubar > ul > li {
+	margin-bottom: .9em;
+}

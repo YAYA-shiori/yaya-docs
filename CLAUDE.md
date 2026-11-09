@@ -17,6 +17,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - `INDEX.md` の該当する表に追加する
 - 関数なら `system/system-functions-index.md` にも追加する
 - 新しいディレクトリを作ったら、`.nav.yml` の `nav` と `scripts/prepare_site.py` の `DIRS` に加える
+- 左のメニューに載せたいページは、`oldstyle/menu.yml` に加える（メニューは手で選んだ一覧。載せなくてもサイトには出る）
 
 ## 言語仕様が変わったとき
 
@@ -36,7 +37,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 各ページの先頭（最初の H2 の前）に、旧版の `div.contents` にあたる目次を `oldstyle/build.py` が付ける（H2・H3 が 3 つ以上あるページ。トップページは H2 だけ）。見出しの末尾の `†` は、その見出しへのリンク（旧 wiki と同じ）
 - `llms.txt`（AI エージェント向けの探し方の案内。`INDEX.md` と各ディレクトリの入口だけを書く）はサイトのルートに置かれる。ページごとの一覧は載せないので、ページを足しても直さなくてよい。ディレクトリを足したときは「構成」に 1 行足す
 - 生の Markdown 原稿（`README.md` と `CLAUDE.md` 以外の `.md`）は、リポジトリと同じパスでサイトにも置かれる（`prepare_site.py` が `_raw/` に写し、ビルドが出力に重ねる）。`llms.txt` や `INDEX.md` の相対リンクは、このおかげでサイト上でも辿れる
-- 章立て（左のメニュー・パンくず・前後のページ）は `.nav.yml`。最上位の章は、ルートの `.nav.yml` に書く。`.nav.yml` の無いディレクトリは、`index.md`（あれば先頭）のあとファイル名順で並べ、題は各ページの H1（`functions/.nav.yml` は `prepare_site.py` が作る）。前後のページは、メニューの順（深さ優先）。メニューは、開いているページのある章だけ下の階層を出す。ページを持たない章（基本・Tips など）は、トップページの対応する節（`## 基本 (basic/)`。見出しの末尾が `(ディレクトリ名/)`）へのリンクになる
+- 左のメニューは `oldstyle/menu.yml`（旧 wiki の MenuBar に当たる、手で選んだ一覧。書き方はファイルの先頭に書いてある。原稿のパスや `INDEX.md#見出し` が違うとビルドが止まる。消すと、`.nav.yml` から自動でメニューを作る）。章立て（パンくず・前後のページ）は `.nav.yml`。最上位の章は、ルートの `.nav.yml` に書く。`.nav.yml` の無いディレクトリは、`index.md`（あれば先頭）のあとファイル名順で並べ、題は各ページの H1（`functions/.nav.yml` は `prepare_site.py` が作る）。前後のページは、メニューの順（深さ優先）。`menu.yml` が無いときの自動メニューは、開いているページのある章だけ下の階層を出す。ページを持たない章（基本・Tips など）は、トップページの対応する節（`## 基本 (basic/)`。見出しの末尾が `(ディレクトリ名/)`）へのリンクになる
 - Markdown の拡張は `tables` `admonition` `attr_list` `md_in_html` `mdx_truly_sane_lists` `pymdownx.superfences` `toc`。見出しのアンカーは GitHub と同じく日本語のまま（`pymdownx.slugs.slugify(case='lower')`）で、`prepare_site.py` のリンク書き換えと同じ変換
 - GitHub では表示できても Python-Markdown では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
 - `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも Python-Markdown でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する

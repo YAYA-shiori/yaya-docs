@@ -246,8 +246,75 @@ def href(from_url, node):
     return rel_url(from_url, t[0]) + ('#' + t[1] if t[1] else '')
 
 
+MENU_FILE = os.path.join(HERE, 'menu.yml')
+MENU = None     # menu.yml の項目（load_menu）。None なら、.nav.yml から自動で作るメニュー
+
+
+def menu_target(spec, where):
+    """menu.yml の page: に書いた原稿のパス（`INDEX.md#見出し`、まとめた元ページの `functions/IHASH.md` も可）の行き先 (URL, フラグメント)"""
+    path, _, frag = spec.partition('#')
+    path = 'index.md' if path == 'INDEX.md' else path
+    if path in MD_PAGES:
+        return page_url(path), frag
+    if path in prepare_site.MERGED:
+        page, prefix = prepare_site.MERGED[path]
+        return page_url(page), prepare_site.FRAGMENTS.get((path, frag), prefix) if frag else prefix
+    error(f'{where}: page: {spec} の原稿が無い')
+    return None
+
+
+def load_menu():
+    """oldstyle/menu.yml の menu: を読む。各項目は title:（必須）、page:（原稿）か url:（外部）、children:（下の項目）"""
+    if not os.path.exists(MENU_FILE):
+        return None
+    with open(MENU_FILE, encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+
+    def parse(items, where):
+        out = []
+        for i, it in enumerate(items or []):
+            here = f'menu.yml {where}[{i}]'
+            if not isinstance(it, dict) or not it.get('title'):
+                error(f'{here}: title: が無い')
+                continue
+            if 'page' in it and 'url' in it:
+                error(f'{here}: page: と url: は同時に書けない')
+            target = None
+            if it.get('page'):
+                t = menu_target(it['page'], here)
+                target = ('page',) + t if t else None
+            elif it.get('url'):
+                target = ('ext', it['url'])
+            out.append({'title': str(it['title']), 'target': target, 'children': parse(it.get('children'), f'{where}[{i}]')})
+        return out
+    return parse(data.get('menu'), 'menu')
+
+
+def custom_menu_html(items, current_url, from_url):
+    """menu.yml のメニュー。旧版の MenuBar と同じく、下の階層まで常に全部出す"""
+    def li(it):
+        label = esc(it['title'])
+        t = it['target']
+        if t and t[0] == 'ext':
+            label = f'<a href="{esc(t[1])}">{label}</a>'
+        elif t:
+            link = rel_url(from_url, t[1]) + ('#' + t[2] if t[2] else '')
+            cur = ' aria-current="page"' if current_url is not None and t[1] == current_url and not t[2] else ''
+            label = f'<a href="{link}"{cur}>{label}</a>'
+        sub = '\n<ul>\n' + '\n'.join(li(c) for c in it['children']) + '\n</ul>\n' if it['children'] else ''
+        return f'<li>{label}{sub}</li>'
+    return '<ul>\n' + '\n'.join(li(it) for it in items) + '\n</ul>'
+
+
 def menu_html(root, current, from_url):
-    """左のメニュー。トップの項目は常に出し、いま開いているページのある節だけ、下の階層を開く"""
+    """左のメニュー。menu.yml があればその定義、無ければ .nav.yml から作る"""
+    if MENU is not None:
+        return custom_menu_html(MENU, current.url if current is not None else None, from_url)
+    return nav_menu_html(root, current, from_url)
+
+
+def nav_menu_html(root, current, from_url):
+    """.nav.yml から作るメニュー。トップの項目は常に出し、いま開いているページのある節だけ、下の階層を開く"""
     opened = set()
     n = current
     while n is not None:
@@ -547,8 +614,14 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     copy_static()
+    if args.no_prepare:
+        # まとめた元ページ（functions/IHASH.md など）の行き先の表は、prepare_site.main() が作る。menu.yml が使うので、ここでも作る
+        prepare_site.register_functions()
+        prepare_site.register_grammar()
     root = load_nav()
     ANCHORS.update(index_anchors())
+    global MENU
+    MENU = load_menu()
     pages = build_pages(root)
     if pages is None or errors:
         sys.exit(f'ビルドに失敗: エラー {len(errors)} 件')

@@ -1,0 +1,98 @@
+# 左のメニューの定義（旧 AYAYA wiki の MenuBar に当たる）。ここに書いた項目だけが、全ページの左に出る。
+# 章立て（前後のページ・パンくずリスト）の元の .nav.yml とは別。このファイルを消すと、.nav.yml から自動でメニューを作る。
+#
+# 項目の書き方（menu: の下に並べる。children: で下の項目を入れ子にできる。深さは自由）
+#   - title: 表示する名前        必須
+#     page: 原稿のパス           サイト内のページ。リポジトリ内のパス（`startup/cheatsheet.md`）で書く
+#                                `INDEX.md#見出し` のように # でアンカーも付けられる（トップページの節へ飛ぶのに使う）
+#                                `functions/IHASH.md` や `grammar/05-arrays.md` のように、まとめた元の原稿も書ける
+#     url: https://...           外部のページ（page: と同時には書けない）
+#     children: [...]            下の項目
+#   page: も url: も書かない項目は、リンクの無い見出し（旧版の「スタートアップ」のような文字だけの項目）になる
+#
+# 原稿のパスやアンカーが違うと、ビルド（oldstyle/build.py）が止まる。表示は、書いた順のまま。
+menu:
+  - title: トップページ
+    page: INDEX.md
+
+  - title: YAYA配布ページ
+    url: https://github.com/YAYA-shiori/yaya-shiori/releases
+    children:
+      - title: ダウンロードページ
+        url: https://github.com/YAYA-shiori/yaya-shiori/releases
+      - title: 更新履歴
+        url: https://github.com/YAYA-shiori/yaya-shiori/wiki/ChangeLog
+      - title: 紺野ややめ
+        url: https://github.com/YAYA-shiori/konnoyayame
+      - title: ツール「玉」
+        url: https://github.com/YAYA-shiori/tama/releases
+      - title: CIツール
+        url: https://github.com/YAYA-shiori/yaya-CI-check
+
+  - title: YAYA 6
+    children:
+      - title: YAYA 6 登場
+        page: other/yaya6-launch.md
+      - title: 600 での変更点
+        page: other/changes-600.md
+
+  - title: スタートアップ
+    children:
+      - title: YAYA、AYAって何？
+        page: other/yaya.md
+      - title: チートシート
+        page: startup/cheatsheet.md
+      - title: 新規ゴースト作成
+        page: startup/creating-ghost.md
+      - title: チュートリアル1：準備
+        page: startup/tutorial-01-preparation.md
+      - title: チュートリアル2：トーク
+        page: startup/tutorial-02-writing-dialogue.md
+      - title: チュートリアル3：変数
+        page: startup/tutorial-03-variables.md
+      - title: AYAからの移行
+        page: startup/migration-from-aya.md
+      - title: 里々からの移行
+        page: startup/migration-from-satolili.md
+
+  - title: マニュアル
+    page: INDEX.md#調べたいとき
+    children:
+      - title: 基本
+        page: INDEX.md#基本-basic
+      - title: 文法
+        page: grammar/index.md
+      - title: システム辞書
+        page: INDEX.md#システム辞書-system
+      - title: 用途別関数一覧
+        page: functions/index.md
+      - title: 名前順関数一覧
+        page: system/system-functions-index.md
+      - title: エラー処理関数
+        page: system/error-handling-functions.md
+
+  - title: Tips
+    page: INDEX.md#tips-tips
+    children:
+      - title: 困ったときの対処法
+        page: other/troubleshooting.md
+      - title: トークべた書き支援ライブラリ
+        page: other/talklib.md
+      - title: 開発情報検索
+        url: http://ukadev.shillest.net/
+
+  - title: SHIORI以外のYAYA
+    children:
+      - title: YAYA as SAORI
+        page: other/yaya-as-saori.md
+      - title: YAYA as MAKOTO
+        page: other/yaya-as-makoto.md
+      - title: YAYA as PLUGIN
+        page: other/yaya-as-plugin.md
+
+  - title: 連絡・掲示板
+    children:
+      - title: 整備班BTS
+        url: https://bts.shillest.net/
+      - title: GitHub Issues
+        url: https://github.com/YAYA-shiori/yaya-docs/issues
