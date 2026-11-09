@@ -390,6 +390,14 @@ html {
 #menubar ul ul {
 	margin-top: .2em;
 }
+/* サイトの外へ飛ぶリンクの印（読み上げには出さない） */
+#menubar a.external::after {
+	content: "\2197";
+	content: "\2197" / "";
+	margin-left: .2em;
+	font-size: 85%;
+	color: #777;
+}
 #menubar a[aria-current="page"] {
 	font-weight: bold;
 	color: #a63d21;

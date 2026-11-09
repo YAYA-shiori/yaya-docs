@@ -319,7 +319,8 @@ def menu_html(root, current_md, from_url):
         link = node_href(n, from_url)
         if link:
             cur = ' aria-current="page"' if current_md is not None and n.target and n.target == (current_md, '') else ''
-            label = f'<a href="{esc(link)}"{cur}>{label}</a>'
+            ext = ' class="external"' if n.ext else ''     # サイトの外へ飛ぶリンクは、CSS で印（↗）を付ける
+            label = f'<a href="{esc(link)}"{ext}{cur}>{label}</a>'
         sub = '\n<ul>\n' + '\n'.join(li(c) for c in n.children) + '\n</ul>\n' if n.children else ''
         return f'<li>{label}{sub}</li>'
     return '<ul>\n' + '\n'.join(li(c) for c in root.children) + '\n</ul>'
