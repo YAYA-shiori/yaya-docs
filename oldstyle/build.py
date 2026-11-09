@@ -268,8 +268,11 @@ def menu_html(root, current, from_url):
 
 
 def breadcrumb_html(node, from_url):
-    if node is None or node.page == 'index.md':
-        return ''
+    # 旧版の「Top(FrontPage)」と同じく、トップページでも出す（そのページ自身は文字だけ）
+    if node is None:
+        return f'<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n<li><a href="{rel_url(from_url, "")}">トップ</a></li>\n</ul>\n</nav>\n'
+    if node.page == 'index.md':
+        return '<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n<li>トップ</li>\n</ul>\n</nav>\n'
     chain = []
     n = node
     while n.parent is not None:
@@ -508,7 +511,7 @@ def build_404(root, template):
     content = '<h1>ページが見つかりません</h1>\n<p>お探しのページは、移動したか、無くなったようです。左のメニューか、上の検索欄から探してください。</p>\n'
     write('404.html', template.substitute(
         title=esc(f'ページが見つかりません - {SITE_NAME}'), description='ページが見つかりません', head='<meta name="robots" content="noindex">\n',
-        root=SITE_PATH, home=SITE_PATH, body_attr='', breadcrumb='', menu=menu_html(root, None, None), content=content,
+        root=SITE_PATH, home=SITE_PATH, body_attr='', breadcrumb=breadcrumb_html(None, None), menu=menu_html(root, None, None), content=content,
         navigation_top='', navigation_bottom=''))
 
 

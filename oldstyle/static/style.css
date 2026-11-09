@@ -226,12 +226,20 @@ td p, th p {
 	padding: 0 0 .5em 0;
 }
 
-/* ---- ヘッダ（旧版: 左にタイトル画像、右の黒い帯にロゴとパンくず）。検索欄と翻訳ボタンは帯の右 ---- */
+/* ---- ヘッダ（旧版: 左にタイトル画像、右の黒い帯にロゴとパンくず）。検索欄と翻訳ボタンは帯の右。
+   スクロールしても上に残す（狭い画面を除く）。ロゴ画像の地色は #212121 ---- */
+html {
+	scroll-padding-top: 90px;   /* 固定のヘッダに、#アンカーの見出しが隠れないように */
+}
 #header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
 	display: flex;
 	align-items: stretch;
-	min-height: 80px;
-	background-color: #202020;
+	height: 80px;
+	box-sizing: border-box;
+	background-color: #212121;
 	border-bottom: 1px solid #dcdcdc;
 }
 #site-logo {
@@ -247,34 +255,37 @@ td p, th p {
 #header1 {
 	flex: 1 1 auto;
 	display: flex;
-	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
 	gap: .5em 1.5em;
-	padding: 6px 16px;
+	padding: 0 16px 0 12px;
 	min-width: 0;
 	border-right: 1px solid #dcdcdc;
-	background-color: #202020;
+	background-color: #212121;
 	color: #ffffff;
+}
+#site-title {
+	min-width: 0;
 }
 #site-name {
 	margin: 0;
 	padding: 0;
-	font-size: 28px;
-	font-weight: bold;
-	line-height: 1.2;
-	letter-spacing: .04em;
+	line-height: 0;
 }
 #site-name a:link, #site-name a:visited, #site-name a:hover {
-	color: #ffffff;
 	background-color: transparent;
 	text-decoration: none;
+}
+#site-name img {
+	display: block;
+	max-width: 100%;
+	height: auto;
 }
 /* 旧版の div#virtualdir（白い文字のパンくず） */
 #breadcrumb ul {
 	display: flex;
 	flex-wrap: wrap;
-	margin: .2em 0 0;
+	margin: 2px 0 0 4px;
 	padding: 0;
 	list-style: none;
 	font-size: 90%;
@@ -305,6 +316,7 @@ td p, th p {
 	align-items: center;
 	gap: .3em;
 	flex: 0 1 22em;
+	min-width: 9em;
 }
 #search form {
 	flex: 1 1 auto;
@@ -347,8 +359,8 @@ td p, th p {
 	box-sizing: border-box;
 	width: 170px;
 	position: sticky;
-	top: 0;
-	max-height: 100vh;
+	top: 81px;                       /* 固定のヘッダの下 */
+	max-height: calc(100vh - 81px);
 	overflow-y: auto;
 	padding: 0 0 1em 0;
 	border-right: 1px solid #dcdcdc;
@@ -739,8 +751,14 @@ body.y6 #body .y6-cta a:hover {
 
 /* ---- 幅が狭いとき: ヘッダ → 本文 → 目次の縦並びにする ---- */
 @media (max-width: 800px) {
+	/* 縦に狭いので、ヘッダは固定せず、縦に積む */
+	html {
+		scroll-padding-top: 0;
+	}
 	#header {
+		position: static;
 		flex-wrap: wrap;
+		height: auto;
 	}
 	#site-logo {
 		width: 120px;
@@ -752,12 +770,13 @@ body.y6 #body .y6-cta a:hover {
 		height: auto;
 	}
 	#header1 {
+		flex-wrap: wrap;
 		flex-basis: 0;
 		padding: 6px 10px;
 		border-right: 0;
 	}
-	#site-name {
-		font-size: 20px;
+	#site-name img {
+		width: 245px;
 	}
 	#search {
 		flex: 1 1 100%;

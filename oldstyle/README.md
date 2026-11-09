@@ -25,7 +25,7 @@ python -m http.server -d _site        # プレビュー（ディレクトリ形�
 
 ```
 body[data-root]
-  header#header     … #site-logo（旧版のタイトル画像）、#header1（#site-name、nav#breadcrumb、#search = 検索欄 + 翻訳ボタン）
+  header#header     … 固定（sticky。幅 800px 以下を除く）。#site-logo（旧版のタイトル画像）、#header1（#site-name = ロゴ画像、nav#breadcrumb、#search = 検索欄 + 翻訳ボタン）
   div#page
     nav#menubar     … 左のメニュー（入れ子の ul）。いま開いているページのある章だけ、下の階層を出す
     main#body       … nav.navi（Prev / Home / Next）、本文（先頭に div.contents の目次）、nav.navi
@@ -37,4 +37,4 @@ body[data-root]
 - ページの無い章（基本・Tips など）の項目は、トップページの `## 基本 (basic/)` のような節へのリンクになる
 - 見出しの末尾の `†` は、その見出しへのリンク。ページ先頭の `div.contents` は、H2・H3 の目次
 - OGP は `build.py` の `OGP`、`other/yaya6-launch.md` の暗い装いは `style.css` の `body.y6` と `.y6-*`
-- ヘッダの画像 `skin/title.png` は旧 wiki のもの。旧版のロゴ画像（「Wiki」「PukiWiki Plus!」の文字入り）は使わず、サイト名は文字で出している
+- ヘッダの画像 `skin/title.png` は旧 wiki のもの。ロゴ画像 `skin/logo.png` は、このサイト用に作り直したもの（旧版のロゴは「Wiki」「PukiWiki Plus!」の文字入りだった）
