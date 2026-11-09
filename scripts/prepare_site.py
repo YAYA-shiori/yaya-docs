@@ -1,4 +1,4 @@
-"""GitHub Pages 用に原稿を _site_src/ へ写す。
+"""サイトのビルド（oldstyle/build.py）のために、原稿を _site_src/ へ写す。
 
 - INDEX.md を index.md（トップページ）にし、INDEX.md へのリンクも書き換える
 - GitHub では表示できるが Python-Markdown では崩れる書き方を直す
@@ -12,8 +12,6 @@
 - まとめた元ページ（functions/NAME.md、grammar/NN-xxx.md）へのリンクは、まとめたページの見出しへのリンクに
   書き換える。元ページの URL には移動先へ飛ばすだけの HTML を置く（外部からのリンクを切らないため）
 - 生の Markdown 原稿を _raw/ に写す（ビルド後に _site へ重ねる。llms.txt から INDEX.md などを辿れるようにする）
-- 見た目のための目印（attr_list の class）を、原稿の写しに付ける。まとめたページの関数の名前（H2）に
-  bundle-item、トップページの節（H2）に top-section（見た目は assets/extra.css）
 原稿そのものは書き換えない。
 """
 import os
@@ -26,6 +24,7 @@ from pymdownx.slugs import slugify
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
 OUT = os.path.join(ROOT, '_site_src')
+SITE_URL = 'https://yaya-shiori.github.io/yaya-docs/'
 DIRS = ['basic', 'other', 'startup', 'system', 'tips']
 
 # 分類名 → functions/ に作るページのファイル名（関数名と区別できる小文字の ASCII）
@@ -87,7 +86,7 @@ BARE_FUNC = re.compile(r'(?<![A-Za-z0-9_./\-])(' + FUNC_ALT + r')(?![A-Za-z0-9_\
 CODE_FUNC = re.compile(r'`(' + FUNC_ALT + r')(?:\(.*\))?`')
 PROTECTED = re.compile(r'!?\[[^\]]*\]\([^)]*\)|`[^`]*`|<[^>]+>|https?://\S+')
 
-# `_in_` や `_RUNTIME_DIC_` のように _ で挟んだ名前は GitHub でも MkDocs でも斜体になってしまう。
+# `_in_` や `_RUNTIME_DIC_` のように _ で挟んだ名前は GitHub でも Python-Markdown でも斜体になってしまう。
 # 斜体は *var* で書く決まりにして、コードスパンの外の _名前_ を警告する（Python-Markdown と同じ判定）
 UNDERSCORE_EM = re.compile(r'(?<!\w)_(?!_)(.+?)(?<!_)_(?!\w)')
 NOT_EM = re.compile(r'`[^`]*`|<[^>]+>|https?://\S+|\]\([^)]*\)')
@@ -310,33 +309,13 @@ def function_categories():
     return cats
 
 
-def site_url():
-    with open(os.path.join(ROOT, 'mkdocs.yml'), encoding='utf-8') as f:
-        return re.search(r'^site_url: *(\S+)', f.read(), re.M).group(1)
-
-
-def mark_item(text):
-    """まとめたページの項目の名前（先頭の H2。{#id} を持つ）に、役の class（bundle-item）を付ける"""
-    return re.sub(r'^(## .+ \{#[^}\s]+)\}', r'\1 .bundle-item}', text, count=1, flags=re.M)
-
-
-def mark_top(text):
-    """トップページの節（H2）の見出しに、役の class（top-section）を付ける"""
-    lines = text.split('\n')
-    in_fence = False
-    for i, line in enumerate(lines):
-        if FENCE.match(line):
-            in_fence = not in_fence
-        elif not in_fence and re.match(r'^## +\S', line):
-            lines[i] = f'{line.rstrip()} {{: .top-section }}'
-    return '\n'.join(lines)
-
-
 def write_redirect(old, page, frag):
     """まとめる前のページ old（.md）の URL に置く、まとめたページの見出しへ飛ばす HTML"""
     base = old[:-3] + '/'
-    rel = posixpath.relpath(page[:-3], base) + f'/#{frag}'
-    absolute = site_url() + page[:-3] + f'/#{frag}'
+    # index.md のページの URL は <ディレクトリ>/
+    page_dir = posixpath.dirname(page) if posixpath.basename(page) == 'index.md' else page[:-3]
+    rel = posixpath.relpath(page_dir, base) + f'/#{frag}'
+    absolute = SITE_URL + page_dir + f'/#{frag}'
     write(base + 'index.html',
           '<!doctype html>\n<html lang="ja">\n<meta charset="utf-8">\n<title>移動しました</title>\n'
           f'<link rel="canonical" href="{absolute}">\n'
@@ -362,7 +341,7 @@ def build_functions(cats):
             text = re.sub(r'^\*\*Category:\*\*.*\n', '', read(src), count=1, flags=re.M)
             # 関数名は H2。その下の節（Signature など）は H4 にして、右の目次を関数名だけにする
             item = render(src, text, page, lambda level: 2 if level == 1 else level + 2).strip('\n')
-            parts.append(mark_item(item))
+            parts.append(item)
         write(page, join_items(parts[0], parts[1:]) + '\n')
     overview = [f'# {FUNCTIONS_TITLE}', '', 'YAYA に組み込まれている関数を、分類ごとのページにまとめています。関数名から探すときは'
                 ' [システム関数一覧](../system/system-functions-index.md) か、サイト上部の検索を使ってください。']
@@ -385,7 +364,7 @@ def register_grammar():
 
 
 def build_grammar(chapters):
-    parts = [f'# {GRAMMAR_TITLE}\n\nYAYA の文法を 1 ページにまとめています。章ごとの内容は右の目次から飛べます。']
+    parts = [f'# {GRAMMAR_TITLE}\n\nYAYA の文法を 1 ページにまとめています。章ごとの内容はページ先頭の目次から飛べます。']
     for name in chapters:
         src = f'grammar/{name}'
         parts.append(render(src, read(src), 'grammar/index.md', lambda level: level + 1).strip('\n'))
@@ -395,14 +374,14 @@ def build_grammar(chapters):
 
 
 RAW = os.path.join(ROOT, '_raw')
-RAW_SKIP_DIRS = {'scripts', 'overrides', 'assets', 'node_modules'}
+RAW_SKIP_DIRS = {'scripts', 'oldstyle', 'assets', 'node_modules'}
 RAW_SKIP_FILES = {'README.md', 'CLAUDE.md'}
 RAW_EXTRA = []   # .md 以外で、原稿から参照されていて一緒に置くファイル
 
 
 def build_raw():
     """生の Markdown 原稿を、リポジトリと同じ相対パスで _raw/ に写す。
-    zensical は docs_dir の .md をページにしてしまうので _site_src/ には置けない。ビルド後に _site へ重ねる"""
+    _site_src/ の .md はページにするための写し（見出しの id などを直してある）なので、生の原稿は別に置く。ビルド後に _site へ重ねる"""
     if os.path.exists(RAW):
         shutil.rmtree(RAW)
     rels = list(RAW_EXTRA)
@@ -426,7 +405,7 @@ def main():
     chapters = register_grammar()
     build_functions(cats)
     build_grammar(chapters)
-    write('index.md', mark_top(render('INDEX.md', read('INDEX.md'), 'index.md')))
+    write('index.md', render('INDEX.md', read('INDEX.md'), 'index.md'))
     shutil.copy(os.path.join(ROOT, '.nav.yml'), os.path.join(OUT, '.nav.yml'))
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
     shutil.copytree(os.path.join(ROOT, 'attachment'), os.path.join(OUT, 'attachment'))

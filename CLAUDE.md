@@ -26,32 +26,34 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 ## GitHub Pages
 
-`main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が Zensical（Material for MkDocs の後継。Material テーマ互換）でビルドし、https://yaya-shiori.github.io/yaya-docs/ に公開する。ビルドは `zensical build --strict` で、リンク切れ・アンカー切れがあると失敗する。
+`main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が `oldstyle/build.py` と `oldstyle/check.py` を走らせ、https://yaya-shiori.github.io/yaya-docs/ に公開する。以前の Zensical 版は `old-zensical` ブランチに残してある。ビルドの仕組みは [`oldstyle/README.md`](oldstyle/README.md)。原稿を書くうえで知っておくことは次のとおり。
 
-- 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする（`assets/` の画像・CSS も写す）。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる
-- 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `INDEX.md` の表で決まる。新しい関数は `INDEX.md` の表に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも `../functions/IHASH.md` や `05-arrays.md#範囲外の要素` と従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
-- まとめた元ページの URL（`functions/IHASH/` など）には、移動先へ飛ばすだけの HTML を `prepare_site.py` が置く。まとめたページでは関数名が H2、その下の節（書式・引数など）が H4 で、ページの目次（左の列に統合してある）は `toc_depth: 3` により関数名だけになる
+- サイトの見た目と構造は、旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）を模している。上にヘッダ（左に旧版のタイトル画像、右の黒い帯にサイト名・パンくずリスト・検索欄・翻訳ボタン）、左に目次（`#menubar`）、右に本文（`#body`。前後のページ `Prev` / `Home` / `Next` が上下に付く）。旧版にあった wiki の道具（一覧・検索・最終更新・編集・添付のリンク、最近更新されたページ、フッタ）は無い。HTML は HTML5 で、JavaScript は検索（`search.js`）と翻訳ボタン（`translate.js`）だけ
+- ページの URL は、Zensical 版と同じディレクトリ形式（`other/yaya/` など）。外部からのリンクや OGP を切らないため、変えない。`file://` ではディレクトリのリンクが `index.html` を開かないので、手元では `python -m http.server -d _site` で見る
+- 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる。原稿内のリンク（`../functions/IHASH.md` や `05-arrays.md#範囲外の要素` など）は、ビルドが出力先の相対パス（`../string/#ihash`）に書き換える。行き先が無ければビルドが止まる
+- 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `INDEX.md` の表で決まる。新しい関数は `INDEX.md` の表に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
+- まとめた元ページの URL（`functions/IHASH/` など）には、移動先へ飛ばすだけの HTML を `prepare_site.py` が置く。まとめたページでは関数名が H2、その下の節（書式・引数など）が H4 になる
+- 各ページの先頭（最初の H2 の前）に、旧版の `div.contents` にあたる目次を `oldstyle/build.py` が付ける（H2・H3 が 3 つ以上あるページ。トップページは H2 だけ）。見出しの末尾の `†` は、その見出しへのリンク（旧 wiki と同じ）
 - `llms.txt`（AI エージェント向けの探し方の案内。`INDEX.md` と各ディレクトリの入口だけを書く）はサイトのルートに置かれる。ページごとの一覧は載せないので、ページを足しても直さなくてよい。ディレクトリを足したときは「構成」に 1 行足す
-- 生の Markdown 原稿（`README.md` と `CLAUDE.md` 以外の `.md`）は、リポジトリと同じパスでサイトにも置かれる。`scripts/prepare_site.py` が `_raw/` に写し、workflow がビルド後に `_site` へ重ねる（zensical は `.md` をページにしてしまうので、`_site_src/` には置けない）。`llms.txt` や `INDEX.md` の相対リンクは、このおかげでサイト上でも辿れる
-- 設定は `mkdocs.yml` をそのまま読ませている。章立ては `.nav.yml`（mkdocs-awesome-nav）。最上位の章はヘッダのタブ（`navigation.tabs`）になり、左の列にはそのタブのページ一覧と開いているページの目次（`toc.integrate`）が並ぶ（画面の幅が約 1220px に満たないとハンバーガーのメニューにまとまる）。各ページの名前は H1 から決まる
-- GitHub では表示できても MkDocs（Python-Markdown）では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
-- `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも MkDocs でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する
-- 注意書きは `!!! note "タイトル"` / `!!! warning "タイトル"`（admonition）で書く。本文は 4 スペース字下げ。転載ページの `> [AYAYA Wiki](...) より転載` は引用のまま
+- 生の Markdown 原稿（`README.md` と `CLAUDE.md` 以外の `.md`）は、リポジトリと同じパスでサイトにも置かれる（`prepare_site.py` が `_raw/` に写し、ビルドが出力に重ねる）。`llms.txt` や `INDEX.md` の相対リンクは、このおかげでサイト上でも辿れる
+- 章立て（左のメニュー・パンくず・前後のページ）は `.nav.yml`。最上位の章は、ルートの `.nav.yml` に書く。`.nav.yml` の無いディレクトリは、`index.md`（あれば先頭）のあとファイル名順で並べ、題は各ページの H1（`functions/.nav.yml` は `prepare_site.py` が作る）。前後のページは、メニューの順（深さ優先）。メニューは、開いているページのある章だけ下の階層を出す。ページを持たない章（基本・Tips など）は、トップページの対応する節（`## 基本 (basic/)`。見出しの末尾が `(ディレクトリ名/)`）へのリンクになる
+- Markdown の拡張は `tables` `admonition` `attr_list` `md_in_html` `mdx_truly_sane_lists` `pymdownx.superfences` `toc`。見出しのアンカーは GitHub と同じく日本語のまま（`pymdownx.slugs.slugify(case='lower')`）で、`prepare_site.py` のリンク書き換えと同じ変換
+- GitHub では表示できても Python-Markdown では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
+- `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも Python-Markdown でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する
+- 注意書きは `!!! note "タイトル"` / `!!! warning "タイトル"`（admonition）で書く。本文は 4 スペース字下げ。転載ページの `> [AYAYA Wiki](...) より転載` は引用のまま（旧版の `blockquote` の橙の枠になる）
 - 本文や See Also に書いた関数名（`functions/` にページがあるもの。素の `FOPEN` でもコードスパンの `` `FOPEN` `` / `` `FOPEN(...)` `` でもよい）は、`prepare_site.py` がサイト用に関数ページへのリンクにする（旧 wiki の自動リンクの代わり）。見出し・コードブロック・既存のリンクの中と、関数ページ自身の名前はリンクにしない。原稿には書き込まれないので GitHub 上ではリンクにならない
 - 関数ページの見出し（Signature / Parameters / Returns など）は原稿では英語のまま書く。サイトでは `prepare_site.py` の `HEADING_JA` で日本語に置き換える
-- ヘッダの色は `assets/extra.css` の `--md-primary-fg-color` で決める（`mkdocs.yml` の `theme.palette` の `primary` は `custom`）。ukatech.shillest.net の YAYA の主色（`#9b3f3a`、ダークモードは `#d0736b`）に合わせている
-- OGP / Twitter カードのタグは `overrides/main.html` が全ページに出す。ページごとのタイトル・説明・画像（1200x630 の PNG）は `mkdocs.yml` の `extra.ogp` にページの URL（`other/yaya6-launch/` のように末尾が `/`。トップは空文字）をキーにして書く（原稿に front matter は書かない。GitHub で表として表示されてしまうため）
-- Zensical は 0.0.x の版を固定している（`requirements.txt`）。Material for MkDocs は 2026-11-05 にサポート終了のため移行した（MkDocs 2.0 はプラグインや Material テーマと互換性が無い）
-- Zensical のテンプレートは MiniJinja で、`page.file` や `page.is_homepage` が無い。`overrides/main.html` はページの URL（`page.url`）で判定する
-- 見た目は `theme.variant: classic` で従来のまま。Zensical の既定は新デザインの modern
-- ukadoc-spec の見た目の部品を、YAYA の主色に合わせて移してある（`assets/extra.css` の「束ねたページの見た目」と、`!!! note` の題のロゴ）。`scripts/prepare_site.py` が、目印の class を原稿の写しに付ける。分類ごとにまとめた関数ページの関数名（H2）に `bundle-item`（項目名の帯）、トップページの節（H2）に `top-section`（帯）。`bundle-item` のあるページでは、書式・使用例などの見出し（H4）とその直後のコードブロックを 1 つの箱にする。色は `--ukd-*`（`assets/extra.css`）に集め、ヘッダの主色（`--md-primary-*`）から導く。`--ukd-*` は body に付く `[data-md-color-scheme]` に置く（`:root` に置くと、暗い表示の主色を読めない）。主色を変えたら、帯と箱の見え方も確かめる。
-- ヘッダに翻訳ボタンがある（`assets/translate.js`。`mkdocs.yml` の `extra_javascript`、見た目は `assets/extra.css` の `.ukadoc-translate`）。ブラウザ組み込みの Translator API（Chrome 138 以降のデスクトップ版など）で、本文と左メニューを日本語から英語・中国語（繁体 `zh-Hant`・簡体 `zh`）へ機械翻訳する。API が無いブラウザではボタンを出さない。訳すのは日本語を含む文だけで、`code` `pre` `kbd` と `translate="no"` の中は訳さない。文はブロック（`p` `li` `td` など）の中の連なりを単位にまとめて訳し、リンク・太字・コードスパンは印（`<x1/>` `<a2>…</a2>`）に置き換えて訳してから元の要素へ戻す（印が崩れた文は断片ごとの訳に切り替える）。訳したくない語は原稿で `<span translate="no">…</span>` と囲める。読める程度の品質でよいとしている。JavaScript を使うのはこのボタンだけ
+- 見た目は `oldstyle/static/style.css`（旧 `skin/default.css` の規則のうち使う分。色と寸法は旧版のまま）。ダークモードは無い。ヘッダの画像 `oldstyle/static/skin/title.png` は旧 wiki のもの（`assets/logo.png` と同じキャラクター）。旧版のロゴ画像は「Wiki」「PukiWiki Plus!」の文字が入っているので使わず、サイト名は文字で出す。`other/yaya6-launch.md` だけ、本文の領域を暗い配色にする専用の装い（`.y6-*`。`style.css` の末尾）がある
+- OGP / Twitter カードのタグは `oldstyle/build.py` が全ページに出す。ページごとのタイトル・説明・画像（1200x630 の PNG）は `build.py` の `OGP` に、ページの URL（`other/yaya6-launch/` のように末尾が `/`。トップは空文字）をキーにして書く（原稿に front matter は書かない。GitHub で表として表示されてしまうため）
+- 検索は、ビルド時に作る `search-index.js`（節ごとの本文）を、`search.js` が空白区切りの語の AND で部分一致検索する。ヘッダの検索欄に打ち込むとドロップダウンが出て、Enter で `search/?q=` に全件が並ぶ。ページの深さが違うので、`<body data-root="../../">` でサイトのルートへの相対パスを渡している
+- ヘッダに翻訳ボタンがある（`oldstyle/static/translate.js`。見た目は `style.css` の `.ukadoc-translate`）。ブラウザ組み込みの Translator API（Chrome 138 以降のデスクトップ版など）で、本文と左メニューを日本語から英語・中国語（繁体 `zh-Hant`・簡体 `zh`）へ機械翻訳する。API が無いブラウザではボタンを出さない。訳すのは日本語を含む文だけで、`code` `pre` `kbd` と `translate="no"` の中は訳さない。文はブロック（`p` `li` `td` など）の中の連なりを単位にまとめて訳し、リンク・太字・コードスパンは印（`<x1/>` `<a2>…</a2>`）に置き換えて訳してから元の要素へ戻す（印が崩れた文は断片ごとの訳に切り替える）。訳したくない語は原稿で `<span translate="no">…</span>` と囲める。読める程度の品質でよいとしている。JavaScript を使うのは検索とこのボタンだけ
+- `sitemap.xml` と `404.html` もビルドが作る。404.html のリンクは、どの深さで開かれるかわからないので、サイトのルートからの絶対パス（`/yaya-docs/…`）
 
-手元で確認するとき（`_site_src/` と `_site/` は `.gitignore` 済み）:
+手元で確認するとき（`_site_src/` `_site/` `_raw/` は `.gitignore` 済み）:
 
 ```sh
 pip install -r requirements.txt
-python scripts/prepare_site.py
-zensical build --strict    # 警告（リンク切れ・アンカー切れ）が出ないことを確認する
-zensical serve             # http://127.0.0.1:8000/yaya-docs/ でプレビュー
+python oldstyle/build.py    # prepare_site.py で _site_src/ を作り、_site/ に出力する（--no-prepare で作り直さない）
+python oldstyle/check.py    # 出力のリンク切れ・アンカー切れ・画像の切れ・検索の索引の URL を調べる（エラーが 0 件であること）
+python -m http.server -d _site    # http://127.0.0.1:8000/ でプレビュー
 ```

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title</title>
+<meta name="description" content="$description">
+<link rel="icon" href="${root}assets/logo.png">
+<link rel="stylesheet" href="${root}style.css">
+$head</head>
+<body data-root="$root"$body_attr>
+<header id="header">
+<a id="site-logo" href="$home"><img src="${root}skin/title.png" width="170" height="80" alt="YAYA マニュアル"></a>
+<div id="header1">
+<div id="site-title">
+<p id="site-name"><a href="$home">YAYA マニュアル</a></p>
+$breadcrumb</div>
+<div id="search">
+<form action="${root}search/" role="search">
+<div class="search-field">
+<input id="query" name="q" type="search" autocomplete="off" placeholder="マニュアル内検索" title="マニュアル内検索" aria-label="マニュアル内検索" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-dropdown">
+<span class="search-icon" aria-hidden="true">🔍</span>
+</div>
+</form>
+</div>
+</div>
+</header>
+<div id="page">
+<nav id="menubar" aria-label="目次">
+<h5>Menu</h5>
+$menu
+</nav>
+<main id="body">
+$navigation_top$content
+$navigation_bottom</main>
+</div>
+<script src="${root}search.js" defer></script>
+<script src="${root}translate.js" defer></script>
+</body>
+</html>
