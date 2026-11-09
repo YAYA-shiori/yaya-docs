@@ -3,7 +3,7 @@ r"""YAYA マニュアルのサイトを作る（旧 AYAYA wiki の見た目を�
     python oldstyle/build.py              # scripts/prepare_site.py で _site_src/ を作り、_site/ に出力する
     python oldstyle/build.py --no-prepare # _site_src/ を作り直さない
 
-原稿（Markdown）→ HTML → 旧 wiki の構造（ヘッダ・左の #menubar・本文の #body・前後のページ）に組む。HTML は HTML5。
+原稿（Markdown）→ HTML → 旧 wiki の構造（ヘッダ・左の #menubar・本文の #body）に組む。HTML は HTML5。
 ページの URL は Zensical 版と同じ（other/yaya/ のようにディレクトリ。外部からのリンクを切らないため）。
 詳しくは oldstyle/README.md。
 """
@@ -114,7 +114,14 @@ def root_of(url):
     return rel_url(url, '')
 
 
-# ---------------------------------------------------------------- 章立て（.nav.yml）
+# ---------------------------------------------------------------- メニューと章立て（menu.yml）
+
+MENU_FILE = os.path.join(HERE, 'menu.yml')
+INDEX_SLUG = re.compile(r'^[a-z0-9][a-z0-9-]*(/[a-z0-9][a-z0-9-]*)*/$')
+GENERATED = {}      # 自動で作る索引ページ: 原稿のパス（basic/index.md など）→ その節の Node
+GENERATED_LIST = '.generated'   # 前のビルドで作った索引ページの記録（--no-prepare で消し残さないため）
+PLACED = {}         # 原稿のパス → 章立て（パンくずリスト）での位置の Node
+
 
 def plain(text):
     # 見出しの Markdown 記法（コード・リンク・{#id} など）を除いた文字
@@ -123,245 +130,222 @@ def plain(text):
     return text.strip()
 
 
-def h1_of(md):
+def h1_line(md):
     for line in read(os.path.join(SRC, md)).split('\n'):
         if line.startswith('# '):
-            return plain(line[2:])
+            return line[2:]
     error(f'{md} に H1 が無い')
     return md
 
 
+def h1_of(md):
+    return plain(h1_line(md))
+
+
+def md_escape(text):
+    """索引ページ（生成する Markdown）の題に書く、メニューの題の記号を Markdown として効かなくする"""
+    return re.sub(r'([\\`*_\[\]<>])', r'\\\1', text)
+
+
 class Node:
-    def __init__(self, title, page=None, depth=0, parent=None):
+    """menu.yml の 1 項目。左のメニュー・パンくずリスト・索引ページの元"""
+
+    def __init__(self, title, parent=None, title_md=None):
         self.title = title
-        self.page = page          # 原稿の写しでのパス。無ければ見出しだけ（トップページの節への案内になる）
-        self.depth = depth        # 最上位の項目が 1
+        self.title_md = title_md if title_md is not None else md_escape(title)   # 索引ページのリンクの文字（Markdown）
         self.parent = parent
-        self.children = []
-
-    @property
-    def url(self):
-        return page_url(self.page) if self.page else None
-
-
-def autolist(rel_dir):
-    """.nav.yml の無いディレクトリの並び（awesome-nav と同じ。index.md が先頭、あとはファイル名順、題は H1）"""
-    names = sorted((n for n in os.listdir(os.path.join(SRC, rel_dir)) if n.endswith('.md') and n != 'index.md'),
-                   key=str.lower)
-    entries = ['index.md'] if os.path.exists(os.path.join(SRC, rel_dir, 'index.md')) else []
-    return entries + names
-
-
-def read_nav_file(rel_dir):
-    path = os.path.join(SRC, rel_dir, '.nav.yml')
-    if os.path.exists(path):
-        with open(path, encoding='utf-8') as f:
-            return yaml.safe_load(f)['nav']
-    if rel_dir == '':
-        error('.nav.yml が無い')
-        return []
-    return autolist(rel_dir)
-
-
-def parse_entries(entries, rel_dir, parent):
-    """.nav.yml（mkdocs-awesome-nav の書式のうち使っている分）の nav を、parent の子にする。
-    `index.md` は parent 自身のページ、`file.md` は H1 を題にしたページ、`題: file.md` は題つきのページ、
-    `題: フォルダ` は下の .nav.yml（無ければ自動の並び）"""
-    for entry in entries:
-        if isinstance(entry, str):
-            md = posixpath.join(rel_dir, entry) if rel_dir else entry
-            if entry == 'index.md':
-                parent.page = md
-            else:
-                parent.children.append(Node(h1_of(md), page=md, depth=parent.depth + 1, parent=parent))
-            continue
-        (title, value), = entry.items()
-        node = Node(title, depth=parent.depth + 1, parent=parent)
-        parent.children.append(node)
-        if value.endswith('.md'):
-            node.page = posixpath.join(rel_dir, value) if rel_dir else value
-        else:
-            sub = posixpath.join(rel_dir, value) if rel_dir else value
-            parse_entries(read_nav_file(sub), sub, node)
-
-
-def load_nav():
-    root = Node(SITE_NAME, depth=0)
-    parse_entries(read_nav_file(''), '', root)
-    # 最上位の index.md は、題を「トップページ」としてページにする（旧版のメニューの先頭）
-    if root.page:
-        home = Node('トップページ', page=root.page, depth=1, parent=root)
-        root.children.insert(0, home)
-        root.page = None
-    return root
-
-
-def flatten(node, out):
-    for c in node.children:
-        if c.page:
-            out.append(c)
-        flatten(c, out)
-    return out
-
-
-def index_anchors():
-    """トップページの H2（「## 基本」のような節）の見出しの id の集まり。ページの無い章は、同じ題の節へ案内する"""
-    ids = set()
-    for line in read(os.path.join(SRC, 'index.md')).split('\n'):
-        if line.startswith('## '):
-            ids.add(prepare_site.heading_slug(line[3:].strip()))
-    return ids
-
-
-ANCHORS = set()
-
-
-def target(node):
-    """メニュー・パンくずがその項目へ向かう先 (URL, フラグメント)。ページの無い章は、トップページの同じ題の節"""
-    if node.page:
-        return node.url, ''
-    top = node
-    while top.parent is not None and top.parent.depth >= 1:
-        top = top.parent
-    frag = prepare_site.heading_slug(top.title)
-    if frag in ANCHORS:
-        return '', frag
-    return None
-
-
-def href(from_url, node):
-    t = target(node)
-    if t is None:
-        return None
-    return rel_url(from_url, t[0]) + ('#' + t[1] if t[1] else '')
-
-
-MENU_FILE = os.path.join(HERE, 'menu.yml')
-MENU = None     # menu.yml の項目（load_menu）。None なら、.nav.yml から自動で作るメニュー
+        self.children = []      # children:（左のメニューに出る）
+        self.listed = []        # list: のディレクトリのページ（左のメニューには出さず、索引ページとパンくずリストにだけ使う）
+        self.list_dirs = []
+        self.target = None      # 行き先（原稿のパス, フラグメント）
+        self.ext = None         # 外部のページの URL
+        self.md = None          # この項目がパンくずリストでの位置になる原稿（フラグメントの無い、ページそのもの）
 
 
 def menu_target(spec, where):
-    """menu.yml の page: に書いた原稿のパス（`INDEX.md#見出し`、まとめた元ページの `functions/IHASH.md` も可）の行き先 (URL, フラグメント)"""
+    """menu.yml の page: に書いた原稿のパス（`INDEX.md#見出し`、まとめた元ページの `functions/IHASH.md` も可）の行き先（原稿のパス, フラグメント）"""
     path, _, frag = spec.partition('#')
     path = 'index.md' if path == 'INDEX.md' else path
     if path in MD_PAGES:
-        return page_url(path), frag
+        return path, frag
     if path in prepare_site.MERGED:
         page, prefix = prepare_site.MERGED[path]
-        return page_url(page), prepare_site.FRAGMENTS.get((path, frag), prefix) if frag else prefix
+        return page, prepare_site.FRAGMENTS.get((path, frag), prefix) if frag else prefix
     error(f'{where}: page: {spec} の原稿が無い')
     return None
 
 
 def load_menu():
-    """oldstyle/menu.yml の menu: を読む。各項目は title:（必須）、page:（原稿）か url:（外部）、children:（下の項目）"""
-    if not os.path.exists(MENU_FILE):
-        return None
+    """oldstyle/menu.yml の menu: を読んで、Node の木にする。
+    各項目は title:（必須）、page:（原稿）か index:（自動で作る索引ページの URL）か url:（外部）、children:（下の項目）、list:（ディレクトリ）"""
     with open(MENU_FILE, encoding='utf-8') as f:
         data = yaml.safe_load(f)
+    root = Node(SITE_NAME)
 
-    def parse(items, where):
-        out = []
+    def parse(items, parent, where):
         for i, it in enumerate(items or []):
             here = f'menu.yml {where}[{i}]'
             if not isinstance(it, dict) or not it.get('title'):
                 error(f'{here}: title: が無い')
                 continue
-            if 'page' in it and 'url' in it:
-                error(f'{here}: page: と url: は同時に書けない')
-            target = None
+            node = Node(str(it['title']), parent)
+            parent.children.append(node)
+            if sum(k in it for k in ('page', 'index', 'url')) > 1:
+                error(f'{here}: page: index: url: は 1 つしか書けない')
             if it.get('page'):
-                t = menu_target(it['page'], here)
-                target = ('page',) + t if t else None
+                node.target = menu_target(it['page'], here)
+                if node.target and not node.target[1] and node.target[0] in MD_PAGES:
+                    node.md = node.target[0]
+            elif it.get('index'):
+                slug = str(it['index'])
+                md = slug + 'index.md'
+                if not INDEX_SLUG.match(slug):
+                    error(f'{here}: index: {slug} は basic/ のように、小文字の英数字とハイフンの名前で、末尾を / にして書く')
+                elif md in MD_PAGES or md in GENERATED:
+                    error(f'{here}: index: {slug} は、ほかのページと重なる')
+                else:
+                    GENERATED[md] = node
+                    node.md = md
+                    node.target = (md, '')
             elif it.get('url'):
-                target = ('ext', it['url'])
-            out.append({'title': str(it['title']), 'target': target, 'children': parse(it.get('children'), f'{where}[{i}]')})
-        return out
-    return parse(data.get('menu'), 'menu')
+                node.ext = str(it['url'])
+            lists = it.get('list') or []
+            node.list_dirs = [lists] if isinstance(lists, str) else list(lists)
+            parse(it.get('children'), node, f'{where}[{i}]')
+
+    parse(data.get('menu'), root, 'menu')
+    return root
 
 
-def custom_menu_html(items, current_url, from_url):
-    """menu.yml のメニュー。旧版の MenuBar と同じく、下の階層まで常に全部出す"""
-    def li(it):
-        label = esc(it['title'])
-        t = it['target']
-        if t and t[0] == 'ext':
-            label = f'<a href="{esc(t[1])}">{label}</a>'
-        elif t:
-            link = rel_url(from_url, t[1]) + ('#' + t[2] if t[2] else '')
-            cur = ' aria-current="page"' if current_url is not None and t[1] == current_url and not t[2] else ''
-            label = f'<a href="{link}"{cur}>{label}</a>'
-        sub = '\n<ul>\n' + '\n'.join(li(c) for c in it['children']) + '\n</ul>\n' if it['children'] else ''
-        return f'<li>{label}{sub}</li>'
-    return '<ul>\n' + '\n'.join(li(it) for it in items) + '\n</ul>'
+def walk(node):
+    for c in node.children:
+        yield c
+        yield from walk(c)
 
 
-def menu_html(root, current, from_url):
-    """左のメニュー。menu.yml があればその定義、無ければ .nav.yml から作る"""
-    if MENU is not None:
-        return custom_menu_html(MENU, current.url if current is not None else None, from_url)
-    return nav_menu_html(root, current, from_url)
+def list_pages(rel_dir, where):
+    """list: のディレクトリのページ（原稿のパス）。ディレクトリに .nav.yml があれば、その並びを先に、残りは H1 の順"""
+    if not os.path.isdir(os.path.join(SRC, rel_dir)):
+        error(f'{where}: list: {rel_dir} のディレクトリが無い')
+        return []
+    mds = [f'{rel_dir}/{n}' for n in os.listdir(os.path.join(SRC, rel_dir)) if n.endswith('.md') and n != 'index.md']
+    order = []
+    nav = os.path.join(SRC, rel_dir, '.nav.yml')
+    if os.path.exists(nav):
+        with open(nav, encoding='utf-8') as f:
+            order = [f'{rel_dir}/{e}' for e in yaml.safe_load(f)['nav'] if isinstance(e, str)]
+    first = [m for m in order if m in mds]
+    return first + sorted((m for m in mds if m not in first), key=h1_of)
 
 
-def nav_menu_html(root, current, from_url):
-    """.nav.yml から作るメニュー。トップの項目は常に出し、いま開いているページのある節だけ、下の階層を開く"""
-    opened = set()
-    n = current
-    while n is not None:
-        opened.add(id(n))
-        n = n.parent
+def place_pages(root):
+    """章立てでの位置を決める。ページは最初に出てきた項目の下に置く（同じページが何度か載っていてもよい）。
+    list: のページは、menu.yml のどこにも載っていないものだけが、その項目の下に加わる"""
+    for n in walk(root):
+        if n.md and n.md not in PLACED:
+            PLACED[n.md] = n
+    for n in walk(root):
+        for d in n.list_dirs:
+            for md in list_pages(d, f'menu.yml 「{n.title}」'):
+                if md not in PLACED:
+                    c = Node(h1_of(md), n, title_md=h1_line(md).strip())
+                    c.target = (md, '')
+                    c.md = md
+                    n.listed.append(c)
+                    PLACED[md] = c
+    for md in sorted(MD_PAGES | set(GENERATED)):
+        if md not in PLACED:
+            error(f'{md} が menu.yml に無い（children: に書くか、list: のディレクトリに入れる）')
+    for n in walk(root):
+        if not n.md and not n.ext and any(d.md for d in walk(n)):
+            error(f'menu.yml 「{n.title}」: 下にページがあるのに、page: も index: も無い（索引ページを作るなら index: を書く）')
 
-    def li(node):
-        label = esc(node.title)
-        link = href(from_url, node)
+
+def index_markdown(node):
+    """自動で作る索引ページの原稿。menu.yml の children: と、list: のページを並べるだけ"""
+    base = posixpath.dirname(node.md)
+    lines = [f'# {node.title_md}', '']
+    for c in node.children + node.listed:
+        if c.ext:
+            link = c.ext
+        elif c.target:
+            md, frag = c.target
+            link = posixpath.relpath(md, base) + ('#' + frag if frag else '')
+        else:
+            link = None
+        lines.append(f'- [{c.title_md}]({link})' if link else f'- {c.title_md}')
+    return '\n'.join(lines) + '\n'
+
+
+def cleanup_generated():
+    """前のビルドで作った索引ページを消す（--no-prepare のとき、_site_src/ に残っている）"""
+    record = os.path.join(SRC, GENERATED_LIST)
+    if not os.path.exists(record):
+        return
+    with open(record, encoding='utf-8') as f:
+        for md in json.load(f):
+            for base in (SRC, RAW):
+                if os.path.exists(os.path.join(base, md)):
+                    os.remove(os.path.join(base, md))
+    os.remove(record)
+
+
+def write_generated():
+    """索引ページの原稿を _site_src/ と _raw/（生の原稿としてサイトにも置く）に書く"""
+    for md, node in GENERATED.items():
+        text = index_markdown(node)
+        for base in (SRC, RAW):
+            path = os.path.join(base, md)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(text)
+    with open(os.path.join(SRC, GENERATED_LIST), 'w', encoding='utf-8') as f:
+        json.dump(sorted(GENERATED), f)
+
+
+def node_href(node, from_url):
+    if node.ext:
+        return node.ext
+    if node.target:
+        md, frag = node.target
+        return rel_url(from_url, page_url(md)) + ('#' + frag if frag else '')
+    return None
+
+
+def menu_html(root, current_md, from_url):
+    """左のメニュー。旧版の MenuBar と同じく、menu.yml の children: を下の階層まで常に全部出す"""
+    def li(n):
+        label = esc(n.title)
+        link = node_href(n, from_url)
         if link:
-            cur = ' aria-current="page"' if node is current else ''
-            label = f'<a href="{link}"{cur}>{label}</a>'
-        sub = ''
-        if node.children and id(node) in opened:
-            sub = '\n<ul>\n' + '\n'.join(li(c) for c in node.children) + '\n</ul>\n'
+            cur = ' aria-current="page"' if current_md is not None and n.target and n.target == (current_md, '') else ''
+            label = f'<a href="{esc(link)}"{cur}>{label}</a>'
+        sub = '\n<ul>\n' + '\n'.join(li(c) for c in n.children) + '\n</ul>\n' if n.children else ''
         return f'<li>{label}{sub}</li>'
     return '<ul>\n' + '\n'.join(li(c) for c in root.children) + '\n</ul>'
 
 
-def breadcrumb_html(node, from_url):
-    # 旧版の「Top(FrontPage)」と同じく、トップページでも出す（そのページ自身は文字だけ）
-    if node is None:
-        return f'<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n<li><a href="{rel_url(from_url, "")}">トップ</a></li>\n</ul>\n</nav>\n'
-    if node.page == 'index.md':
-        return '<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n<li>トップ</li>\n</ul>\n</nav>\n'
+def breadcrumb_html(md, from_url, last=None):
+    """パンくずリスト。md の章立てでの位置を、上の項目から順にたどる（旧版の「Top(FrontPage)」と同じく、トップページでも出す）。
+    md が None のページ（検索・404）は、last の題を最後に付ける"""
     chain = []
-    n = node
-    while n.parent is not None:
+    n = PLACED.get(md)
+    while n is not None and n.parent is not None:
         chain.append(n)
         n = n.parent
     chain.reverse()
-    items = [f'<li><a href="{rel_url(from_url, "")}">トップ</a></li>']
-    for n in chain:
-        link = href(from_url, n) if n is not node else None
-        items.append(f'<li><a href="{link}">{esc(n.title)}</a></li>' if link else f'<li>{esc(n.title)}</li>')
+    chain = [n for n in chain if n.md != 'index.md']
+    items = []
+    if md == 'index.md':
+        items.append('<li>トップ</li>')
+    else:
+        items.append(f'<li><a href="{rel_url(from_url, "")}">トップ</a></li>')
+        for n in chain:
+            link = node_href(n, from_url) if n.md != md else None
+            items.append(f'<li><a href="{esc(link)}">{esc(n.title)}</a></li>' if link else f'<li>{esc(n.title)}</li>')
+        if last:
+            items.append(f'<li>{esc(last)}</li>')
     return '<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n' + '\n'.join(items) + '\n</ul>\n</nav>\n'
-
-
-def navigation_html(node, prev, nxt, from_url, bottom):
-    """旧版の ul.navi（Prev / Home / Next）。下のほうには、行き先のページ名も付く。Home は節（無ければトップページ）"""
-    if prev is None and nxt is None:
-        return ''
-    home = node.parent if node.parent is not None and node.parent.depth >= 1 and target(node.parent) else None
-    home_href = href(from_url, home) if home is not None else rel_url(from_url, '')
-
-    def item(cls, label, link, name, rel=None):
-        if link is None:
-            return f'<li class="{cls}"></li>'
-        a = f'<a href="{link}"' + (f' rel="{rel}"' if rel else '') + f'>{label}</a>'
-        if bottom and name:
-            a += f'<br><a href="{link}">{esc(name)}</a>'
-        return f'<li class="{cls}">{a}</li>'
-    items = [item('navi_left', 'Prev', href(from_url, prev) if prev else None, prev and prev.title, 'prev'),
-             item('navi_none', 'Home', home_href, home.title if home is not None else 'トップページ'),
-             item('navi_right', 'Next', href(from_url, nxt) if nxt else None, nxt and nxt.title, 'next')]
-    nav = '<nav class="navi" aria-label="前後のページ">\n<ul>\n' + '\n'.join(items) + '\n</ul>\n</nav>\n'
-    return '<hr class="full_hr">\n' + nav if bottom else nav + '<hr class="full_hr">\n'
 
 
 # ---------------------------------------------------------------- Markdown → HTML
@@ -388,6 +372,9 @@ def rewrite_links(tree, src, from_url):
             a.set('href', rel_file(from_url, t) + frag)
         elif os.path.isfile(os.path.join(SRC, t)):
             a.set('href', rel_file(from_url, t) + frag)
+        elif posixpath.join(t, 'index.md') in MD_PAGES:
+            # basic/ のようなディレクトリへのリンクは、そのディレクトリの索引ページへ（GitHub ではファイルの一覧になる）
+            a.set('href', rel_url(from_url, page_url(posixpath.join(t, 'index.md'))) + frag)
         else:
             error(f'{src}: リンク先 {a.get("href")} が無い')
     for img in tree.iter('img'):
@@ -440,10 +427,9 @@ def add_contents(tree, levels):
 
 
 def mark_index_grid(tree):
-    """トップページの「文法」以降の一覧（ul）に class を付ける。CSS で 3 列のグリッド（狭いと 1 列）にする"""
-    start = next((h for h in tree.iter('h2') if h.get('id') == '文法'), None)
-    if start is not None:
-        for ul in start.itersiblings('ul'):
+    """索引ページの長い一覧（ul）に class を付ける。CSS で 3 列のグリッド（狭いと 1 列）にする"""
+    for ul in tree.findall('ul'):
+        if len(ul) >= 9:
             ul.set('class', 'index-grid')
 
 
@@ -453,7 +439,7 @@ def render(md, from_url):
     tree = lxml.html.fragment_fromstring(html, create_parent='div')
     rewrite_links(tree, md, from_url)
     add_contents(tree, (2,) if md == 'index.md' else (2, 3))
-    if md == 'index.md':
+    if md in GENERATED:
         mark_index_grid(tree)
     return tree
 
@@ -525,41 +511,31 @@ def head_extra(url, page_title, description):
 
 
 def build_pages(root):
-    pages = flatten(root, [])
-    nodes = {n.page: n for n in pages}
-    for md in MD_PAGES:
-        if md not in nodes:
-            error(f'{md} が .nav.yml に無い（メニューに出せない。新しいディレクトリは .nav.yml に加える）')
     if errors:
         return None
     template = string.Template(read(os.path.join(HERE, 'templates', 'page.html')))
     index = []
-    for i, node in enumerate(pages):
-        url = node.url
-        tree = render(node.page, url)
-        prev = pages[i - 1] if i > 0 else None
-        nxt = pages[i + 1] if i + 1 < len(pages) else None
+    pages = sorted(MD_PAGES)
+    for md in pages:
+        node = PLACED[md]
+        url = page_url(md)
+        tree = render(md, url)
         h1 = tree.find('h1')
         page_title = heading_text(h1) if h1 is not None else node.title
-        description = description_of(tree)
+        description = f'{node.title}の一覧' if md in GENERATED else description_of(tree)
         head = head_extra(url, page_title, description)
-        if prev:
-            head += f'<link rel="prev" href="{rel_url(url, prev.url)}">\n'
-        if nxt:
-            head += f'<link rel="next" href="{rel_url(url, nxt.url)}">\n'
         content = inner_html(tree)
         write(posixpath.join(url, 'index.html'), template.substitute(
             title=esc(page_title if not url else f'{page_title} - {SITE_NAME}'), description=esc(description), head=head,
             root=root_of(url), home=rel_url(url, ''), body_attr='',
-            breadcrumb=breadcrumb_html(node, url), menu=menu_html(root, node, url), content=content,
-            navigation_top=navigation_html(node, prev, nxt, url, False),
-            navigation_bottom=navigation_html(node, prev, nxt, url, True)))
-        index.extend(search_entries(tree, node.title, url))
+            breadcrumb=breadcrumb_html(md, url), menu=menu_html(root, md, url), content=content))
+        if md not in GENERATED:     # 自動で作る索引ページは、題の一覧でしかないので、検索の対象にしない
+            index.extend(search_entries(tree, node.title, url))
     build_search_page(root, template)
     build_404(root, template)
     write('search-index.js', 'window.YAYA_INDEX=' + json.dumps(index, ensure_ascii=False, separators=(',', ':')) + ';\n')
     write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-          ''.join(f'<url><loc>{esc(SITE_URL + n.url)}</loc></url>\n' for n in pages) + '</urlset>\n')
+          ''.join(f'<url><loc>{esc(SITE_URL + page_url(md))}</loc></url>\n' for md in pages) + '</urlset>\n')
     return pages
 
 
@@ -569,8 +545,8 @@ def build_search_page(root, template):
                '<button type="submit">検索</button></p>\n</form>\n<div id="search-results"></div>\n')
     write(url + 'index.html', template.substitute(
         title=esc(f'検索 - {SITE_NAME}'), description='YAYA マニュアルの内部検索', head='<meta name="robots" content="noindex">\n',
-        root=root_of(url), home=rel_url(url, ''), body_attr='', breadcrumb=breadcrumb_html(Node('検索', depth=1, parent=root), url),
-        menu=menu_html(root, None, url), content=content, navigation_top='', navigation_bottom=''))
+        root=root_of(url), home=rel_url(url, ''), body_attr='', breadcrumb=breadcrumb_html(None, url, last='検索'),
+        menu=menu_html(root, None, url), content=content))
 
 
 def build_404(root, template):
@@ -578,8 +554,7 @@ def build_404(root, template):
     content = '<h1>ページが見つかりません</h1>\n<p>お探しのページは、移動したか、無くなったようです。左のメニューか、上の検索欄から探してください。</p>\n'
     write('404.html', template.substitute(
         title=esc(f'ページが見つかりません - {SITE_NAME}'), description='ページが見つかりません', head='<meta name="robots" content="noindex">\n',
-        root=SITE_PATH, home=SITE_PATH, body_attr='', breadcrumb=breadcrumb_html(None, None), menu=menu_html(root, None, None), content=content,
-        navigation_top='', navigation_bottom=''))
+        root=SITE_PATH, home=SITE_PATH, body_attr='', breadcrumb=breadcrumb_html(None, None), menu=menu_html(root, None, None), content=content))
 
 
 def copy_static():
@@ -588,7 +563,7 @@ def copy_static():
     shutil.copytree(STATIC, OUT, dirs_exist_ok=True)
     for base, _, names in os.walk(SRC):
         for name in names:
-            if name.endswith('.md') or name == '.nav.yml':
+            if name.endswith('.md') or name in ('.nav.yml', GENERATED_LIST):
                 continue
             rel = os.path.relpath(os.path.join(base, name), SRC)
             dst = os.path.join(OUT, rel)
@@ -606,22 +581,25 @@ def main():
     args = ap.parse_args()
     if not args.no_prepare:
         prepare_site.main()
+    cleanup_generated()
     for base, _, names in os.walk(SRC):
         for name in names:
             if name.endswith('.md'):
                 MD_PAGES.add(os.path.relpath(os.path.join(base, name), SRC).replace(os.sep, '/'))
-    if os.path.exists(OUT):
-        shutil.rmtree(OUT)
-    os.makedirs(OUT)
-    copy_static()
     if args.no_prepare:
         # まとめた元ページ（functions/IHASH.md など）の行き先の表は、prepare_site.main() が作る。menu.yml が使うので、ここでも作る
         prepare_site.register_functions()
         prepare_site.register_grammar()
-    root = load_nav()
-    ANCHORS.update(index_anchors())
-    global MENU
-    MENU = load_menu()
+    root = load_menu()
+    place_pages(root)
+    if errors:
+        sys.exit(f'ビルドに失敗: エラー {len(errors)} 件')
+    write_generated()
+    MD_PAGES.update(GENERATED)
+    if os.path.exists(OUT):
+        shutil.rmtree(OUT)
+    os.makedirs(OUT)
+    copy_static()
     pages = build_pages(root)
     if pages is None or errors:
         sys.exit(f'ビルドに失敗: エラー {len(errors)} 件')

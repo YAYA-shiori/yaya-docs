@@ -6,7 +6,7 @@
 - 関数ページなどの英語の見出し（Signature など）を日本語にする
 - 本文中の関数名（functions/ にページがあるもの）を関数ページへのリンクにする
 - `_in_` のように _ で挟んだ書き方（斜体になってしまう）を警告する
-- functions/*.md を分類（各ページの **Category:** 行、並びは INDEX.md）ごとの 1 ページにまとめる
+- functions/*.md を分類（各ページの **Category:** 行、並びは functions/README.md）ごとの 1 ページにまとめる
   （functions/<分類>.md と、全分類の一覧 functions/index.md）
 - grammar/01〜14 を 1 ページ（grammar/index.md）にまとめる
 - まとめた元ページ（functions/NAME.md、grammar/NN-xxx.md）へのリンクは、まとめたページの見出しへのリンクに
@@ -79,7 +79,7 @@ HEADING = re.compile(r'^(#{2,6} +)(' + '|'.join(map(re.escape, HEADING_JA)) + r'
 # 旧 wiki の自動リンクの代わりに、本文中の関数名を関数ページへのリンクにする。
 # 既存のリンク・HTML タグ・URL の中は触らない。コードスパンは中身が関数名か
 # 関数呼び出し（`FOPEN(...)` など）のときだけリンクにする
-FUNC_NAMES = sorted((n[:-3] for n in os.listdir(os.path.join(ROOT, 'functions')) if n.endswith('.md')),
+FUNC_NAMES = sorted((n[:-3] for n in os.listdir(os.path.join(ROOT, 'functions')) if n.endswith('.md') and n != 'README.md'),
                     key=len, reverse=True)
 FUNC_ALT = '|'.join(map(re.escape, FUNC_NAMES))
 BARE_FUNC = re.compile(r'(?<![A-Za-z0-9_./\-])(' + FUNC_ALT + r')(?![A-Za-z0-9_\-]|\.[A-Za-z])')
@@ -274,34 +274,32 @@ def write(rel, text):
 
 
 def function_categories():
-    """分類名 → 関数名の並び。並びは INDEX.md の一覧、分類は各ページの **Category:** 行。食い違いや漏れは止める"""
-    index = read('INDEX.md')
-    section = index.split(f'\n## {FUNCTIONS_TITLE}\n', 1)[1].split('\n## ', 1)[0]
+    """分類名 → 関数名の並び。並びは functions/README.md の一覧、分類は各ページの **Category:** 行。食い違いや漏れは止める"""
     cats = {}
     current = None
-    for line in section.split('\n'):
-        if line.startswith('### '):
-            current = cats.setdefault(line[4:].strip(), [])
+    for line in read('functions/README.md').split('\n'):
+        if line.startswith('## '):
+            current = cats.setdefault(line[3:].strip(), [])
         else:
-            m = re.search(r'\]\(functions/([^)]+)\.md\)', line)
+            m = re.search(r'\]\(([^)/]+)\.md\)', line)
             if m and current is not None:
                 current.append(m.group(1))
     errors = []
     listed = [n for names in cats.values() for n in names]
-    files = sorted(n[:-3] for n in os.listdir(os.path.join(ROOT, 'functions')) if n.endswith('.md'))
+    files = sorted(n[:-3] for n in os.listdir(os.path.join(ROOT, 'functions')) if n.endswith('.md') and n != 'README.md')
     for name in sorted(set(files) - set(listed)):
-        errors.append(f'functions/{name}.md が INDEX.md の表に無い')
+        errors.append(f'functions/{name}.md が functions/README.md の一覧に無い')
     for name in sorted(set(listed) - set(files)):
-        errors.append(f'INDEX.md の functions/{name}.md が無い')
+        errors.append(f'functions/README.md の {name}.md が無い')
     for name in sorted({n for n in listed if listed.count(n) > 1}):
-        errors.append(f'{name} が INDEX.md の表に 2 回以上ある')
+        errors.append(f'{name} が functions/README.md の一覧に 2 回以上ある')
     for cat, names in cats.items():
         if cat not in CATEGORY_PAGES:
             errors.append(f'分類「{cat}」のページ名が CATEGORY_PAGES に無い')
         for name in names:
             m = re.search(r'^\*\*Category:\*\* *(.+?) *$', read(f'functions/{name}.md'), re.M)
             if not m or m.group(1) != cat:
-                errors.append(f'functions/{name}.md の Category が INDEX.md の分類「{cat}」と合わない')
+                errors.append(f'functions/{name}.md の Category が functions/README.md の分類「{cat}」と合わない')
     if len({n.lower() for n in files} | set(CATEGORY_PAGES.values()) | {'index'}) != len(files) + len(CATEGORY_PAGES) + 1:
         errors.append('関数名と分類のページ名が大文字小文字を無視すると重なる')
     if errors:
@@ -406,7 +404,6 @@ def main():
     build_functions(cats)
     build_grammar(chapters)
     write('index.md', render('INDEX.md', read('INDEX.md'), 'index.md'))
-    shutil.copy(os.path.join(ROOT, '.nav.yml'), os.path.join(OUT, '.nav.yml'))
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
     shutil.copytree(os.path.join(ROOT, 'attachment'), os.path.join(OUT, 'attachment'))
     shutil.copy(os.path.join(ROOT, 'llms.txt'), os.path.join(OUT, 'llms.txt'))

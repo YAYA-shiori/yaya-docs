@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* 旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）の見た目を、HTML5 で模したスタイル。
-   旧版の規則のうち、このサイトで使う分（文字・リンク・見出し・リスト・表・pre・ヘッダ・左メニュー・前後のページ）だけを持つ。
+   旧版の規則のうち、このサイトで使う分（文字・リンク・見出し・リスト・表・pre・ヘッダ・左メニュー）だけを持つ。
    色と寸法は旧版のまま。旧版は table レイアウトだったので、ここでは flex で組む */
 
 /* ---- 文字・リンク ---- */
@@ -432,33 +432,6 @@ ul.index-grid li {
 	margin-bottom: .1em;
 }
 
-/* 前後のページ（旧版の ul.navi） */
-nav.navi {
-	clear: both;
-}
-nav.navi ul {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	gap: 1em;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-nav.navi li {
-	flex: 1 1 0;
-	min-width: 0;
-}
-nav.navi .navi_left {
-	text-align: left;
-}
-nav.navi .navi_none {
-	text-align: center;
-}
-nav.navi .navi_right {
-	text-align: right;
-}
-
 /* ---- 検索（search.js） ---- */
 .site-search__dropdown {
 	position: absolute;
@@ -727,7 +700,7 @@ nav.navi .navi_right {
 }
 
 @media print {
-	#menubar, nav.navi, #search, .ukadoc-translate {
+	#menubar, #search, .ukadoc-translate {
 		display: none;
 	}
 }

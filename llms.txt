@@ -4,16 +4,16 @@
 
 ## 探し方
 
-- 最初に [INDEX.md](INDEX.md) を開く。「はじめての方へ」「調べたいとき」と、分野ごとのページ一覧から各ページへ辿れる。
-- システム関数（組み込み関数）は 1 関数 1 ファイルで、`functions/<関数名>.md`（関数名は大文字。例: `functions/IHASH.md`）。名前から探すなら [system/system-functions-index.md](system/system-functions-index.md)、用途別に探すなら INDEX.md の「システム関数(組み込み関数)」の表を見る。
+- 最初に [INDEX.md](INDEX.md) を開く。「はじめての方へ」「調べたいとき」から各ページへ辿れる。分野ごとのページ一覧は、サイトでは各節の索引ページ（`manual/index.md`・`basic/index.md`・`system/index.md`・`other/index.md`・`tips/index.md` など。HTML は `tips/`）にある。リポジトリでは、ディレクトリのファイル一覧を見る。
+- システム関数（組み込み関数）は 1 関数 1 ファイルで、`functions/<関数名>.md`（関数名は大文字。例: `functions/IHASH.md`）。名前から探すなら [system/system-functions-index.md](system/system-functions-index.md)、用途別に探すなら [functions/README.md](functions/README.md) の分類別の一覧を見る。
 - 書き方をざっと確認したいときは [startup/cheatsheet.md](startup/cheatsheet.md)。
 
 ## 構成
 
-- [INDEX.md](INDEX.md): 全体の目次
+- [INDEX.md](INDEX.md): 入口。はじめての方への案内と、調べたいときの行き先
 - `basic/`: 基本（変数・関数・条件分岐・ループ・配列・演算子）。プログラミング未経験者向け
 - `grammar/`: 文法（`01`〜`14` の章立て）
-- `functions/`: システム関数（組み込み関数）。1 関数 1 ファイル
+- `functions/`: システム関数（組み込み関数）。1 関数 1 ファイル。[functions/README.md](functions/README.md) が、分類別の一覧
 - `system/`: システム辞書、システム関数一覧、エラー処理関数、`OnCallLimit` などの SHIORI イベント
 - `startup/`: チートシート、ゴーストの作り方、チュートリアル、AYA・里々からの移行
 - `tips/`: Tips

@@ -1,16 +1,23 @@
-# 左のメニューの定義（旧 AYAYA wiki の MenuBar に当たる）。ここに書いた項目だけが、全ページの左に出る。
-# 章立て（前後のページ・パンくずリスト）の元の .nav.yml とは別。このファイルを消すと、.nav.yml から自動でメニューを作る。
+# 左のメニューの定義（旧 AYAYA wiki の MenuBar に当たる）。サイトの階層構造の元になるファイルで、
+# 左のメニュー・上のパンくずリスト・各節の索引ページが、すべてここから作られる。
 #
 # 項目の書き方（menu: の下に並べる。children: で下の項目を入れ子にできる。深さは自由）
 #   - title: 表示する名前        必須
 #     page: 原稿のパス           サイト内のページ。リポジトリ内のパス（`startup/cheatsheet.md`）で書く
-#                                `INDEX.md#見出し` のように # でアンカーも付けられる（トップページの節へ飛ぶのに使う）
+#                                `INDEX.md#見出し` のように # でアンカーも付けられる
 #                                `functions/IHASH.md` や `grammar/05-arrays.md` のように、まとめた元の原稿も書ける
-#     url: https://...           外部のページ（page: と同時には書けない）
-#     children: [...]            下の項目
-#   page: も url: も書かない項目は、リンクの無い見出し（旧版の「スタートアップ」のような文字だけの項目）になる
+#     index: basic/              下の項目の索引ページを自動で作る。その URL（小文字の英数字とハイフン、末尾は /）。
+#                                children: と list: に書いたページを並べるだけの、小さなページになる
+#     url: https://...           外部のページ
+#     children: [...]            下の項目。左のメニューに出て、索引ページにも並ぶ
+#     list: tips                 そのディレクトリの原稿のうち、menu.yml のどこにも載っていないページを、この項目の下に置く。
+#                                左のメニューには出さず、索引ページとパンくずリストにだけ使う（Tips のように数が多いページ向け）。
+#                                並びは、ディレクトリに .nav.yml があればその順、残りは各ページの題（H1）の順
+#   page: index: url: は、1 項目に 1 つだけ書ける。どれも書かない項目は、リンクの無い見出しになる（下にページを置けない）。
 #
-# 原稿のパスやアンカーが違うと、ビルド（oldstyle/build.py）が止まる。表示は、書いた順のまま。
+# 原稿は、children: か list: のどこかに必ず載せる（載っていないページがあると、ビルドが止まる）。
+# 同じページを何か所に書いてもよいが、パンくずリストは最初に出てくる項目の下になる。
+# 原稿のパスやアンカーが違っても、ビルド（oldstyle/build.py）が止まる。表示は、書いた順のまま。
 menu:
   - title: トップページ
     page: INDEX.md
@@ -30,6 +37,7 @@ menu:
         url: https://github.com/YAYA-shiori/yaya-CI-check
 
   - title: YAYA 6
+    index: yaya6/
     children:
       - title: YAYA 6 登場
         page: other/yaya6-launch.md
@@ -37,6 +45,7 @@ menu:
         page: other/changes-600.md
 
   - title: スタートアップ
+    index: startup/
     children:
       - title: YAYA、AYAって何？
         page: other/yaya.md
@@ -56,23 +65,47 @@ menu:
         page: startup/migration-from-satolili.md
 
   - title: マニュアル
-    page: INDEX.md#調べたいとき
+    index: manual/
     children:
       - title: 基本
-        page: INDEX.md#基本
+        index: basic/
+        children:
+          - title: 変数
+            page: basic/variables.md
+          - title: 関数
+            page: basic/functions.md
+          - title: 条件分岐
+            page: basic/branching.md
+          - title: ループ
+            page: basic/loops.md
+          - title: 配列
+            page: basic/arrays.md
+          - title: 演算子
+            page: basic/operators.md
       - title: 文法
         page: grammar/index.md
       - title: システム辞書
-        page: INDEX.md#システム辞書
+        index: system/
+        list: system
+        children:
+          - title: yaya_shiori3.dic
+            page: system/yaya-shiori3-dic.md
+          - title: yaya_optional.dic
+            page: system/yaya-optional-dic.md
       - title: 用途別関数一覧
         page: functions/index.md
+        list: functions
       - title: 名前順関数一覧
         page: system/system-functions-index.md
       - title: エラー処理関数
         page: system/error-handling-functions.md
+      - title: その他
+        index: other/
+        list: other
 
   - title: Tips
-    page: INDEX.md#tips
+    index: tips/
+    list: tips
     children:
       - title: 困ったときの対処法
         page: other/troubleshooting.md
@@ -82,6 +115,7 @@ menu:
         url: http://ukadev.shillest.net/
 
   - title: SHIORI以外のYAYA
+    index: non-shiori/
     children:
       - title: YAYA as SAORI
         page: other/yaya-as-saori.md

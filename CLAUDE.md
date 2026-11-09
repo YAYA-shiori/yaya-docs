@@ -14,10 +14,10 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 ## ページを追加・改名したとき
 
-- `INDEX.md` の該当する一覧（「## 文法」以降の、ページ名のリスト。ファイル名やディレクトリ名は書かず、読む人に見える題だけをリンクの文字にする）に追加する
-- 関数なら `system/system-functions-index.md` にも追加する
-- 新しいディレクトリを作ったら、`.nav.yml` の `nav` と `scripts/prepare_site.py` の `DIRS` に加える
-- 左のメニューに載せたいページは、`oldstyle/menu.yml` に加える（メニューは手で選んだ一覧。載せなくてもサイトには出る）
+- `oldstyle/menu.yml` に加える。サイトの階層（左のメニュー・パンくずリスト・各節の索引ページ）は、すべてこのファイルから作られる。`children:` に書くと左のメニューにも出る。`list: ディレクトリ名` を書いた項目の下には、メニューに載っていないそのディレクトリのページが（左のメニューには出さずに）自動で入る（`tips/` の新しいページは、何もしなくてよい）。どちらにも載らないページがあると、ビルドが止まる
+- `INDEX.md`（トップページ）に全ページを並べる必要は無い。節の一覧は、`menu.yml` から自動で作る索引ページ（`basic/` `tips/` など）が受け持つ
+- 関数なら `functions/README.md`（分類別の一覧。ビルドの元データ）と `system/system-functions-index.md` にも追加する
+- 新しいディレクトリを作ったら、`scripts/prepare_site.py` の `DIRS` に加え、`menu.yml` に載せる
 
 ## 言語仕様が変わったとき
 
@@ -29,15 +29,15 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 `main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が `oldstyle/build.py` と `oldstyle/check.py` を走らせ、https://yaya-shiori.github.io/yaya-docs/ に公開する。以前の Zensical 版は `old-zensical` ブランチに残してある。ビルドの仕組みは [`oldstyle/README.md`](oldstyle/README.md)。原稿を書くうえで知っておくことは次のとおり。
 
-- サイトの見た目と構造は、旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）を模している。上にヘッダ（左に旧版のタイトル画像、右の黒い帯にロゴ画像・パンくずリスト・検索欄・翻訳ボタン。幅が 800px を超えるときは、スクロールしても上に固定する）、左に目次（`#menubar`）、右に本文（`#body`。前後のページ `Prev` / `Home` / `Next` が上下に付く）。旧版にあった wiki の道具（一覧・検索・最終更新・編集・添付のリンク、最近更新されたページ、フッタ）は無い。HTML は HTML5 で、JavaScript は検索（`search.js`）と翻訳ボタン（`translate.js`）だけ
+- サイトの見た目と構造は、旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）を模している。上にヘッダ（左に旧版のタイトル画像、右の黒い帯にロゴ画像・パンくずリスト・検索欄・翻訳ボタン。幅が 800px を超えるときは、スクロールしても上に固定する）、左に目次（`#menubar`）、右に本文（`#body`）。旧版にあった wiki の道具（一覧・検索・最終更新・編集・添付のリンク、最近更新されたページ、フッタ）は無い。HTML は HTML5 で、JavaScript は検索（`search.js`）と翻訳ボタン（`translate.js`）だけ
 - ページの URL は、Zensical 版と同じディレクトリ形式（`other/yaya/` など）。外部からのリンクや OGP を切らないため、変えない。`file://` ではディレクトリのリンクが `index.html` を開かないので、手元では `python -m http.server -d _site` で見る
 - 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる。原稿内のリンク（`../functions/IHASH.md` や `05-arrays.md#範囲外の要素` など）は、ビルドが出力先の相対パス（`../string/#ihash`）に書き換える。行き先が無ければビルドが止まる
-- 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `INDEX.md` の一覧（`### 分類` の下のリスト）で決まる。新しい関数は `INDEX.md` の一覧に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
+- 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `functions/README.md` の一覧（`## 分類` の下のリスト）で決まる。新しい関数は `functions/README.md` の一覧に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
 - まとめた元ページの URL（`functions/IHASH/` など）には、移動先へ飛ばすだけの HTML を `prepare_site.py` が置く。まとめたページでは関数名が H2、その下の節（書式・引数など）が H4 になる
 - 各ページの先頭（最初の H2 の前）に、旧版の `div.contents` にあたる目次を `oldstyle/build.py` が付ける（H2・H3 が 3 つ以上あるページ。トップページは H2 だけ）。見出しの末尾の `†` は、その見出しへのリンク（旧 wiki と同じ）
 - `llms.txt`（AI エージェント向けの探し方の案内。`INDEX.md` と各ディレクトリの入口だけを書く）はサイトのルートに置かれる。ページごとの一覧は載せないので、ページを足しても直さなくてよい。ディレクトリを足したときは「構成」に 1 行足す
 - 生の Markdown 原稿（`README.md` と `CLAUDE.md` 以外の `.md`）は、リポジトリと同じパスでサイトにも置かれる（`prepare_site.py` が `_raw/` に写し、ビルドが出力に重ねる）。`llms.txt` や `INDEX.md` の相対リンクは、このおかげでサイト上でも辿れる
-- 左のメニューは `oldstyle/menu.yml`（旧 wiki の MenuBar に当たる、手で選んだ一覧。書き方はファイルの先頭に書いてある。原稿のパスや `INDEX.md#見出し` が違うとビルドが止まる。消すと、`.nav.yml` から自動でメニューを作る）。章立て（パンくず・前後のページ）は `.nav.yml`。最上位の章は、ルートの `.nav.yml` に書く。`.nav.yml` の無いディレクトリは、`index.md`（あれば先頭）のあとファイル名順で並べ、題は各ページの H1（`functions/.nav.yml` は `prepare_site.py` が作る）。前後のページは、メニューの順（深さ優先）。`menu.yml` が無いときの自動メニューは、開いているページのある章だけ下の階層を出す。ページを持たない章（基本・Tips など）は、トップページの同じ題の節（`## 基本`。`.nav.yml` の章の題と、`INDEX.md` の H2 の見出しを同じにしておく）へのリンクになる
+- サイトの階層の元は `oldstyle/menu.yml`（旧 wiki の MenuBar に当たる、手で選んだ一覧。書き方はファイルの先頭に書いてある）ひとつだけ。左のメニュー、上のパンくずリスト、各節の索引ページが、同じ木から作られる。`index: basic/` と書いた項目には、下の項目（`children:` と `list:` のページ）を並べるだけの小さな索引ページを、ビルドが自動で作る（原稿は無い。サイトには生の `index.md` も置かれる）。`list:` のページの並びは、ディレクトリに `.nav.yml` があればその順（`functions/.nav.yml` は `prepare_site.py` が作る）、残りは各ページの H1 の順。パンくずは、ページが最初に出てくる項目の下になる。原稿のパスや `INDEX.md#見出し` が違う、載っていないページがある、とビルドが止まる。`INDEX.md` や他のページから節へのリンクは、`[基本](basic/)` のようにディレクトリで書く（GitHub ではファイルの一覧、サイトでは索引ページになる）
 - Markdown の拡張は `tables` `admonition` `attr_list` `md_in_html` `mdx_truly_sane_lists` `pymdownx.superfences` `toc`。見出しのアンカーは GitHub と同じく日本語のまま（`pymdownx.slugs.slugify(case='lower')`）で、`prepare_site.py` のリンク書き換えと同じ変換
 - GitHub では表示できても Python-Markdown では崩れる書き方がある。段落の直後に空行なしで続くリストや表は `prepare_site.py` が空行を補うので、原稿は GitHub 向けのままでよい。表の中のコードスパンの `|` は GitHub 向けに `\|` と書く（`prepare_site.py` がサイト用に `|` へ戻す）。2スペース字下げの入れ子リストは mdx_truly_sane_lists で扱える
 - `_in_` や `_RUNTIME_DIC_` のように `_` で挟んだ名前は、GitHub でも Python-Markdown でも斜体になってしまう。名前はコードスパンで囲み、斜体（引数の仮置き名など）は `*var*` と書く。コードスパンの外にある `_名前_` は `prepare_site.py` が警告する
