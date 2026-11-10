@@ -12,6 +12,9 @@
 - まとめた元ページ（functions/NAME.md、grammar/NN-xxx.md）へのリンクは、まとめたページの見出しへのリンクに
   書き換える。元ページの URL には移動先へ飛ばすだけの HTML を置く（外部からのリンクを切らないため）
 - 生の Markdown 原稿を _raw/ に写す（ビルド後に _site へ重ねる。llms.txt から INDEX.md などを辿れるようにする）
+- `--lang=<コード>`（例: en）を付けると、日本語の原稿に i18n/<コード>/ の翻訳を重ねたものを _site_src_<コード>/ に写す。
+  構造の判定（関数の分類・まとめたページの見出しの id）は日本語の原稿から作る
+  （訳した見出しでも `file.md#見出し` のリンクが切れないように）
 原稿そのものは書き換えない。
 """
 import os
@@ -20,11 +23,27 @@ import re
 import shutil
 import sys
 
+import markdown
 from pymdownx.slugs import slugify
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
-OUT = os.path.join(ROOT, '_site_src')
+
+
+def _lang_arg():
+    """--lang=<コード>（例: en）。指定すると、日本語の原稿に i18n/<コード>/ の翻訳を重ねる。無ければ日本語版"""
+    for a in sys.argv[1:]:
+        if a.startswith('--lang='):
+            return a.split('=', 1)[1]
+    return None
+
+
+LANG = _lang_arg()
+OUT = os.path.join(ROOT, '_site_src' + (f'_{LANG}' if LANG else ''))
+I18N = os.path.join(ROOT, 'i18n', LANG) if LANG else None
 SITE_URL = 'https://yaya-shiori.github.io/yaya-docs/'
+# oldstyle/build.py と同じ Markdown の設定（見出しの id を日本語の原稿から数えるのに使う）
+MD_EXTENSIONS = ['tables', 'admonition', 'attr_list', 'md_in_html', 'mdx_truly_sane_lists', 'pymdownx.superfences', 'toc']
+MD_CONFIG = {'toc': {'slugify': slugify(case='lower')}}
 DIRS = ['basic', 'other', 'startup', 'system', 'tips']
 
 # 分類名 → functions/ に作るページのファイル名（関数名と区別できる小文字の ASCII）
@@ -45,8 +64,44 @@ CATEGORY_PAGES = {
     'スレッド': 'thread',
     'デバッグ': 'debug',
 }
-FUNCTIONS_TITLE = 'システム関数(組み込み関数)'
-GRAMMAR_TITLE = '文法'
+# ビルドが書く文言（関数の分類ページ・文法ページの題と前書き）。言語ごと
+TEXTS = {
+    'ja': {
+        'functions_title': 'システム関数(組み込み関数)',
+        'functions_count': '{n} 個の関数。',
+        'functions_intro': 'YAYA に組み込まれている関数を、分類ごとのページにまとめています。関数名から探すときは'
+                           ' [システム関数一覧](../system/system-functions-index.md) か、サイト上部の検索を使ってください。',
+        'grammar_title': '文法',
+        'grammar_intro': 'YAYA の文法を 1 ページにまとめています。章ごとの内容はページ先頭の目次から飛べます。',
+    },
+    'en': {
+        'functions_title': 'System functions (built-in functions)',
+        'functions_count': '{n} functions.',
+        'functions_intro': 'The functions built into YAYA, grouped into one page per category. To look a function up by name, use'
+                           ' the [function index](../system/system-functions-index.md) or the search box at the top of the site.',
+        'grammar_title': 'Grammar',
+        'grammar_intro': 'The grammar of YAYA on a single page. You can jump to each chapter from the table of contents at the top of the page.',
+    },
+    'zh-Hant': {
+        'functions_title': '系統函式（內建函式）',
+        'functions_count': '共 {n} 個函式。',
+        'functions_intro': '將 YAYA 內建的函式依分類整理成各分類一頁。若要依函式名稱查找，請使用'
+                           ' [系統函式一覽](../system/system-functions-index.md)，或網站上方的搜尋。',
+        'grammar_title': '文法',
+        'grammar_intro': '將 YAYA 的文法整理在同一頁。可由頁面開頭的目錄跳到各章內容。',
+    },
+    'zh': {
+        'functions_title': '系统函数（内置函数）',
+        'functions_count': '共 {n} 个函数。',
+        'functions_intro': '将 YAYA 内置的函数按分类整理成每个分类一页。若要按函数名查找，请使用'
+                           ' [系统函数一览](../system/system-functions-index.md)，或网站上方的搜索。',
+        'grammar_title': '语法',
+        'grammar_intro': '将 YAYA 的语法整理在同一页。可从页面开头的目录跳转到各章内容。',
+    },
+}
+TX = TEXTS[LANG or 'ja']
+FUNCTIONS_TITLE = TX['functions_title']
+GRAMMAR_TITLE = TX['grammar_title']
 
 HEADING_LINE = re.compile(r'^(#{1,6}) +(.+?)(?: +#+)? *$')
 LINK_MD = re.compile(r'\[([^\]]*)\]\([^)]*\)')
@@ -74,6 +129,23 @@ HEADING_JA = {
     'Error Codes': 'エラーコード',
     'Information Types': '取得できる情報',
 }
+# 翻訳版の見出し。原稿の英語の見出し（Signature など）は構造の判定に使うので、訳文でも原文のまま残し、表示のときだけここで言語ごとの語にする。
+# 英語版は原文のまま
+HEADING_LOCAL = {
+    'ja': HEADING_JA,
+    'en': {k: k for k in HEADING_JA},
+    'zh-Hant': {
+        'Signature': '語法', 'Parameters': '參數', 'Returns': '傳回值', 'Description': '說明', 'Example': '範例',
+        'Compatibility': '相容性', 'See Also': '相關項目', 'Notes': '備註', 'Availability': '支援版本',
+        'Error Codes': '錯誤碼', 'Information Types': '可取得的資訊',
+    },
+    'zh': {
+        'Signature': '语法', 'Parameters': '参数', 'Returns': '返回值', 'Description': '说明', 'Example': '示例',
+        'Compatibility': '兼容性', 'See Also': '另请参阅', 'Notes': '备注', 'Availability': '支持版本',
+        'Error Codes': '错误码', 'Information Types': '可获取的信息',
+    },
+}
+HEADING_TEXT = HEADING_LOCAL[LANG or 'ja']
 HEADING = re.compile(r'^(#{2,6} +)(' + '|'.join(map(re.escape, HEADING_JA)) + r') *$')
 
 # 旧 wiki の自動リンクの代わりに、本文中の関数名を関数ページへのリンクにする。
@@ -130,7 +202,7 @@ def fix_markdown(text, func_dir, self_name):
             in_fence = not in_fence
         elif not in_fence and HEADING.match(line):
             m = HEADING.match(line)
-            line = m.group(1) + HEADING_JA[m.group(2)]
+            line = m.group(1) + HEADING_TEXT[m.group(2)]
         elif not in_fence and BLOCK_START.match(line):
             # 直前が本文の行（空行・同種のブロック・見出し以外）なら空行を入れる
             if prev.strip() != '' and not BLOCK_START.match(prev) and not prev.startswith((' ', '\t')):
@@ -193,12 +265,17 @@ def register(src, page, prefix, text):
 
 def shift_headings(text, src, depth_of):
     """見出しの深さを depth_of(元の深さ) にし、まとめたページ内で重ならない id を振る。
-    英語の見出し（Signature など）はここで日本語にする（id は元の見出しから作る）"""
+    英語の見出し（Signature など）はここで言語ごとの語（日本語版は日本語）にする（id は日本語の原稿の見出しから作る）"""
     page, prefix = MERGED[src]
     lines = text.split('\n')
-    for n, (i, level, title, old) in enumerate(scan_headings(text)):
+    heads = list(scan_headings(text))
+    # 翻訳版でも、見出しの id は日本語の原稿の見出しから（位置で対応させる）。訳した見出しの slug は使わない
+    ja_heads = list(scan_headings(read_ja(src))) if LANG else heads
+    if len(heads) != len(ja_heads):
+        sys.exit(f'エラー: {src}: 訳文の見出しの数が原文と合わない（原文 {len(ja_heads)}、訳文 {len(heads)}）')
+    for (i, level, title, _), (_, _, _, old) in zip(heads, ja_heads):
         new_id = FRAGMENTS[(src, old)]
-        title = HEADING_JA.get(title, title) if level >= 2 else title
+        title = HEADING_TEXT.get(title, title) if level >= 2 else title
         lines[i] = f'{"#" * depth_of(level)} {title} {{#{new_id}}}'
     return '\n'.join(lines)
 
@@ -246,6 +323,8 @@ def render(src, text, dst, shift=None):
     check_underscore_em(text, src)
     if shift:
         text = shift_headings(text, src, shift)
+    else:
+        text = pin_ids(text, src)
     # 関数ページへの相対パスと、自分自身へはリンクしないための関数名
     func_dir = posixpath.relpath('functions', posixpath.dirname(dst) or '.') + '/'
     self_name = None
@@ -256,9 +335,66 @@ def render(src, text, dst, shift=None):
     return rewrite_links(fix_markdown(text, func_dir, self_name), src, dst)
 
 
-def read(rel):
+def read_ja(rel):
+    """日本語の原稿（構造の判定と、見出しの id の計算に使う。翻訳版でもここは日本語を見る）"""
     with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
         return f.read()
+
+
+def read(rel):
+    """本文に使う原稿。翻訳版（LANG 指定）では i18n/<LANG>/<rel> があればそちら、無ければ日本語"""
+    if I18N:
+        path = os.path.join(I18N, rel)
+        if os.path.isfile(path):
+            with open(path, encoding='utf-8') as f:
+                return f.read()
+    return read_ja(rel)
+
+
+def toc_ids(text):
+    """サイトの toc 拡張が原稿の見出しに付ける id を、文書順に返す"""
+    md = markdown.Markdown(extensions=MD_EXTENSIONS, extension_configs=MD_CONFIG, output_format='html')
+    md.convert(text)
+    ids = []
+
+    def walk(tokens):
+        for t in tokens:
+            ids.append(t['id'])
+            walk(t['children'])
+    walk(md.toc_tokens)
+    return ids
+
+
+def indented_headings(text):
+    """コードブロックの外の見出し行を、字下げ（!!! の囲みの中など）も含めて (行番号, 字下げ, 深さ, 見出し) で返す。
+    toc 拡張が拾う見出しは、この字下げ付きのものと、`#` の直後に空白の無い行（`#define …` を説明する文など。Python-Markdown は見出しとみなす）まで含む"""
+    in_fence = False
+    for i, line in enumerate(text.split('\n')):
+        if FENCE.match(line):
+            in_fence = not in_fence
+        elif not in_fence:
+            m = re.match(r'^(\s*)(#{1,6})(?:[ \t]+(.+?)|([^#\s].*?))\s*$', line)
+            if m:
+                yield i, m.group(1), len(m.group(2)), m.group(3) or m.group(4)
+
+
+def pin_ids(text, rel):
+    """翻訳版の（まとめない）ページの見出しに、日本語の原稿から作った id を `{#id}` で固定する。
+    訳した見出しの slug が変わっても、ほかのページからの `file.md#見出し` のリンクが切れないようにする"""
+    if not I18N:
+        return text
+    ja = read_ja(rel)
+    if text == ja:
+        return text
+    ids = toc_ids(ja)
+    heads = list(indented_headings(text))
+    if len(heads) != len(ids):
+        sys.exit(f'エラー: {rel}: 訳文の見出しの数が原文と合わない（原文の toc {len(ids)}、訳文 {len(heads)}）')
+    lines = text.split('\n')
+    for (i, indent, level, title), ident in zip(heads, ids):
+        if not re.search(r'\{[^}]*#', title):
+            lines[i] = f'{indent}{"#" * level} {title} {{#{ident}}}'
+    return '\n'.join(lines)
 
 
 def join_items(head, items):
@@ -277,7 +413,7 @@ def function_categories():
     """分類名 → 関数名の並び。並びは functions/README.md の一覧、分類は各ページの **Category:** 行。食い違いや漏れは止める"""
     cats = {}
     current = None
-    for line in read('functions/README.md').split('\n'):
+    for line in read_ja('functions/README.md').split('\n'):
         if line.startswith('## '):
             current = cats.setdefault(line[3:].strip(), [])
         else:
@@ -297,7 +433,7 @@ def function_categories():
         if cat not in CATEGORY_PAGES:
             errors.append(f'分類「{cat}」のページ名が CATEGORY_PAGES に無い')
         for name in names:
-            m = re.search(r'^\*\*Category:\*\* *(.+?) *$', read(f'functions/{name}.md'), re.M)
+            m = re.search(r'^\*\*Category:\*\* *(.+?) *$', read_ja(f'functions/{name}.md'), re.M)
             if not m or m.group(1) != cat:
                 errors.append(f'functions/{name}.md の Category が functions/README.md の分類「{cat}」と合わない')
     if len({n.lower() for n in files} | set(CATEGORY_PAGES.values()) | {'index'}) != len(files) + len(CATEGORY_PAGES) + 1:
@@ -305,6 +441,18 @@ def function_categories():
     if errors:
         sys.exit('エラー: 関数の分類\n  ' + '\n  '.join(errors))
     return cats
+
+
+def category_labels():
+    """関数の分類名（日本語）→ 表示する名前。日本語版はそのまま。翻訳版は、訳した functions/README.md の「## 分類」の見出しを、
+    日本語の見出しと同じ位置のものとして対応させる（訳が無い・数が合わないときは日本語のまま）"""
+    ja = [l[3:].strip() for l in read_ja('functions/README.md').split('\n') if l.startswith('## ')]
+    if not LANG:
+        return {c: c for c in ja}
+    local = [l[3:].strip() for l in read('functions/README.md').split('\n') if l.startswith('## ')]
+    if len(local) != len(ja):
+        return {c: c for c in ja}
+    return dict(zip(ja, local))
 
 
 def write_redirect(old, page, frag):
@@ -326,14 +474,15 @@ def register_functions():
     for cat, names in cats.items():
         page = f'functions/{CATEGORY_PAGES[cat]}.md'
         for name in names:
-            register(f'functions/{name}.md', page, heading_slug(name), read(f'functions/{name}.md'))
+            register(f'functions/{name}.md', page, heading_slug(name), read_ja(f'functions/{name}.md'))
     return cats
 
 
 def build_functions(cats):
+    labels = category_labels()
     for cat, names in cats.items():
         page = f'functions/{CATEGORY_PAGES[cat]}.md'
-        parts = [f'# {cat}\n\n{len(names)} 個の関数。']
+        parts = [f'# {labels[cat]}\n\n' + TX['functions_count'].format(n=len(names))]
         for name in names:
             src = f'functions/{name}.md'
             text = re.sub(r'^\*\*Category:\*\*.*\n', '', read(src), count=1, flags=re.M)
@@ -341,38 +490,39 @@ def build_functions(cats):
             item = render(src, text, page, lambda level: 2 if level == 1 else level + 2).strip('\n')
             parts.append(item)
         write(page, join_items(parts[0], parts[1:]) + '\n')
-    overview = [f'# {FUNCTIONS_TITLE}', '', 'YAYA に組み込まれている関数を、分類ごとのページにまとめています。関数名から探すときは'
-                ' [システム関数一覧](../system/system-functions-index.md) か、サイト上部の検索を使ってください。']
+    overview = [f'# {FUNCTIONS_TITLE}', '', TX['functions_intro']]
     for cat, names in cats.items():
-        overview += ['', f'## [{cat}]({CATEGORY_PAGES[cat]}.md)（{len(names)}）', '',
+        overview += ['', f'## [{labels[cat]}]({CATEGORY_PAGES[cat]}.md)（{len(names)}）', '',
                      ' ・ '.join(f'[{n}]({CATEGORY_PAGES[cat]}.md#{MERGED[f"functions/{n}.md"][1]})' for n in names)]
     write('functions/index.md', '\n'.join(overview) + '\n')
     write('functions/.nav.yml', 'nav:\n  - index.md\n' + ''.join(f'  - {p}.md\n' for p in CATEGORY_PAGES.values()))
-    for names in cats.values():
-        for name in names:
-            page, prefix = MERGED[f'functions/{name}.md']
-            write_redirect(f'functions/{name}.md', page, prefix)
+    if not LANG:      # 転送ページは、外部からの（日本語版の）リンクを切らないためのもの。翻訳版には要らない
+        for names in cats.values():
+            for name in names:
+                page, prefix = MERGED[f'functions/{name}.md']
+                write_redirect(f'functions/{name}.md', page, prefix)
 
 
 def register_grammar():
     chapters = sorted(n for n in os.listdir(os.path.join(ROOT, 'grammar')) if n.endswith('.md'))
     for name in chapters:
-        register(f'grammar/{name}', 'grammar/index.md', name[:-3], read(f'grammar/{name}'))
+        register(f'grammar/{name}', 'grammar/index.md', name[:-3], read_ja(f'grammar/{name}'))
     return chapters
 
 
 def build_grammar(chapters):
-    parts = [f'# {GRAMMAR_TITLE}\n\nYAYA の文法を 1 ページにまとめています。章ごとの内容はページ先頭の目次から飛べます。']
+    parts = [f'# {GRAMMAR_TITLE}\n\n' + TX['grammar_intro']]
     for name in chapters:
         src = f'grammar/{name}'
         parts.append(render(src, read(src), 'grammar/index.md', lambda level: level + 1).strip('\n'))
     write('grammar/index.md', join_items(parts[0], parts[1:]) + '\n')
-    for name in chapters:
-        write_redirect(f'grammar/{name}', *MERGED[f'grammar/{name}'])
+    if not LANG:
+        for name in chapters:
+            write_redirect(f'grammar/{name}', *MERGED[f'grammar/{name}'])
 
 
 RAW = os.path.join(ROOT, '_raw')
-RAW_SKIP_DIRS = {'scripts', 'oldstyle', 'assets', 'node_modules'}
+RAW_SKIP_DIRS = {'scripts', 'oldstyle', 'assets', 'node_modules', 'i18n'}   # i18n（翻訳）は日本語版の生の原稿に混ぜない
 RAW_SKIP_FILES = {'README.md', 'CLAUDE.md'}
 RAW_EXTRA = []   # .md 以外で、原稿から参照されていて一緒に置くファイル
 
@@ -407,7 +557,8 @@ def main():
     shutil.copytree(os.path.join(ROOT, 'assets'), os.path.join(OUT, 'assets'))
     shutil.copytree(os.path.join(ROOT, 'attachment'), os.path.join(OUT, 'attachment'))
     shutil.copy(os.path.join(ROOT, 'llms.txt'), os.path.join(OUT, 'llms.txt'))
-    build_raw()
+    if not LANG:
+        build_raw()
     for d in DIRS:
         for name in sorted(os.listdir(os.path.join(ROOT, d))):
             if name.endswith('.md'):

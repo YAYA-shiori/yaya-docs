@@ -18,6 +18,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - `INDEX.md`（トップページ）に全ページを並べる必要は無い。節の一覧は、`menu.yml` から自動で作る索引ページ（`basic/` `tips/` など）が受け持つ
 - 関数なら `functions/README.md`（分類別の一覧。ビルドの元データ）と `system/system-functions-index.md` にも追加する
 - 新しいディレクトリを作ったら、`scripts/prepare_site.py` の `DIRS` に加え、`menu.yml` に載せる
+- 翻訳を回し直す（`python scripts/translate.py`。下の「翻訳」を参照）。新しいページは、回し直すまで翻訳版では日本語のまま出る。新しいディレクトリは `scripts/translate.py` の `DIRS` にも加える
 
 ## 言語仕様が変わったとき
 
@@ -47,14 +48,27 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 見た目は `oldstyle/static/style.css`（旧 `skin/default.css` の規則のうち使う分。色と寸法は旧版のまま）。ダークモードは無い。ヘッダの画像 `oldstyle/static/skin/title.png` は旧 wiki のもの（`assets/logo.png` と同じキャラクター）。ロゴ画像 `oldstyle/static/skin/logo.png`（350x40、地色 `#212121`）は、このサイト用に作り直したもの。パンくずリストはトップページでも出す。`other/yaya6-launch.md` の部品（ヒーロー画像・ボタン・数字のカードなど。`.y6-*`、`style.css` の末尾）も、配色はほかのページと同じ旧版の配色
 - OGP / Twitter カードのタグは `oldstyle/build.py` が全ページに出す。ページごとのタイトル・説明・画像（1200x630 の PNG）は `build.py` の `OGP` に、ページの URL（`other/yaya6-launch/` のように末尾が `/`。トップは空文字）をキーにして書く（原稿に front matter は書かない。GitHub で表として表示されてしまうため）
 - 検索は、ビルド時に作る `search-index.js`（節ごとの本文）を、`search.js` が空白区切りの語の AND で部分一致検索する。ヘッダの検索欄に打ち込むとドロップダウンが出て、Enter で `search/?q=` に全件が並ぶ。ページの深さが違うので、`<body data-root="../../">` でサイトのルートへの相対パスを渡している
-- ヘッダに翻訳ボタンがある（`oldstyle/static/translate.js`。見た目は `style.css` の `.ukadoc-translate`）。ブラウザ組み込みの Translator API（Chrome 138 以降のデスクトップ版など）で、本文と左メニューを日本語から英語・中国語（繁体 `zh-Hant`・簡体 `zh`）へ機械翻訳する。API が無いブラウザではボタンを出さない。訳すのは日本語を含む文だけで、`code` `pre` `kbd` と `translate="no"` の中は訳さない。文はブロック（`p` `li` `td` など）の中の連なりを単位にまとめて訳し、リンク・太字・コードスパンは印（`<x1/>` `<a2>…</a2>`）に置き換えて訳してから元の要素へ戻す（印が崩れた文は断片ごとの訳に切り替える）。訳したくない語は原稿で `<span translate="no">…</span>` と囲める。読める程度の品質でよいとしている。JavaScript を使うのは検索とこのボタンだけ
+- ヘッダに言語切替がある（`oldstyle/static/lang.js`。見た目は `style.css` の `.ukadoc-translate`）。日本語版（サイトのルート）の下に、翻訳版（`en/` `zh-Hant/` `zh/`）が同じ URL で出る。切替先は、ページの `<meta name="ukadoc-langs">`（ビルドが `i18n/` にある言語を書く）で決まる。翻訳版のページの本文の頭には、機械翻訳である旨と日本語の原文へのリンクの帯を出す。翻訳版が 1 つも無ければ、ボタンは出ない。ブラウザ組み込みの Translator API を使う旧 `translate.js` は、ファイルだけ残してあり、読み込まない。JavaScript を使うのは検索と言語切替だけ
 - `sitemap.xml` と `404.html` もビルドが作る。404.html のリンクは、どの深さで開かれるかわからないので、サイトのルートからの絶対パス（`/yaya-docs/…`）
 
 手元で確認するとき（`_site_src/` `_site/` `_raw/` は `.gitignore` 済み）:
 
 ```sh
 pip install -r requirements.txt
-python oldstyle/build.py    # prepare_site.py で _site_src/ を作り、_site/ に出力する（--no-prepare で作り直さない）
-python oldstyle/check.py    # 出力のリンク切れ・アンカー切れ・画像の切れ・検索の索引の URL を調べる（エラーが 0 件であること）
+python oldstyle/build.py    # prepare_site.py で _site_src/ を作り、_site/ に出力する。i18n/ のある言語は、続けて _site/<言語>/ に出す（--no-prepare で作り直さない、--no-langs で日本語版だけ、--lang=en でその言語だけ）
+python oldstyle/check.py    # 出力のリンク切れ・アンカー切れ・画像の切れ・検索の索引の URL を調べる（エラーが 0 件であること。翻訳版は --lang=en など）
 python -m http.server -d _site    # http://127.0.0.1:8000/ でプレビュー
 ```
+
+## 翻訳
+
+英語・繁体字中国語・簡体字中国語の版は、日本語の原稿を `scripts/translate.py` で LLM に訳させて `i18n/<言語>/` に置いたもの。サイトでは日本語版の下（`/en/` `/zh-Hant/` `/zh/`）に出る。原稿を書く側が知っておくこと:
+
+- **日本語の原稿を直したら、翻訳を回し直す**: `python scripts/translate.py`。原稿のハッシュ（`i18n/<言語>/.manifest.json`）が変わったファイルだけを、ファイルごと丸ごと訳し直す。結果を `i18n/` ごとコミットする。API の設定はリポジトリ直下の `.env`（`TRANSLATE_API_KEY` `TRANSLATE_BASE_URL`。`.gitignore` 済み）。まず `--dry-run` で量と費用の目安を見られる（全ページ・全言語で 1 ドル未満）
+- 訳すのは、原稿（`.md`）と、メニューの定義（`oldstyle/menu.yml`。`title:` の値だけ。訳は `i18n/<言語>/menu.yml`）。画面の枠の文言（検索欄・パンくずなど）は `oldstyle/build.py` の `UI`、関数の分類ページと文法ページの題・前書きは `scripts/prepare_site.py` の `TEXTS` に、言語ごとの語を書いてある
+- 訳文は構造を自動で検査する（見出しの数とレベル、リンク先、コードブロック、表、箇条書き、HTML のタグ、**構造の判定に使う語**）。通らないファイルは置かず、そのページは日本語のまま出る。**訳文に残す語**: 関数ページの `**Category:** 分類` の行（分類の語も含めて）と、英語の節の見出し（`Signature` `Parameters` `Returns` など。`prepare_site.py` の `HEADING_JA`）。節の見出しは、表示のときだけ `HEADING_LOCAL` で言語ごとの語になる（日本語版が「書式」「引数」になるのと同じ。英語版は原文のまま）。コードブロックの中（サンプルのセリフを含む）は訳さない
+- 関数の分類名は、訳した `functions/README.md` の `## 分類` の見出しを、日本語の見出しと同じ位置のものとして使う（`prepare_site.py` の `category_labels`）。分類の判定や、まとめたページの見出しの id は、日本語の原稿から作る
+- 見出しの id は日本語の原稿から作るので、訳した見出しでもリンクの `#見出し` は切れない。リンク先の見出しを日本語側で改名したら、翻訳も回し直す
+- 訳語がぶれる語は `i18n/glossary.tsv`（`ja` `en` `zh-Hant` `zh` の列。タブ区切り）に足し、`python scripts/translate.py --force` で訳し直す。検査器を直したときは `--recheck` で、書き出し済みの訳文に今の検査を当て直せる
+- `i18n/` の訳文を手で直してもよいが、日本語の原稿が変わると次の翻訳で上書きされる。恒久的に直したいことは、用語集か `translate.py` のプロンプトに書く
+- 翻訳版のサイトの検査: `python oldstyle/check.py --lang=en`（画像・添付ファイル・`llms.txt`・生の原稿は日本語版のものを共有し、翻訳版のページは 1 つ上から参照する。`404.html` と `sitemap.xml` は日本語版だけ）

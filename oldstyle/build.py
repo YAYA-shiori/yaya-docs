@@ -2,6 +2,7 @@ r"""YAYA マニュアルのサイトを作る（旧 AYAYA wiki の見た目を�
 
     python oldstyle/build.py              # scripts/prepare_site.py で _site_src/ を作り、_site/ に出力する
     python oldstyle/build.py --no-prepare # _site_src/ を作り直さない
+    python oldstyle/build.py --lang=en    # i18n/en/ の翻訳を重ねた版だけを _site/en/ に出す（--no-langs: 日本語版だけ）
 
 原稿（Markdown）→ HTML → 旧 wiki の構造（ヘッダ・左の #menubar・本文の #body）に組む。HTML は HTML5。
 ページの URL は Zensical 版と同じ（other/yaya/ のようにディレクトリ。外部からのリンクを切らないため）。
@@ -15,6 +16,7 @@ import posixpath
 import re
 import shutil
 import string
+import subprocess
 import sys
 from urllib.parse import urlsplit
 
@@ -29,14 +31,51 @@ ROOT = os.path.normpath(os.path.join(HERE, '..'))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import prepare_site  # noqa: E402
 
-SRC = prepare_site.OUT                  # 原稿の写し（_site_src/）
+LANG = prepare_site.LANG                # --lang=<コード>（翻訳版）。無ければ日本語版
+SRC = prepare_site.OUT                  # 原稿の写し（_site_src/、翻訳版は _site_src_<コード>/）
 RAW = prepare_site.RAW                  # 生の Markdown 原稿の写し（_raw/）
-OUT = os.path.join(ROOT, '_site')
+OUT = os.path.join(ROOT, '_site', *([LANG] if LANG else []))   # 翻訳版は _site/<コード>/（日本語版の下）
 STATIC = os.path.join(HERE, 'static')
 SITE_URL = prepare_site.SITE_URL
 SITE_PATH = urlsplit(SITE_URL).path     # /yaya-docs/（404.html のように、どの深さで開かれるかわからないページが使う）
-SITE_NAME = 'YAYA マニュアル'
-SITE_DESCRIPTION = '伺かの SHIORI「YAYA」の言語マニュアル'
+# 翻訳版の頁は、画像・添付ファイルなど（日本語版のルートにある共有のもの）を 1 つ上から参照する
+BASE = '../' if LANG else ''
+PAGE_URL = SITE_URL + (LANG + '/' if LANG else '')    # このサイト（言語）のルートの URL（canonical・OGP のページの URL）
+
+# 翻訳版の言語（i18n/<コード>/ があるものだけ、日本語版のビルドの最後に続けてビルドする）
+LANGS = ['en', 'zh-Hant', 'zh']
+
+# 画面に出す文言（ビルドが書くもの）。構造の判定に使う日本語・英語の語は、訳文でも原文のまま残し、表示のときだけ言語ごとの語にする
+UI = {
+    'ja': {
+        'site_name': 'YAYA マニュアル', 'site_description': '伺かの SHIORI「YAYA」の言語マニュアル', 'top': 'トップ',
+        'breadcrumb': 'パンくずリスト', 'contents': '目次', 'search_ph': 'マニュアル内検索', 'search_h1': '検索', 'search_button': '検索',
+        'search_desc': 'YAYA マニュアルの内部検索', 'list_desc': '{title}の一覧', 'permalink_title': 'この見出しへのリンク', 'og_locale': 'ja_JP',
+    },
+    'en': {
+        'site_name': 'YAYA Manual', 'site_description': 'Language manual for YAYA, a SHIORI for Ukagaka', 'top': 'Top',
+        'breadcrumb': 'Breadcrumb', 'contents': 'Contents', 'search_ph': 'Search the manual', 'search_h1': 'Search', 'search_button': 'Search',
+        'search_desc': 'Search within the YAYA Manual', 'list_desc': 'List of {title}', 'permalink_title': 'Link to this heading', 'og_locale': 'en_US',
+    },
+    'zh-Hant': {
+        'site_name': 'YAYA 手冊', 'site_description': '伺か SHIORI「YAYA」的語言手冊', 'top': '首頁',
+        'breadcrumb': '導覽路徑', 'contents': '目錄', 'search_ph': '搜尋手冊', 'search_h1': '搜尋', 'search_button': '搜尋',
+        'search_desc': 'YAYA 手冊的站內搜尋', 'list_desc': '{title}一覽', 'permalink_title': '此標題的連結', 'og_locale': 'zh_TW',
+    },
+    'zh': {
+        'site_name': 'YAYA 手册', 'site_description': '伺か SHIORI「YAYA」的语言手册', 'top': '首页',
+        'breadcrumb': '导航路径', 'contents': '目录', 'search_ph': '搜索手册', 'search_h1': '搜索', 'search_button': '搜索',
+        'search_desc': 'YAYA 手册的站内搜索', 'list_desc': '{title}一览', 'permalink_title': '此标题的链接', 'og_locale': 'zh_CN',
+    },
+}
+T = UI[LANG or 'ja']
+SITE_NAME = T['site_name']
+SITE_DESCRIPTION = T['site_description']
+
+
+def available_langs():
+    """言語メニューに出す言語のコード。日本語 + i18n/<コード>/ があるもの（LANGS の順）"""
+    return ['ja'] + [code for code in LANGS if os.path.isdir(os.path.join(ROOT, 'i18n', code))]
 
 # ページごとの OGP / Twitter カード。キーはページの URL（トップは ''）、image は SITE_URL からの相対パス（1200x630）
 OGP = {
@@ -55,7 +94,7 @@ MD_CONFIG = {
         # 旧 wiki と同じ、見出しの末尾の †（その見出しへのリンク）
         'permalink': '†',
         'permalink_class': 'anchor_super',
-        'permalink_title': 'この見出しへのリンク',
+        'permalink_title': T['permalink_title'],
     },
 }
 
@@ -104,10 +143,11 @@ def rel_url(from_url, to_url):
 
 
 def rel_file(from_url, path):
-    """ページ from_url から、サイトのルートからの path（画像・添付ファイルなど）へのパス"""
+    """ページ from_url から、サイトのルートからの path（画像・添付ファイルなど）へのパス。
+    翻訳版では、これらは日本語版のルートにある共有のものなので、翻訳版のルートの 1 つ上から参照する"""
     if from_url is None:
         return SITE_PATH + path
-    return posixpath.relpath(path, from_url.rstrip('/') or '.')
+    return BASE + posixpath.relpath(path, from_url.rstrip('/') or '.')
 
 
 def root_of(url):
@@ -117,6 +157,8 @@ def root_of(url):
 # ---------------------------------------------------------------- メニューと章立て（menu.yml）
 
 MENU_FILE = os.path.join(HERE, 'menu.yml')
+if LANG and os.path.isfile(os.path.join(ROOT, 'i18n', LANG, 'menu.yml')):
+    MENU_FILE = os.path.join(ROOT, 'i18n', LANG, 'menu.yml')     # 翻訳版では、メニューの名前の訳（題だけ訳したもの）
 INDEX_SLUG = re.compile(r'^[a-z0-9][a-z0-9-]*(/[a-z0-9][a-z0-9-]*)*/$')
 GENERATED = {}      # 自動で作る索引ページ: 原稿のパス（basic/index.md など）→ その節の Node
 GENERATED_LIST = '.generated'   # 前のビルドで作った索引ページの記録（--no-prepare で消し残さないため）
@@ -235,7 +277,15 @@ def list_pages(rel_dir, where):
         with open(nav, encoding='utf-8') as f:
             order = [f'{rel_dir}/{e}' for e in yaml.safe_load(f)['nav'] if isinstance(e, str)]
     first = [m for m in order if m in mds]
-    return first + sorted((m for m in mds if m not in first), key=h1_of)
+
+    def sort_key(md):
+        # 並びは日本語の原稿の H1 の順（翻訳版でも同じ並びにする）。自動で作ったページなど、日本語の原稿が無いものは、写しの H1
+        if LANG and os.path.isfile(os.path.join(ROOT, md)):
+            for line in prepare_site.read_ja(md).split('\n'):
+                if line.startswith('# '):
+                    return plain(line[2:])
+        return h1_of(md)
+    return first + sorted((m for m in mds if m not in first), key=sort_key)
 
 
 def place_pages(root):
@@ -284,17 +334,17 @@ def cleanup_generated():
         return
     with open(record, encoding='utf-8') as f:
         for md in json.load(f):
-            for base in (SRC, RAW):
+            for base in ((SRC,) if LANG else (SRC, RAW)):
                 if os.path.exists(os.path.join(base, md)):
                     os.remove(os.path.join(base, md))
     os.remove(record)
 
 
 def write_generated():
-    """索引ページの原稿を _site_src/ と _raw/（生の原稿としてサイトにも置く）に書く"""
+    """索引ページの原稿を _site_src/ と _raw/（生の原稿としてサイトにも置く。翻訳版は _site_src_<コード>/ だけ）に書く"""
     for md, node in GENERATED.items():
         text = index_markdown(node)
-        for base in (SRC, RAW):
+        for base in ((SRC,) if LANG else (SRC, RAW)):
             path = os.path.join(base, md)
             os.makedirs(os.path.dirname(path), exist_ok=True)
             with open(path, 'w', encoding='utf-8', newline='\n') as f:
@@ -338,15 +388,15 @@ def breadcrumb_html(md, from_url, last=None):
     chain = [n for n in chain if n.md != 'index.md']
     items = []
     if md == 'index.md':
-        items.append('<li>トップ</li>')
+        items.append(f'<li>{esc(T["top"])}</li>')
     else:
-        items.append(f'<li><a href="{rel_url(from_url, "")}">トップ</a></li>')
+        items.append(f'<li><a href="{rel_url(from_url, "")}">{esc(T["top"])}</a></li>')
         for n in chain:
             link = node_href(n, from_url) if n.md != md else None
             items.append(f'<li><a href="{esc(link)}">{esc(n.title)}</a></li>' if link else f'<li>{esc(n.title)}</li>')
         if last:
             items.append(f'<li>{esc(last)}</li>')
-    return '<nav id="breadcrumb" aria-label="パンくずリスト">\n<ul>\n' + '\n'.join(items) + '\n</ul>\n</nav>\n'
+    return f'<nav id="breadcrumb" aria-label="{esc(T["breadcrumb"])}">\n<ul>\n' + '\n'.join(items) + '\n</ul>\n</nav>\n'
 
 
 # ---------------------------------------------------------------- Markdown → HTML
@@ -490,16 +540,18 @@ def search_entries(tree, label, url):
 def head_extra(url, page_title, description):
     """canonical・OGP・Twitter カード"""
     ogp = OGP.get(url, {})
+    if LANG:      # OGP の題と説明は日本語のもの。翻訳版では、ページの題と説明を使う（画像は共有）
+        ogp = {k: v for k, v in ogp.items() if k == 'image'}
     title = ogp.get('title', f'{page_title} - {SITE_NAME}' if url else SITE_NAME)
     description = ogp.get('description', description)
-    full = SITE_URL + url
+    full = PAGE_URL + url
     out = f'<link rel="canonical" href="{esc(full)}">\n'
     out += (f'<meta property="og:type" content="{"article" if url else "website"}">\n'
             f'<meta property="og:site_name" content="{esc(SITE_NAME)}">\n'
             f'<meta property="og:title" content="{esc(title)}">\n'
             f'<meta property="og:description" content="{esc(description)}">\n'
             f'<meta property="og:url" content="{esc(full)}">\n'
-            '<meta property="og:locale" content="ja_JP">\n')
+            f'<meta property="og:locale" content="{T["og_locale"]}">\n')
     if 'image' in ogp:
         image = esc(SITE_URL + ogp['image'])
         out += (f'<meta property="og:image" content="{image}">\n<meta property="og:image:width" content="1200">\n'
@@ -523,30 +575,37 @@ def build_pages(root):
         tree = render(md, url)
         h1 = tree.find('h1')
         page_title = heading_text(h1) if h1 is not None else node.title
-        description = f'{node.title}の一覧' if md in GENERATED else description_of(tree)
+        description = T['list_desc'].format(title=node.title) if md in GENERATED else description_of(tree)
         head = head_extra(url, page_title, description)
         content = inner_html(tree)
         write(posixpath.join(url, 'index.html'), template.substitute(
             title=esc(page_title if not url else f'{page_title} - {SITE_NAME}'), description=esc(description), head=head,
-            root=root_of(url), home=rel_url(url, ''), body_attr='',
+            root=root_of(url), home=rel_url(url, ''), body_attr='', **frame_fields(),
             breadcrumb=breadcrumb_html(md, url), menu=menu_html(root, md, url), content=content))
         if md not in GENERATED:     # 自動で作る索引ページは、題の一覧でしかないので、検索の対象にしない
             index.extend(search_entries(tree, node.title, url))
     build_search_page(root, template)
-    build_404(root, template)
     write('search-index.js', 'window.YAYA_INDEX=' + json.dumps(index, ensure_ascii=False, separators=(',', ':')) + ';\n')
-    write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-          ''.join(f'<url><loc>{esc(SITE_URL + page_url(md))}</loc></url>\n' for md in pages) + '</urlset>\n')
+    if not LANG:      # 404.html と sitemap.xml は、日本語版（サイトのルート）のものだけ
+        build_404(root, template)
+        write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+              ''.join(f'<url><loc>{esc(SITE_URL + page_url(md))}</loc></url>\n' for md in pages) + '</urlset>\n')
     return pages
+
+
+def frame_fields():
+    """page.html の枠に埋める、言語ごとの値"""
+    return dict(lang=LANG or 'ja', langs=','.join(available_langs()), base=BASE, l_site_name=esc(SITE_NAME),
+                l_contents=esc(T['contents']), l_search_ph=esc(T['search_ph']))
 
 
 def build_search_page(root, template):
     url = 'search/'
-    content = ('<h1>検索</h1>\n<form id="search-form" action="./">\n<p><input id="search-q" name="q" type="search" size="30" autocomplete="off"> '
-               '<button type="submit">検索</button></p>\n</form>\n<div id="search-results"></div>\n')
+    content = (f'<h1>{esc(T["search_h1"])}</h1>\n<form id="search-form" action="./">\n<p><input id="search-q" name="q" type="search" size="30" autocomplete="off"> '
+               f'<button type="submit">{esc(T["search_button"])}</button></p>\n</form>\n<div id="search-results"></div>\n')
     write(url + 'index.html', template.substitute(
-        title=esc(f'検索 - {SITE_NAME}'), description='YAYA マニュアルの内部検索', head='<meta name="robots" content="noindex">\n',
-        root=root_of(url), home=rel_url(url, ''), body_attr='', breadcrumb=breadcrumb_html(None, url, last='検索'),
+        title=esc(f'{T["search_h1"]} - {SITE_NAME}'), description=esc(T['search_desc']), head='<meta name="robots" content="noindex">\n',
+        root=root_of(url), home=rel_url(url, ''), body_attr='', **frame_fields(), breadcrumb=breadcrumb_html(None, url, last=T['search_h1']),
         menu=menu_html(root, None, url), content=content))
 
 
@@ -555,13 +614,16 @@ def build_404(root, template):
     content = '<h1>ページが見つかりません</h1>\n<p>お探しのページは、移動したか、無くなったようです。左のメニューか、上の検索欄から探してください。</p>\n'
     write('404.html', template.substitute(
         title=esc(f'ページが見つかりません - {SITE_NAME}'), description='ページが見つかりません', head='<meta name="robots" content="noindex">\n',
-        root=SITE_PATH, home=SITE_PATH, body_attr='', breadcrumb=breadcrumb_html(None, None), menu=menu_html(root, None, None), content=content))
+        root=SITE_PATH, home=SITE_PATH, body_attr='', **frame_fields(), breadcrumb=breadcrumb_html(None, None), menu=menu_html(root, None, None), content=content))
 
 
 def copy_static():
     """静的ファイル（CSS・JS・ヘッダの画像）、_site_src/ の .md 以外（assets/・attachment/・llms.txt・転送 HTML）、
-    生の Markdown 原稿（llms.txt や INDEX.md の相対リンクを、サイト上でも辿れるようにする）を出力に置く"""
+    生の Markdown 原稿（llms.txt や INDEX.md の相対リンクを、サイト上でも辿れるようにする）を出力に置く。
+    翻訳版は、静的ファイルだけ（assets/ などは日本語版のものを共有し、翻訳版の頁は 1 つ上から参照する）"""
     shutil.copytree(STATIC, OUT, dirs_exist_ok=True)
+    if LANG:
+        return
     for base, _, names in os.walk(SRC):
         for name in names:
             if name.endswith('.md') or name in ('.nav.yml', GENERATED_LIST):
@@ -579,6 +641,8 @@ MD_PAGES = set()
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--no-prepare', action='store_true', help='_site_src/ を作り直さない')
+    ap.add_argument('--lang', help='翻訳版だけを _site/<コード>/ に出す（i18n/<コード>/ の訳文を重ねる）')
+    ap.add_argument('--no-langs', action='store_true', help='日本語版だけを作る（翻訳版を続けて作らない）')
     args = ap.parse_args()
     if not args.no_prepare:
         prepare_site.main()
@@ -605,6 +669,10 @@ def main():
     if pages is None or errors:
         sys.exit(f'ビルドに失敗: エラー {len(errors)} 件')
     print(f'{len(pages)} ページを {os.path.relpath(OUT)} に出力した')
+    if not LANG and not args.no_langs:
+        # 日本語版の後ろに、翻訳のある言語（i18n/<コード>/ があるもの）を _site/<コード>/ へ続けてビルドする
+        for code in available_langs()[1:]:
+            subprocess.run([sys.executable, os.path.abspath(__file__), f'--lang={code}'], check=True)
 
 
 if __name__ == '__main__':

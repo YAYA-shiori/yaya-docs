@@ -1,16 +1,17 @@
 <!doctype html>
-<html lang="ja">
+<html lang="$lang">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$title</title>
 <meta name="description" content="$description">
-<link rel="icon" href="${root}assets/logo.png">
+<meta name="ukadoc-langs" content="$langs">
+<link rel="icon" href="${root}${base}assets/logo.png">
 <link rel="stylesheet" href="${root}style.css">
 $head</head>
 <body data-root="$root"$body_attr>
 <header id="header">
-<a id="site-logo" href="$home"><img src="${root}skin/title.png" width="220" height="80" alt="YAYA マニュアル"></a>
+<a id="site-logo" href="$home"><img src="${root}skin/title.png" width="220" height="80" alt="$l_site_name"></a>
 <div id="header1">
 <div id="site-title">
 <p id="site-name"><a href="$home"><img src="${root}skin/logo.png" width="350" height="40" alt="AYAYA/04 YAYA Documentation"></a></p>
@@ -18,7 +19,7 @@ $breadcrumb</div>
 <div id="search">
 <form action="${root}search/" role="search">
 <div class="search-field">
-<input id="query" name="q" type="search" autocomplete="off" placeholder="マニュアル内検索" title="マニュアル内検索" aria-label="マニュアル内検索" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-dropdown">
+<input id="query" name="q" type="search" autocomplete="off" placeholder="$l_search_ph" title="$l_search_ph" aria-label="$l_search_ph" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-dropdown">
 <span class="search-icon" aria-hidden="true">🔍</span>
 </div>
 </form>
@@ -26,7 +27,7 @@ $breadcrumb</div>
 </div>
 </header>
 <div id="page">
-<nav id="menubar" aria-label="目次">
+<nav id="menubar" aria-label="$l_contents">
 <h5>Menu</h5>
 $menu
 </nav>
@@ -35,6 +36,6 @@ $content
 </main>
 </div>
 <script src="${root}search.js" defer></script>
-<script src="${root}translate.js" defer></script>
+<script src="${root}lang.js" defer></script>
 </body>
 </html>

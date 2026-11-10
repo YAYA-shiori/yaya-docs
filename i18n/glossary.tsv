@@ -1,0 +1,41 @@
+ja	en	zh-Hant	zh
+# 関数名・変数名・コードは訳さない。ゴースト（人格）・シェル・バルーンの語は、SSP の中国語の画面（ssp-i18n）に合わせてある
+YAYA	YAYA	YAYA	YAYA
+AYA	AYA	AYA	AYA
+SHIORI	SHIORI	SHIORI	SHIORI
+SAORI	SAORI	SAORI	SAORI
+伺か	Ukagaka	伺か (Ukagaka)	伺か (Ukagaka)
+さくらスクリプト	Sakura Script	Sakura Script	Sakura Script
+里々	Satori	Satori	Satori
+華和梨	Kawari	Kawari	Kawari
+紺野ややめ	Konnoyayame	紺野ややめ (Konnoyayame)	紺野ややめ (Konnoyayame)
+ゴースト	ghost	人格	人格
+シェル	shell	外殼	外壳
+バルーン	balloon	對話方塊	对话框
+ベースウェア	baseware	baseware	baseware
+辞書	dictionary	辭典	词典
+辞書ファイル	dictionary file	辭典檔案	词典文件
+システム辞書	system dictionary	系統辭典	系统词典
+トーク	talk	對話	对话
+ランダムトーク	random talk	隨機對話	随机对话
+イベント	event	事件	事件
+関数	function	函式	函数
+システム関数	system function	系統函式	系统函数
+組み込み関数	built-in function	內建函式	内置函数
+ユーザー関数	user-defined function	使用者自訂函式	用户自定义函数
+変数	variable	變數	变量
+グローバル変数	global variable	全域變數	全局变量
+ローカル変数	local variable	區域變數	局部变量
+配列	array	陣列	数组
+汎用配列	generic array	通用陣列	通用数组
+ハッシュ	hash	雜湊	哈希
+文字列	string	字串	字符串
+数値	number	數值	数值
+条件分岐	conditional branching	條件分支	条件分支
+ループ	loop	迴圈	循环
+演算子	operator	運算子	运算符
+式	expression	運算式	表达式
+引数	argument	引數	参数
+戻り値	return value	傳回值	返回值
+代入	assignment	指派	赋值
+セーブデータ	save data	存檔資料	存档数据

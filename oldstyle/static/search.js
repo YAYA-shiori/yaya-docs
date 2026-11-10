@@ -13,6 +13,34 @@
   var ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return ESC[c]; }); }
   function norm(s) { return s.toLowerCase(); }
+  // 表示の文言。頁の <html lang> の言語（日本語・en・zh-Hant・zh）で切り替える。無い言語は日本語
+  var MESSAGES = {
+    ja: {
+      none: '見つかりませんでした。',
+      all: function (n) { return 'すべての結果を見る（' + n + ' 件）'; },
+      goSearch: '検索ページで探す',
+      count: function (n, top) { return n + ' 件' + (top ? '（上位 ' + top + ' 件を表示）' : ''); }
+    },
+    en: {
+      none: 'No results found.',
+      all: function (n) { return 'See all results (' + n + ')'; },
+      goSearch: 'Search on the search page',
+      count: function (n, top) { return n + (n === 1 ? ' result' : ' results') + (top ? ' (top ' + top + ' shown)' : ''); }
+    },
+    'zh-Hant': {
+      none: '找不到結果。',
+      all: function (n) { return '查看所有結果（' + n + ' 筆）'; },
+      goSearch: '前往搜尋頁',
+      count: function (n, top) { return n + ' 筆' + (top ? '（顯示前 ' + top + ' 筆）' : ''); }
+    },
+    zh: {
+      none: '未找到结果。',
+      all: function (n) { return '查看所有结果（' + n + ' 条）'; },
+      goSearch: '前往搜索页',
+      count: function (n, top) { return n + ' 条' + (top ? '（显示前 ' + top + ' 条）' : ''); }
+    }
+  };
+  var T = MESSAGES[document.documentElement.lang] || MESSAGES.ja;
   // ページの深さによらず、サイトのルートからの相対パス（<body data-root="../../"> など）を前に付ける
   var ROOT = document.body.getAttribute('data-root') || './';
   function urlOf(u) { return ROOT + u; }
@@ -86,7 +114,7 @@
         var r = find(q);
         if (!r.terms.length) { out.innerHTML = ''; return; }
         var shown = r.hits.slice(0, MAX_PAGE);
-        var html = '<p>' + r.hits.length + ' 件' + (r.hits.length > shown.length ? '（上位 ' + shown.length + ' 件を表示）' : '') + '</p><ul>';
+        var html = '<p>' + T.count(r.hits.length, r.hits.length > shown.length ? shown.length : 0) + '</p><ul>';
         shown.forEach(function (h) {
           html += '<li><a href="' + esc(urlOf(h.d.url)) + '">' + esc(h.d.title) + '</a> <span class="search-page">' + esc(h.d.page) + '</span><br>' + snippet(h.d, r.terms, 140) + '</li>';
         });
@@ -142,9 +170,9 @@
         html += '<a class="site-search__item" role="option" data-i="' + i + '" href="' + esc(urlOf(h.d.url)) + '"><span class="site-search__title">' + esc(h.d.title) +
           '</span> <span class="site-search__page">' + esc(h.d.page) + '</span><span class="site-search__snippet">' + snippet(h.d, r.terms, 90) + '</span></a>';
       });
-      if (!shown.length) html += '<p class="site-search__empty">見つかりませんでした。</p>';
+      if (!shown.length) html += '<p class="site-search__empty">' + esc(T.none) + '</p>';
       html += '<a class="site-search__all" role="option" data-i="' + shown.length + '" href="' + esc(searchUrl(q)) + '">' +
-        (shown.length ? 'すべての結果を見る（' + r.hits.length + ' 件）' : '検索ページで探す') + '</a>';
+        esc(shown.length ? T.all(r.hits.length) : T.goSearch) + '</a>';
       el.innerHTML = html;
       count = shown.length + 1;
       active = -1;

@@ -2,3 +2,5 @@ _site_src/
 _site/
 __pycache__/
 _raw/
+_site_src_*/
+.env

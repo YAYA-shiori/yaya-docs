@@ -512,7 +512,21 @@ ul.index-grid li {
 	margin-bottom: .8em;
 }
 
-/* ---- 翻訳ボタン（translate.js）。検索欄の右横。Translator API が無いブラウザでは出ない ---- */
+/* 翻訳版のページの頭に出す、機械翻訳の注記の帯（lang.js）。本文（#body）の上に置く */
+.ukadoc-mt-notice {
+	margin: 0 0 .8em;
+	padding: .4em .8em;
+	border: 1px solid #e0c870;
+	background: #fff8dc;
+	color: #5a4a00;
+	font-size: 85%;
+	line-height: 1.5;
+}
+.ukadoc-mt-notice a {
+	color: #7a5c00;
+}
+
+/* ---- 言語切替（lang.js）。検索欄の右横。翻訳版が 1 つも無ければ出ない ---- */
 .ukadoc-translate {
 	position: relative;
 	flex: none;
@@ -708,7 +722,7 @@ ul.index-grid li {
 }
 
 @media print {
-	#menubar, #search, .ukadoc-translate {
+	#menubar, #search, .ukadoc-translate, .ukadoc-mt-notice {
 		display: none;
 	}
 }
