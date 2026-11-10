@@ -707,6 +707,16 @@ ul.index-grid li {
 	}
 	#body {
 		order: 1;
+		overflow-wrap: anywhere;
+	}
+	/* 幅の広い表は、表の中だけを横にスクロールする */
+	#body table {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+	}
+	#body pre {
+		overflow-x: auto;
 	}
 	#menubar {
 		order: 2;
@@ -721,8 +731,75 @@ ul.index-grid li {
 	}
 }
 
+/* ---- 幅が狭いとき: 左のメニュー（#menubar）を、検索欄の左のボタン（menu.js）で開閉する引き出しにする ----
+   js-drawer は menu.js が <html> に付ける（JavaScript が動かなければ、メニューは上のとおり本文の下に出る）。
+   引き出しと暗幕は、ヘッダの下（--drawer-top。menu.js が開くときに測る。ヘッダが画面の外なら画面の上）から */
+.ukadoc-drawer-toggle,
+.ukadoc-drawer-backdrop {
+	display: none;
+}
+@media (max-width: 800px) {
+	html.js-drawer .ukadoc-drawer-toggle {
+		display: block;
+		flex: none;
+		box-sizing: border-box;
+		width: 1.8em;
+		height: 1.8em;
+		padding: .15em;
+		border: 1px solid #dcdcdc;
+		background: #ffffff;
+		color: #333333;
+		cursor: pointer;
+	}
+	html.js-drawer .ukadoc-drawer-toggle svg {
+		display: block;
+		width: 100%;
+		height: 100%;
+		fill: currentColor;
+	}
+	html.js-drawer.drawer-open .ukadoc-drawer-toggle {
+		background: #ccddee;
+	}
+	html.js-drawer #menubar {
+		display: none;
+	}
+	html.js-drawer.drawer-open #menubar {
+		display: block;
+		position: fixed;
+		top: var(--drawer-top, 0);
+		bottom: 0;
+		left: 0;
+		z-index: 60;
+		box-sizing: border-box;
+		width: min(320px, 85vw);
+		max-height: none;
+		margin: 0;
+		padding: 0 .3em 2em 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		background: #f4f4f4;
+		border: 0;
+		border-right: 1px solid #dcdcdc;
+		box-shadow: 2px 0 8px rgba(0, 0, 0, .4);
+		outline: none;
+	}
+	html.js-drawer.drawer-open .ukadoc-drawer-backdrop {
+		display: block;
+		position: fixed;
+		top: var(--drawer-top, 0);
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: 55;
+		background: rgba(0, 0, 0, .4);
+	}
+	html.js-drawer.drawer-open body {
+		overflow: hidden;
+	}
+}
+
 @media print {
-	#menubar, #search, .ukadoc-translate, .ukadoc-mt-notice {
+	#menubar, #search, .ukadoc-translate, .ukadoc-mt-notice, .ukadoc-drawer-backdrop {
 		display: none;
 	}
 }

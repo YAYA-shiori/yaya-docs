@@ -30,7 +30,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 
 `main` に push すると GitHub Actions（`.github/workflows/pages.yml`）が `oldstyle/build.py` と `oldstyle/check.py` を走らせ、https://yaya-shiori.github.io/yaya-docs/ に公開する。以前の Zensical 版は `old-zensical` ブランチに残してある。ビルドの仕組みは [`oldstyle/README.md`](oldstyle/README.md)。原稿を書くうえで知っておくことは次のとおり。
 
-- サイトの見た目と構造は、旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）を模している。上にヘッダ（左に旧版のタイトル画像、右の黒い帯にロゴ画像・パンくずリスト・検索欄・翻訳ボタン。幅が 800px を超えるときは、スクロールしても上に固定する）、左に目次（`#menubar`）、右に本文（`#body`）。旧版にあった wiki の道具（一覧・検索・最終更新・編集・添付のリンク、最近更新されたページ、フッタ）は無い。HTML は HTML5 で、JavaScript は検索（`search.js`）と翻訳ボタン（`translate.js`）だけ
+- サイトの見た目と構造は、旧 AYAYA wiki（PukiWiki Plus! の skin/default.css）を模している。上にヘッダ（左に旧版のタイトル画像、右の黒い帯にロゴ画像・パンくずリスト・検索欄・翻訳ボタン。幅が 800px を超えるときは、スクロールしても上に固定する）、左に目次（`#menubar`）、右に本文（`#body`）。旧版にあった wiki の道具（一覧・検索・最終更新・編集・添付のリンク、最近更新されたページ、フッタ）は無い。HTML は HTML5 で、JavaScript は検索（`search.js`）と言語切替（`lang.js`）と、狭い画面のメニュー（`menu.js`）だけ。幅が 800px 以下では、左の目次を畳み、検索欄の左のボタン（ハンバーガー）で開く引き出しにする（JavaScript が動かなければ、目次は本文の下に出る）
 - ページの URL は、Zensical 版と同じディレクトリ形式（`other/yaya/` など）。外部からのリンクや OGP を切らないため、変えない。`file://` ではディレクトリのリンクが `index.html` を開かないので、手元では `python -m http.server -d _site` で見る
 - 原稿はリポジトリ直下にあるため、`scripts/prepare_site.py` が `_site_src/` に写してからビルドする。その際 `INDEX.md` は `index.md`（トップページ）になり、`INDEX.md` へのリンクも書き換えられる。原稿内のリンク（`../functions/IHASH.md` や `05-arrays.md#範囲外の要素` など）は、ビルドが出力先の相対パス（`../string/#ihash`）に書き換える。行き先が無ければビルドが止まる
 - 関数ページ（`functions/*.md`）は、サイトでは分類ごとの 1 ページ（`functions/string/` など）にまとめて出す。分類は各ページの `**Category:**` 行、並びは `functions/README.md` の一覧（`## 分類` の下のリスト）で決まる。新しい関数は `functions/README.md` の一覧に 1 回だけ載せ、分類名を `**Category:**` と合わせる（食い違い・漏れは `prepare_site.py` が止める。新しい分類は `CATEGORY_PAGES` にも加える）。文法（`grammar/01〜14`）も 1 ページ（`grammar/`）にまとめる。原稿は 1 ファイル 1 ページのまま書き、リンクも従来どおり書く（`prepare_site.py` がまとめたページの見出しへのリンクに書き換える）
@@ -48,7 +48,7 @@ YAYA 本体のソースは `../yaya-shiori` にあります。
 - 見た目は `oldstyle/static/style.css`（旧 `skin/default.css` の規則のうち使う分。色と寸法は旧版のまま）。ダークモードは無い。ヘッダの画像 `oldstyle/static/skin/title.png` は旧 wiki のもの（`assets/logo.png` と同じキャラクター）。ロゴ画像 `oldstyle/static/skin/logo.png`（350x40、地色 `#212121`）は、このサイト用に作り直したもの。パンくずリストはトップページでも出す。`other/yaya6-launch.md` の部品（ヒーロー画像・ボタン・数字のカードなど。`.y6-*`、`style.css` の末尾）も、配色はほかのページと同じ旧版の配色
 - OGP / Twitter カードのタグは `oldstyle/build.py` が全ページに出す。ページごとのタイトル・説明・画像（1200x630 の PNG）は `build.py` の `OGP` に、ページの URL（`other/yaya6-launch/` のように末尾が `/`。トップは空文字）をキーにして書く（原稿に front matter は書かない。GitHub で表として表示されてしまうため）
 - 検索は、ビルド時に作る `search-index.js`（節ごとの本文）を、`search.js` が空白区切りの語の AND で部分一致検索する。ヘッダの検索欄に打ち込むとドロップダウンが出て、Enter で `search/?q=` に全件が並ぶ。ページの深さが違うので、`<body data-root="../../">` でサイトのルートへの相対パスを渡している
-- ヘッダに言語切替がある（`oldstyle/static/lang.js`。見た目は `style.css` の `.ukadoc-translate`）。日本語版（サイトのルート）の下に、翻訳版（`en/` `zh-Hant/` `zh/`）が同じ URL で出る。切替先は、ページの `<meta name="ukadoc-langs">`（ビルドが `i18n/` にある言語を書く）で決まる。翻訳版のページの本文の頭には、機械翻訳である旨と日本語の原文へのリンクの帯を出す。翻訳版が 1 つも無ければ、ボタンは出ない。ブラウザ組み込みの Translator API を使う旧 `translate.js` は、ファイルだけ残してあり、読み込まない。JavaScript を使うのは検索と言語切替だけ
+- ヘッダに言語切替がある（`oldstyle/static/lang.js`。見た目は `style.css` の `.ukadoc-translate`）。日本語版（サイトのルート）の下に、翻訳版（`en/` `zh-Hant/` `zh/`）が同じ URL で出る。切替先は、ページの `<meta name="ukadoc-langs">`（ビルドが `i18n/` にある言語を書く）で決まる。翻訳版のページの本文の頭には、機械翻訳である旨と日本語の原文へのリンクの帯を出す。翻訳版が 1 つも無ければ、ボタンは出ない。ブラウザ組み込みの Translator API を使う旧 `translate.js` は、ファイルだけ残してあり、読み込まない。JavaScript を使うのは検索と言語切替と、狭い画面のメニュー（`menu.js`）だけ
 - `sitemap.xml` と `404.html` もビルドが作る。404.html のリンクは、どの深さで開かれるかわからないので、サイトのルートからの絶対パス（`/yaya-docs/…`）
 
 手元で確認するとき（`_site_src/` `_site/` `_raw/` は `.gitignore` 済み）:
