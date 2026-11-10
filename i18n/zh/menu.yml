@@ -1,0 +1,132 @@
+# 左侧菜单的定义（相当于旧 AYAYA wiki 的 MenuBar）。这是网站层级结构的基础文件，
+# 左侧菜单、顶部面包屑导航和各节的索引页都由此生成。
+#
+# 项目的写法（在 menu: 下排列。可通过 children: 嵌套子项目。深度不限）
+#   - title: 显示的名称        必填
+#     page: 原稿路径           站内页面。填写仓库内的路径（`startup/cheatsheet.md`）
+#                                也可以像 `INDEX.md#标题` 一样用 # 添加锚点
+#                                还可以填写合并后的原稿，例如 `functions/IHASH.md` 或 `grammar/05-arrays.md`
+#     index: basic/              自动创建子项目的索引页。填写其 URL（小写字母、数字和连字符，末尾为 /）。
+#                                该页面内容仅为列出 children: 和 list: 中的页面
+#     url: https://...           外部页面
+#     children: [...]            子项目。会显示在左侧菜单中，也会列在索引页中
+#     list: tips                 将该目录下未列在 menu.yml 任何位置的原稿放在此项目下。
+#                                不显示在左侧菜单中，仅用于索引页和面包屑导航（适用于 Tips 这类页面较多的目录）。
+#                                排序规则：如果目录中有 .nav.yml，则按其中的顺序；其余页面按各自标题（H1）的顺序排列
+#   page: index: url: 每个项目只能填写其中一项。若都不填写，该项目会成为没有链接的标题（不能在其下放置页面）。
+#
+# 原稿必须列在某处的 children: 或 list: 中（如果有原稿未列出，构建会停止）。
+# 同一页面可以列在多个位置，但面包屑导航会将其归到首次出现的项目下。
+# 如果原稿路径或锚点不正确，构建（oldstyle/build.py）也会停止。显示顺序与填写顺序一致。
+menu:
+  - title: 首页
+    page: INDEX.md
+
+  - title: YAYA 下载页面
+    url: https://github.com/YAYA-shiori/yaya-shiori/releases
+    children:
+      - title: 下载页面
+        url: https://github.com/YAYA-shiori/yaya-shiori/releases
+      - title: 更新历史
+        url: https://github.com/YAYA-shiori/yaya-shiori/wiki/ChangeLog
+      - title: 紺野ややめ
+        url: https://github.com/YAYA-shiori/konnoyayame
+      - title: 工具「玉」
+        url: https://github.com/YAYA-shiori/tama/releases
+      - title: CI 工具
+        url: https://github.com/YAYA-shiori/yaya-CI-check
+
+  - title: YAYA 6
+    index: yaya6/
+    children:
+      - title: YAYA 6 登场
+        page: other/yaya6-launch.md
+      - title: 600 中的变更
+        page: other/changes-600.md
+
+  - title: 入门
+    index: startup/
+    children:
+      - title: YAYA、AYA 是什么？
+        page: other/yaya.md
+      - title: 速查表
+        page: startup/cheatsheet.md
+      - title: 创建新人格
+        page: startup/creating-ghost.md
+      - title: 教程 1：准备
+        page: startup/tutorial-01-preparation.md
+      - title: 教程 2：对话
+        page: startup/tutorial-02-writing-dialogue.md
+      - title: 教程 3：变量
+        page: startup/tutorial-03-variables.md
+      - title: 从 AYA 迁移
+        page: startup/migration-from-aya.md
+      - title: 从 Satori 迁移
+        page: startup/migration-from-satolili.md
+
+  - title: 手册
+    index: manual/
+    children:
+      - title: 基础
+        index: basic/
+        children:
+          - title: 变量
+            page: basic/variables.md
+          - title: 函数
+            page: basic/functions.md
+          - title: 条件分支
+            page: basic/branching.md
+          - title: 循环
+            page: basic/loops.md
+          - title: 数组
+            page: basic/arrays.md
+          - title: 运算符
+            page: basic/operators.md
+      - title: 语法
+        page: grammar/index.md
+      - title: 系统词典
+        index: system/
+        list: system
+        children:
+          - title: yaya_shiori3.dic
+            page: system/yaya-shiori3-dic.md
+          - title: yaya_optional.dic
+            page: system/yaya-optional-dic.md
+      - title: 按用途分类的函数列表
+        page: functions/index.md
+        list: functions
+      - title: 按名称排序的函数列表
+        page: system/system-functions-index.md
+      - title: 错误处理函数
+        page: system/error-handling-functions.md
+      - title: 其他
+        index: other/
+        list: other
+
+  - title: 技巧
+    index: tips/
+    list: tips
+    children:
+      - title: 遇到问题时的处理方法
+        page: other/troubleshooting.md
+      - title: 对话直接书写辅助库
+        page: other/talklib.md
+      - title: 搜索开发信息
+        url: http://ukadev.shillest.net/
+
+  - title: SHIORI 以外的 YAYA
+    index: non-shiori/
+    children:
+      - title: YAYA 作为 SAORI
+        page: other/yaya-as-saori.md
+      - title: YAYA 作为 MAKOTO
+        page: other/yaya-as-makoto.md
+      - title: YAYA 作为 PLUGIN
+        page: other/yaya-as-plugin.md
+
+  - title: 联系方式・论坛
+    children:
+      - title: 整备班 BTS
+        url: https://bts.shillest.net/
+      - title: GitHub Issues
+        url: https://github.com/YAYA-shiori/yaya-docs/issues

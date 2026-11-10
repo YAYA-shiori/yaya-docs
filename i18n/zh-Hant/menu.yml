@@ -1,0 +1,132 @@
+# 左のメニューの定義（旧 AYAYA wiki の MenuBar に当たる）。サイトの階層構造の元になるファイルで、
+# 左のメニュー・上のパンくずリスト・各節の索引ページが、すべてここから作られる。
+#
+# 項目の書き方（menu: の下に並べる。children: で下の項目を入れ子にできる。深さは自由）
+#   - title: 表示する名前        必須
+#     page: 原稿のパス           サイト内のページ。リポジトリ内のパス（`startup/cheatsheet.md`）で書く
+#                                `INDEX.md#見出し` のように # でアンカーも付けられる
+#                                `functions/IHASH.md` や `grammar/05-arrays.md` のように、まとめた元の原稿も書ける
+#     index: basic/              下の項目の索引ページを自動で作る。その URL（小文字の英数字とハイフン、末尾は /）。
+#                                children: と list: に書いたページを並べるだけの、小さなページになる
+#     url: https://...           外部のページ
+#     children: [...]            下の項目。左のメニューに出て、索引ページにも並ぶ
+#     list: tips                 そのディレクトリの原稿のうち、menu.yml のどこにも載っていないページを、この項目の下に置く。
+#                                左のメニューには出さず、索引ページとパンくずリストにだけ使う（Tips のように数が多いページ向け）。
+#                                並びは、ディレクトリに .nav.yml があればその順、残りは各ページの題（H1）の順
+#   page: index: url: は、1 項目に 1 つだけ書ける。どれも書かない項目は、リンクの無い見出しになる（下にページを置けない）。
+#
+# 原稿は、children: か list: のどこかに必ず載せる（載っていないページがあると、ビルドが止まる）。
+# 同じページを何か所に書いてもよいが、パンくずリストは最初に出てくる項目の下になる。
+# 原稿のパスやアンカーが違っても、ビルド（oldstyle/build.py）が止まる。表示は、書いた順のまま。
+menu:
+  - title: 首頁
+    page: INDEX.md
+
+  - title: YAYA 發佈頁面
+    url: https://github.com/YAYA-shiori/yaya-shiori/releases
+    children:
+      - title: 下載頁面
+        url: https://github.com/YAYA-shiori/yaya-shiori/releases
+      - title: 更新紀錄
+        url: https://github.com/YAYA-shiori/yaya-shiori/wiki/ChangeLog
+      - title: 紺野ややめ (Konnoyayame)
+        url: https://github.com/YAYA-shiori/konnoyayame
+      - title: 工具「玉」
+        url: https://github.com/YAYA-shiori/tama/releases
+      - title: CI 工具
+        url: https://github.com/YAYA-shiori/yaya-CI-check
+
+  - title: YAYA 6
+    index: yaya6/
+    children:
+      - title: YAYA 6 登場
+        page: other/yaya6-launch.md
+      - title: 600 的變更項目
+        page: other/changes-600.md
+
+  - title: 入門
+    index: startup/
+    children:
+      - title: YAYA、AYA 是什麼？
+        page: other/yaya.md
+      - title: 速查表
+        page: startup/cheatsheet.md
+      - title: 建立新人格
+        page: startup/creating-ghost.md
+      - title: 教學 1：準備
+        page: startup/tutorial-01-preparation.md
+      - title: 教學 2：對話
+        page: startup/tutorial-02-writing-dialogue.md
+      - title: 教學 3：變數
+        page: startup/tutorial-03-variables.md
+      - title: 從 AYA 遷移
+        page: startup/migration-from-aya.md
+      - title: 從 Satori 遷移
+        page: startup/migration-from-satolili.md
+
+  - title: 手冊
+    index: manual/
+    children:
+      - title: 基礎
+        index: basic/
+        children:
+          - title: 變數
+            page: basic/variables.md
+          - title: 函式
+            page: basic/functions.md
+          - title: 條件分支
+            page: basic/branching.md
+          - title: 迴圈
+            page: basic/loops.md
+          - title: 陣列
+            page: basic/arrays.md
+          - title: 運算子
+            page: basic/operators.md
+      - title: 文法
+        page: grammar/index.md
+      - title: 系統辭典
+        index: system/
+        list: system
+        children:
+          - title: yaya_shiori3.dic
+            page: system/yaya-shiori3-dic.md
+          - title: yaya_optional.dic
+            page: system/yaya-optional-dic.md
+      - title: 依用途分類的函式一覽
+        page: functions/index.md
+        list: functions
+      - title: 依名稱排列的系統函式一覽
+        page: system/system-functions-index.md
+      - title: 錯誤處理函式
+        page: system/error-handling-functions.md
+      - title: 其他
+        index: other/
+        list: other
+
+  - title: 技巧
+    index: tips/
+    list: tips
+    children:
+      - title: 遇到問題時的處理方式
+        page: other/troubleshooting.md
+      - title: 對話直接撰寫輔助函式庫
+        page: other/talklib.md
+      - title: 搜尋開發資訊
+        url: http://ukadev.shillest.net/
+
+  - title: 作為非 SHIORI 的 YAYA
+    index: non-shiori/
+    children:
+      - title: YAYA as SAORI
+        page: other/yaya-as-saori.md
+      - title: YAYA as MAKOTO
+        page: other/yaya-as-makoto.md
+      - title: YAYA as PLUGIN
+        page: other/yaya-as-plugin.md
+
+  - title: 聯絡・討論區
+    children:
+      - title: 整備班 BTS
+        url: https://bts.shillest.net/
+      - title: GitHub Issues
+        url: https://github.com/YAYA-shiori/yaya-docs/issues
