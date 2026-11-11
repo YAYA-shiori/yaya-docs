@@ -8,7 +8,7 @@ Names reserved by the YAYA system. They cannot be used as user-defined variable 
 
 All function names listed in the [System Function List](../system/system-functions-index.md) are reserved.
 
-!!! note "Names with uppercase letters and underscores"
+!!! note "Names Consisting of Uppercase Letters and Underscores"
     It is best to avoid names consisting only of uppercase letters and underscores, for future compatibility.
 
 ## Control-Flow Keywords
@@ -25,9 +25,11 @@ void  parallel
 
 ## Operators
 
-Reserved operator symbols that cannot be used in variable names or function names:
+Reserved operator symbols that cannot be used in variable or function names:
 
 ```
 ( ) [ ] ! ++ -- * / % + - & == != <= >= < > _in_ !_in_ && ||
 = := += -= *= /= %= +:= -:= *:= /:= %:= ,=
 ```
+
+Operator words and symbols also cannot appear as part of a variable or function name.

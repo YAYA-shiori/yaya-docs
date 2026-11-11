@@ -33,3 +33,7 @@ _tehai // '4m4m5m5m6m6m2p3p3p4p4p1s1s'
 ## Compatibility
 - YAYA: 初期リリースから使用可能（countパラメータはTc548-1で追加）
 - AYA: バージョン5.8から使用可能
+
+## See Also
+- RE_REPLACE
+- RE_REPLACEEX

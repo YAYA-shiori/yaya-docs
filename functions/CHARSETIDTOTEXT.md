@@ -37,3 +37,4 @@ CHARSETIDTOTEXT(1) // "UTF-8" を返す
 ## See Also
 
 - CHARSETTEXTTOID
+- [文字コードの名前](../grammar/11-character-encoding.md#文字コードの名前)

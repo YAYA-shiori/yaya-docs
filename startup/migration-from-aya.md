@@ -10,6 +10,7 @@ DLL 名称が `aya5.dll` から `yaya.dll` に変更になる。
 
 - そのため、`aya5.txt` は `yaya.txt` に名前を変える必要がある
 - セーブファイル名が `yaya_variable.cfg` になり、セーブデータがそのままでは移行されない
+- AYA 用テンプレートのまま起動してしまった場合は、`aya5_variable.cfg` を `yaya_variable.cfg` にリネームする
 
 これを避けるための機能が用意されている。`aya_shiori3.dic` を開き、`load` 関数の `OnLoad` の手前に、次のコードを追加する。
 

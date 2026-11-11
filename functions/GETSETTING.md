@@ -24,7 +24,7 @@ GETSETTING( string )
 | 識別子 | 旧数値 | 取得されるデータ | 例 |
 |--------|--------|----------------|-----|
 | `coreinfo.version` | 0 | YAYAのバージョン番号 | `"Tc522-1"` |
-| （数値1）          | 1 | 現在の文字コードID | `0` |
+| （数値1）          | 1 | 現在の文字コードID（0=Shift_JIS、1=UTF-8、127=OS のデフォルト） | `0` |
 | `coreinfo.path`    | 2 | ディレクトリの絶対パス | `"c:\hogehoge\"` |
 | `coreinfo.name`    | 3 | DLL名 | `"YAYA"` |
 | `coreinfo.author`  | 4 | DLL作者 | `"umeici/The Maintenance Shop"` |

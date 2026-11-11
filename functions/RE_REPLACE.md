@@ -21,7 +21,7 @@ RE_REPLACE( string , regexp , replace [, count] )
 ## Description
 処理対象文字列内で正規表現にマッチした部分を置換します。置換文字列にメタ文字は利用できません。メタ文字を使用したい場合は RE_REPLACEEX を使用してください。
 
-マッチした詳細は RE_GETSTR、RE_GETPOS、RE_GETLEN で取得できます。
+マッチした詳細は RE_GETSTR、RE_GETPOS、RE_GETLEN で取得できます。この関数を使った場合、それらは `( )` ごとの内容ではなく、対象文字列において正規表現全体にマッチしたn番目の内容を表します。
 
 ## Compatibility
 - YAYA: 初期バージョンより対応（count パラメータは Tc548-1 以降）

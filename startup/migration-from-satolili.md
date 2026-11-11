@@ -668,6 +668,8 @@ OnMouseDoubleClick {
 
 「条件分岐」「比較」と「計算」は別の方法で行うが、それ以外はほぼ YAYA のシステム関数で同じことができる。[システム関数一覧](../system/system-functions-index.md)を見る。
 
+「これじゃ使いたいものを見つけにくい！」という人には、[YAYAシステム関数リファレンス](http://navy.nm.land.to/post/y_sysfn.html)もある（外部サイト）。
+
 ### SAORI
 
 #### つかいかた

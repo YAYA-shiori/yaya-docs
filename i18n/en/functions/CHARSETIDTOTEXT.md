@@ -16,8 +16,8 @@ CHARSETIDTOTEXT(id)
 
 ## Returns
 
-On success: a string representing a character encoding
-On failure: the string "default"
+On success: A string representing a character encoding
+On failure: The string "default"
 
 ## Description
 
@@ -32,8 +32,9 @@ CHARSETIDTOTEXT(1) // "UTF-8" を返す
 
 ## Compatibility
 
-- YAYA: Available since the initial release
+- YAYA: Available since the first release
 
 ## See Also
 
 - CHARSETTEXTTOID
+- [Character encoding names](../grammar/11-character-encoding.md#文字コードの名前)

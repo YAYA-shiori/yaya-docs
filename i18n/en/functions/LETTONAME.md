@@ -9,14 +9,14 @@ LETTONAME(name, val)
 ## Parameters
 | Parameter | Description |
 |-----------|-------------|
-| name | String representing the name of the variable to assign to |
+| name | String representing the name of the destination variable |
 | val | Value to assign |
 
 ## Returns
 VOID (no return value)
 
 ## Description
-Assigns the value specified by val to the variable whose name is given by name. Use this function to determine a variable name dynamically at runtime and assign a value to it.
+Assigns the value specified by val to the variable whose name is specified by the string name. Use this when you need to determine a variable name dynamically at runtime and assign a value to it. For example, it can be used when composing a variable name at runtime, such as for the reference variables in `shiori3.dic`.
 
 ## Example
 ```
@@ -38,8 +38,8 @@ LETTONAME(_varname, 'abc', 12)
 ```
 
 ## Compatibility
-- YAYA: Available from the initial version
-- AYA: Available from version 5.8 onward
+- YAYA: Available since the initial version
+- AYA: Available from version 5.8
 
 ## See Also
 - ISVAR

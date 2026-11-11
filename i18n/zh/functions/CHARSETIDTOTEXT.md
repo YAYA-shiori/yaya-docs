@@ -10,7 +10,7 @@ CHARSETIDTOTEXT(id)
 
 ## Parameters
 
-| Parameter | Description |
+| 参数 | 说明 |
 |-----------|-------------|
 | id | 表示字符编码 ID 的整数 |
 
@@ -32,8 +32,9 @@ CHARSETIDTOTEXT(1) // "UTF-8" を返す
 
 ## Compatibility
 
-- YAYA: 从初版起可用
+- YAYA：从初版起即可使用
 
 ## See Also
 
 - CHARSETTEXTTOID
+- [字符编码的名称](../grammar/11-character-encoding.md#文字コードの名前)

@@ -7,19 +7,19 @@ REPLACE( src , before , after [ , count ] )
 ```
 
 ## Parameters
-| 引數 | 說明 |
+| Parameter | Description |
 |-----------|-------------|
 | src | 要轉換的字串 |
 | before | 要搜尋的子字串 |
 | after | 取代後的子字串 |
-| count | （可省略）取代次數。若小於 0 或省略，則會取代所有符合項目 |
+| count | （可省略）取代次數。小於 0 或省略時，會取代所有符合項目 |
 
 ## Returns
 - 成功：取代後的字串
-- 失敗：原始 src 字串（未變更）
+- 失敗：原始 src 字串（不變更）
 
 ## Description
-取代字串。所有符合的原字串都會被取代。指定 `count` 即可限制取代次數。
+取代字串。所有符合的原字串都會被取代。指定 `count` 可限制取代次數。
 
 ## Example
 ```
@@ -31,5 +31,9 @@ _tehai // '4m4m5m5m6m6m2p3p3p4p4p1s1s'
 ```
 
 ## Compatibility
-- YAYA：自初次發行起即可使用（count 參數於 Tc548-1 新增）
-- AYA：自版本 5.8 起即可使用
+- YAYA：自初次發布起可使用（count 參數於 Tc548-1 加入）
+- AYA：5.8 版起可使用
+
+## See Also
+- RE_REPLACE
+- RE_REPLACEEX

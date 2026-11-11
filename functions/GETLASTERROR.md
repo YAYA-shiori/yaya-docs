@@ -16,6 +16,8 @@ GETLASTERROR()
 ## Description
 直近に実行したシステム関数呼び出しのエラーコードを返す関数。
 
+この関数が返す値は [SETLASTERROR](SETLASTERROR.md) で設定することもできる。エラーが起きそうな場所を確実にチェックするには、先に `SETLASTERROR(0)` で値を 0 に戻してから、システム関数を使い、その後で `GETLASTERROR` を調べる。
+
 ## Error Codes
 | コード | 意味 |
 |--------|------|

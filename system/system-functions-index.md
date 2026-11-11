@@ -4,6 +4,25 @@
 
 YAYAに組み込まれているシステム関数の一覧。詳細は各関数のページ（`functions/` ディレクトリ）を参照。
 
+## 改名された関数
+
+旧版の資料やスクリプトに出てくる旧名と、今の名前の対応。旧名の関数は無くなっている。
+
+| 旧名 | 新名 | 改名・置き換えの版 |
+|------|------|------|
+| TONUMBER | [CVINT](../functions/CVINT.md) | v4 |
+| TONUMBER2 | [TOINT](../functions/TOINT.md) | v4 |
+| TOSTRING | [CVSTR](../functions/CVSTR.md) | v4 |
+| TOSTRING2 | [TOSTR](../functions/TOSTR.md) | v4 |
+| ERASEVARIABLE | [ERASEVAR](../functions/ERASEVAR.md) | v4 |
+| ISFUNCTION | [ISFUNC](../functions/ISFUNC.md) | v4 |
+| SETSEPARATOR | [SETDELIM](../functions/SETDELIM.md) | v4 |
+| BINSTRTONUM | [BINSTRTOI](../functions/BINSTRTOI.md) | v4 |
+| HEXSTRTONUM | [HEXSTRTOI](../functions/HEXSTRTOI.md) | v4 |
+| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4（旧版の表記は「相当」） |
+| GETSTRURLENCODE | [STRENCODE](../functions/STRENCODE.md) | Tc532-1 |
+| GETSTRURLDECODE | [STRDECODE](../functions/STRDECODE.md) | Tc532-1 |
+
 ## A-C
 
 | 関数 | 説明 |
@@ -48,6 +67,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) | SERIALIZEVAR の文字列から変数を復元（Tc607-3以降） |
 | [DICLOAD](../functions/DICLOAD.md) | 辞書ファイルを読み込む |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | 辞書ファイルをアンロード |
+| [DIRECTSSTP](../functions/DIRECTSSTP.md) | DirectSSTP でゴーストにリクエストを送る |
 | [DUMPJSON](../functions/DUMPJSON.md) | 値をJSONの文字列にする（Tc602-1以降） |
 | [DUMPTOML](../functions/DUMPTOML.md) | ハッシュをTOMLの文字列にする（Tc602-5以降） |
 | [DUMPVAR](../functions/DUMPVAR.md) | 変数をダンプ |

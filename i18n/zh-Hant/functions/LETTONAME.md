@@ -9,14 +9,14 @@ LETTONAME(name, val)
 ## Parameters
 | Parameter | Description |
 |-----------|-------------|
-| name | 表示要指派目標的變數名稱之字串 |
+| name | 表示指派目標變數名稱的字串 |
 | val | 要指派的值 |
 
 ## Returns
 VOID（沒有傳回值）
 
 ## Description
-將 val 指定的值指派給 name 指定字串所表示的變數名稱。用於在執行時動態決定變數名稱並指派值。
+將 val 指定的值指派給 name 所指定字串表示的變數名稱。用於在執行時動態決定變數名稱並指派值，例如在執行時組合變數名稱時使用（例：`shiori3.dic` 中的 reference 變數）。
 
 ## Example
 ```
@@ -38,8 +38,8 @@ LETTONAME(_varname, 'abc', 12)
 ```
 
 ## Compatibility
-- YAYA：初始版本起即可使用
-- AYA：5.8 版起即可使用
+- YAYA：自初期版本起可使用
+- AYA：5.8 版以後可使用
 
 ## See Also
 - ISVAR

@@ -19,7 +19,7 @@ TOUPPER( string [ , locale ] )
 ## Description
 文字列中の小文字をすべて大文字に変換して返す。localeを省略した場合はCモード（a-zのみA-Zに変換）となる。
 
-localeには `"ja-JP"` `"tr_TR"` `"tr_TR.UTF-8"` のような名前を指定する。そのロケールの規則で変換し、非ASCIIの文字（`é`→`É`、全角英字など）も変換される。トルコ語（`tr-TR`）では `i` が `İ` になる。`"C"` と `"POSIX"` はCモード、空文字列はOSのユーザー設定のロケールになる。[GETSETTING](GETSETTING.md) の `coreinfo.locale` が返す名前も使える。
+locale の書式は、[setlocale で使えるロケール文字列](https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/setlocale-wsetlocale)と同じ。localeには `"ja-JP"` `"tr_TR"` `"tr_TR.UTF-8"` のような名前を指定する。そのロケールの規則で変換し、非ASCIIの文字（`é`→`É`、全角英字など）も変換される。トルコ語（`tr-TR`）では `i` が `İ` になる。`"C"` と `"POSIX"` はCモード、空文字列はOSのユーザー設定のロケールになる。[GETSETTING](GETSETTING.md) の `coreinfo.locale` が返す名前も使える。
 
 - Windows: OSのロケール名を使う。`"Japanese_Japan.932"` のようなCランタイムのロケール名も使える
 - Linux / macOS: OSに入っているロケール（`locale -a` に出るもの）が必要。`tr_TR` のように文字コードを省いたときは、UTF-8版を先に探す

@@ -12,14 +12,14 @@ ANY(var)
 
 | Parameter | Description |
 |-----------|-------------|
-| var | The item to select randomly. Must be a string, generic array, integer, or real number |
+| var | The target to choose from at random. A string, generic array, integer, or real number |
 
 ## Returns
 
 On success: One randomly selected element
 On failure: VOID
 
-When a string is treated as a simple array, returns one random element from it. For a generic array, also returns one random element. For a numeric value (integer or real), returns that value unchanged. You can get the index of the selected element with the LSO function.
+When a string is treated as a simple array, this function returns one random element from it. If a variable is passed, its delimiter is taken into account. For a generic array, this function also returns one random element. If the argument is a numeric value (integer or real number), it returns that value as is. You can get the index of the selected element with the LSO function.
 
 ## Example
 

@@ -9,25 +9,26 @@ TRANSLATE( text, format_from, format_to )
 ## Parameters
 | Parameter | Description |
 |-----------|-------------|
-| text | String to be replaced |
-| format_from | List of characters to replace (with formatting; see below) |
-| format_to | List of replacement characters. Specify an empty string to delete characters |
+| text | The string to replace characters in |
+| format_from | The list of characters to replace (with formatting; see below) |
+| format_to | The list of replacement characters. Specify an empty string to delete characters |
 
 ## Returns
-- Success: Replaced string
+- Success: The string after replacement
 - Failure: -1
 
 ## Description
-Replaces strings character by character at high speed. Provides functionality equivalent to Perl's tr/// (without options).
+Replaces characters in a string quickly, one character at a time. It provides functionality equivalent to Perl's tr/// (with no options).
 
 ### Format
 
-**Simple enumeration**: Maps characters one to one. Characters not in the list are not changed.
+**Simple enumeration**: Maps characters one-to-one. Characters not in the list are unchanged.
 ```
 TRANSLATE('ぬるぽガッ', 'ぽガ', 'りゴ') // 'ぬるりゴッ'
+TRANSLATE('あああいいいううう', 'あい', 'おえ') // 'おおおえええううう'
 ```
 
-**Range specification**: Use "-" to specify a character code range for bulk replacement. The character code used is UCS-2 (Unicode), so you can check it by switching your IME's character palette to Unicode mode.
+**Range specification**: Use a hyphen to specify a range of character codes for replacement. The character codes used are UCS-2 (Unicode), so you can check them by switching the character palette in your IME to Unicode mode.
 ```
 TRANSLATE('123456789', '1-9', '①-⑨') // '①②③④⑤⑥⑦⑧⑨'
 ```
@@ -52,7 +53,7 @@ _wokyu = TRANSLATE('ティータイムは大事にしないとネー', 'ぁ-ゖ�
 // _wokyu の中身 = てぃーたいむハ大事ニシナイトねー
 ```
 
-The Unicode table specifies the overlapping range of katakana and hiragana, 「ァ-ヶ」. If the dictionary is written in Shift_JIS, 「ゖ」 will be garbled; in that case, write it as follows.
+The range “ァ-ヶ” is specified because the Unicode tables have overlapping ranges for katakana and hiragana. If you write the dictionary in Shift_JIS, “ゖ” will appear garbled; in that case, write it as follows.
 
 ```
 _wokyu = TRANSLATE('ティータイムは大事にしないとネー', 'ぁ-んァ-ン', 'ァ-ンぁ-ん')
@@ -62,7 +63,7 @@ _wokyu = TRANSLATE('ティータイムは大事にしないとネー', 'ぁ-ん�
 
 - YAYA: Tc546-1 and later
 - Tc546-2: Added escape sequences
-- Tc547-1: Added deletion processing (specifying an empty string for the third argument)
+- Tc547-1: Added deletion (set the third argument to an empty string)
 
 ## See Also
 - ZEN2HAN

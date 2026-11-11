@@ -2,15 +2,34 @@
 
 ## Overview
 
-A list of system functions built into YAYA. See each function's page (the `functions/` directory) for details.
+A list of system functions built into YAYA. For details, see the page for each function in the `functions/` directory.
+
+## Renamed Functions
+
+Correspondence between old names found in older documentation or scripts and their current names. Functions with the old names no longer exist.
+
+| Old name | New name | Version renamed/replaced |
+|------|------|------|
+| TONUMBER | [CVINT](../functions/CVINT.md) | v4 |
+| TONUMBER2 | [TOINT](../functions/TOINT.md) | v4 |
+| TOSTRING | [CVSTR](../functions/CVSTR.md) | v4 |
+| TOSTRING2 | [TOSTR](../functions/TOSTR.md) | v4 |
+| ERASEVARIABLE | [ERASEVAR](../functions/ERASEVAR.md) | v4 |
+| ISFUNCTION | [ISFUNC](../functions/ISFUNC.md) | v4 |
+| SETSEPARATOR | [SETDELIM](../functions/SETDELIM.md) | v4 |
+| BINSTRTONUM | [BINSTRTOI](../functions/BINSTRTOI.md) | v4 |
+| HEXSTRTONUM | [HEXSTRTOI](../functions/HEXSTRTOI.md) | v4 |
+| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4 (older documentation says “equivalent”) |
+| GETSTRURLENCODE | [STRENCODE](../functions/STRENCODE.md) | Tc532-1 |
+| GETSTRURLDECODE | [STRDECODE](../functions/STRDECODE.md) | Tc532-1 |
 
 ## A-C
 
 | Function | Description |
 |------|------|
 | [ACOS](../functions/ACOS.md) | Returns the arccosine (in radians) |
-| [ANY](../functions/ANY.md) | Selects a random element from an array |
-| [APPEND_RUNTIME_DIC](../functions/APPEND_RUNTIME_DIC.md) | Dynamically appends to a runtime dictionary |
+| [ANY](../functions/ANY.md) | Selects one random element from an array |
+| [APPEND_RUNTIME_DIC](../functions/APPEND_RUNTIME_DIC.md) | Dynamically appends to the runtime dictionary |
 | [ARRAYDEDUP](../functions/ARRAYDEDUP.md) | Removes duplicate elements from an array |
 | [ARRAYSIZE](../functions/ARRAYSIZE.md) | Returns the number of elements in an array |
 | [ASEARCH](../functions/ASEARCH.md) | Searches an array and returns the index of the first match |
@@ -48,6 +67,7 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) | Restores a variable from a SERIALIZEVAR string (Tc607-3 and later) |
 | [DICLOAD](../functions/DICLOAD.md) | Loads a dictionary file |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | Unloads a dictionary file |
+| [DIRECTSSTP](../functions/DIRECTSSTP.md) | Sends a request to a ghost using DirectSSTP |
 | [DUMPJSON](../functions/DUMPJSON.md) | Converts a value to a JSON string (Tc602-1 and later) |
 | [DUMPTOML](../functions/DUMPTOML.md) | Converts a hash to a TOML string (Tc602-5 and later) |
 | [DUMPVAR](../functions/DUMPVAR.md) | Dumps a variable |
@@ -55,9 +75,9 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [DUMPYAML](../functions/DUMPYAML.md) | Converts a value to a YAML string (Tc602-5 and later) |
 | [ERASE](../functions/ERASE.md) | Removes a substring from a string |
 | [ERASEVAR](../functions/ERASEVAR.md) | Deletes a variable |
-| [EVAL](../functions/EVAL.md) | Evaluates a string as an expression or sequence of statements |
+| [EVAL](../functions/EVAL.md) | Evaluates a string as an expression or a sequence of statements |
 | [EXECUTE](../functions/EXECUTE.md) | Runs an external program |
-| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | Runs an external program, passes standard input to it, and captures standard output and standard error (Tc608-3 and later) |
+| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | Runs an external program, passes it standard input, and captures standard output and standard error (Tc608-3 and later) |
 | [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | Runs an external program and waits for it to finish |
 | [FATTRIB](../functions/FATTRIB.md) | Gets or sets file attributes |
 | [FCHARSET](../functions/FCHARSET.md) | Sets the character encoding of a file |
@@ -88,7 +108,7 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [FUNCTIONEX](../functions/FUNCTIONEX.md) | Calls an external library function |
 | [FWRITE](../functions/FWRITE.md) | Writes to a file |
 | [FWRITE2](../functions/FWRITE2.md) | Writes to a file (with a newline) |
-| [FWRITEBIN](../functions/FWRITEBIN.md) | Writes binary data to a file |
+| [FWRITEBIN](../functions/FWRITEBIN.md) | Writes to a file as binary data |
 | [FWRITEDECODE](../functions/FWRITEDECODE.md) | Writes while converting the encoding |
 | [FWRITEJSON](../functions/FWRITEJSON.md) | Converts a value to JSON and writes it to a file (Tc602-1 and later) |
 | [FWRITETOML](../functions/FWRITETOML.md) | Converts a hash to TOML and writes it to a file (Tc602-5 and later) |
@@ -126,8 +146,8 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [HEXSTRTOI](../functions/HEXSTRTOI.md) | Convert a hexadecimal string to an integer |
 | [IARRAY](../functions/IARRAY.md) | Initialization value for a generic array |
 | [IHASH](../functions/IHASH.md) | Create a hash (Tc600-3 and later) |
-| [INSERT](../functions/INSERT.md) | Insert a string into a string |
-| [ISEVALUABLE](../functions/ISEVALUABLE.md) | Check whether a value can be evaluated by EVAL |
+| [INSERT](../functions/INSERT.md) | Insert a string into another string |
+| [ISEVALUABLE](../functions/ISEVALUABLE.md) | Check whether an expression can be evaluated by EVAL |
 | [ISFUNC](../functions/ISFUNC.md) | Check whether a function exists |
 | [ISGLOBALDEFINE](../functions/ISGLOBALDEFINE.md) | Check whether a global definition exists |
 | [ISINTSTR](../functions/ISINTSTR.md) | Check whether a string represents an integer |
@@ -138,15 +158,15 @@ A list of system functions built into YAYA. See each function's page (the `funct
 
 | Function | Description |
 |------|------|
-| [LETTONAME](../functions/LETTONAME.md) | Assign a value using a dynamically specified variable name |
+| [LETTONAME](../functions/LETTONAME.md) | Assign to a dynamically specified variable name |
 | [LICENSE](../functions/LICENSE.md) | Display license information |
-| [LINT.GetFuncUsedBy](../functions/LINT.GetFuncUsedBy.md) | Get the locations where a function is used (LINT) |
-| [LINT.GetGlobalVarLetted](../functions/LINT.GetGlobalVarLetted.md) | Get the locations where a global variable is assigned (LINT) |
-| [LINT.GetGlobalVarUsedBy](../functions/LINT.GetGlobalVarUsedBy.md) | Get the locations where a global variable is used (LINT) |
-| [LINT.GetLocalVarLetted](../functions/LINT.GetLocalVarLetted.md) | Get the locations where a local variable is assigned (LINT) |
-| [LINT.GetLocalVarUsedBy](../functions/LINT.GetLocalVarUsedBy.md) | Get the locations where a local variable is used (LINT) |
-| [LINT.GetUserDefFuncUsedBy](../functions/LINT.GetUserDefFuncUsedBy.md) | Get the locations where a user-defined function is used (LINT) |
-| [LINT.GetVarRefs](../functions/LINT.GetVarRefs.md) | Get each occurrence of variables and functions, along with its block (LINT) |
+| [LINT.GetFuncUsedBy](../functions/LINT.GetFuncUsedBy.md) | Get locations where a function is used (LINT) |
+| [LINT.GetGlobalVarLetted](../functions/LINT.GetGlobalVarLetted.md) | Get locations where a global variable is assigned (LINT) |
+| [LINT.GetGlobalVarUsedBy](../functions/LINT.GetGlobalVarUsedBy.md) | Get locations where a global variable is used (LINT) |
+| [LINT.GetLocalVarLetted](../functions/LINT.GetLocalVarLetted.md) | Get locations where a local variable is assigned (LINT) |
+| [LINT.GetLocalVarUsedBy](../functions/LINT.GetLocalVarUsedBy.md) | Get locations where a local variable is used (LINT) |
+| [LINT.GetUserDefFuncUsedBy](../functions/LINT.GetUserDefFuncUsedBy.md) | Get locations where a user-defined function is used (LINT) |
+| [LINT.GetVarRefs](../functions/LINT.GetVarRefs.md) | Get each occurrence of a variable or function and its block (LINT) |
 | [LOADLIB](../functions/LOADLIB.md) | Load an external library |
 | [LOG](../functions/LOG.md) | Return the natural logarithm |
 | [LOG10](../functions/LOG10.md) | Return the common logarithm |
@@ -192,10 +212,10 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md) | Set a global definition |
 | [SETLASTERROR](../functions/SETLASTERROR.md) | Set the last error code |
 | [SETSETTING](../functions/SETSETTING.md) | Change a setting value |
-| [SETTAMAHWND](../functions/SETTAMAHWND.md) | Set the window handle for the tama |
+| [SETTAMAHWND](../functions/SETTAMAHWND.md) | Set the window handle of the tama |
 | [SIN](../functions/SIN.md) | Return the sine |
 | [SINH](../functions/SINH.md) | Return the hyperbolic sine |
-| [SLEEP](../functions/SLEEP.md) | Pause execution |
+| [SLEEP](../functions/SLEEP.md) | Pause processing |
 | [SPLIT](../functions/SPLIT.md) | Split a string and return an array |
 | [SPLITPATH](../functions/SPLITPATH.md) | Split a path into its components |
 | [SQLCLOSE](../functions/SQLCLOSE.md) | Close an SQLite database (Tc602-11 and later) |
@@ -205,7 +225,7 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [SQRT](../functions/SQRT.md) | Return the square root |
 | [SRAND](../functions/SRAND.md) | Set the random seed |
 | [STRDECODE](../functions/STRDECODE.md) | Decode a string |
-| [STRDIGEST](../functions/STRDIGEST.md) | Calculate the hash of a string |
+| [STRDIGEST](../functions/STRDIGEST.md) | Calculate a string hash |
 | [STRENCODE](../functions/STRENCODE.md) | Encode a string |
 | [STRFORM](../functions/STRFORM.md) | Generate a formatted string |
 | [STRLEN](../functions/STRLEN.md) | Return the length of a string |
@@ -221,10 +241,10 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [THREADCLOSE](../functions/THREADCLOSE.md) | Discards the thread record (Tc608-1 and later) |
 | [THREADJOIN](../functions/THREADJOIN.md) | Waits for the thread to finish (Tc608-1 and later) |
 | [THREADRESULT](../functions/THREADRESULT.md) | Returns the return value of a function in a finished thread (Tc608-1 and later) |
-| [THREADSTART](../functions/THREADSTART.md) | Runs a function in another thread (Tc608-1 and later) |
+| [THREADSTART](../functions/THREADSTART.md) | Runs a function in a separate thread (Tc608-1 and later) |
 | [THREADSTATE](../functions/THREADSTATE.md) | Returns the state of a thread (Tc608-1 and later) |
 | [THREADSTOP](../functions/THREADSTOP.md) | Requests that a thread stop (Tc608-1 and later) |
-| [TOAUTO](../functions/TOAUTO.md) | Automatically converts a value to an appropriate type |
+| [TOAUTO](../functions/TOAUTO.md) | Automatically converts a value to the appropriate type |
 | [TOAUTOEX](../functions/TOAUTOEX.md) | Extended version of TOAUTO |
 | [TOBINSTR](../functions/TOBINSTR.md) | Converts an integer to a binary string |
 | [TOHEXSTR](../functions/TOHEXSTR.md) | Converts an integer to a hexadecimal string |
@@ -233,8 +253,8 @@ A list of system functions built into YAYA. See each function's page (the `funct
 | [TOREAL](../functions/TOREAL.md) | Converts a value to a real number |
 | [TOSTR](../functions/TOSTR.md) | Converts a value to a string |
 | [TOUPPER](../functions/TOUPPER.md) | Converts a string to uppercase |
-| [TRANSLATE](../functions/TRANSLATE.md) | Transforms a string |
+| [TRANSLATE](../functions/TRANSLATE.md) | Translates a string |
 | [UNDEFFUNC](../functions/UNDEFFUNC.md) | Deletes a function definition |
 | [UNDEFGLOBALDEFINE](../functions/UNDEFGLOBALDEFINE.md) | Deletes a global definition |
 | [UNLOADLIB](../functions/UNLOADLIB.md) | Unloads an external library |
-| [ZEN2HAN](../functions/ZEN2HAN.md) | Converts full-width characters to half-width characters |
+| [ZEN2HAN](../functions/ZEN2HAN.md) | Converts full-width characters to half-width |

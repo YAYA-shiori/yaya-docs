@@ -10,19 +10,29 @@ STRFORM(format [, arg ...])
 | Parameter | Description |
 |-----------|-------------|
 | format | Format string |
-| arg | Argument to insert into the format string (multiple arguments can be specified) |
+| arg | Arguments to insert into the format string (multiple arguments can be specified) |
 
 ## Returns
-- On success: the formatted string
-- On failure: behavior is undefined
+- On success: Formatted string
+- On failure: Behavior is undefined
 
 ## Description
-Returns a formatted string equivalent to one produced by C's sprintf function.
+Returns a formatted string equivalent to one produced by C's sprintf.
 
 Format specifiers use `$` as a prefix instead of `%` (for example, `$04d`, `$s`). The string expanded by each format specifier is at most 1024 characters long.
 
+Except for returning the result as the return value and using `$` as the format specifier prefix, it works just like sprintf.
+
 ## Example
+Comparison with sprintf.
+
 ```
+// C言語
+int year = 1941;
+char *warname = "太平洋";
+sprintf(str, "%04d年　%s戦争勃発。", year, warname);
+
+// 文
 year = 1941
 warname = "太平洋"
 str = STRFORM("$04d年　$s戦争勃発。", year, warname)

@@ -29,3 +29,4 @@ YAYA 内部で起きたエラー・警告のログを消去する。実行する
 ## See Also
 
 - GETERRORLOG
+- [読み込み時に辞書エラーが起きた際の挙動](../grammar/01-basic-settings.md#読み込み時に辞書エラーが起きた際の挙動)

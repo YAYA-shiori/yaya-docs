@@ -12,8 +12,8 @@ FRENAME( from , to )
 
 | Parameter | Description |
 |-----------|-------------|
-| from | The original file name. Can be specified as a full path. Relative paths are based on the DLL load location |
-| to | The new file name |
+| from | Original file name. A full path can be specified. Relative paths are resolved from the DLL load location |
+| to | New file name |
 
 ## Returns
 
@@ -22,12 +22,14 @@ FRENAME( from , to )
 
 ## Description
 
-Renames a file. The path can be specified as a full path. Relative paths are based on the location passed to DLL load (usually the location of the DLL).
+Renames a file. A full path can be specified. Relative paths are resolved from the location passed to DLL load (usually the location of the DLL).
+
+A file that is still open with `FOPEN` cannot be renamed, and 0 is returned. Close it with `FCLOSE` before renaming it.
 
 ## Compatibility
 
 - YAYA: Available since the initial release
-- AYA: Version 5.8 or later
+- AYA: Version 5.8 and later
 
 ## See Also
 

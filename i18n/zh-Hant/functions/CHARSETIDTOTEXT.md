@@ -32,8 +32,9 @@ CHARSETIDTOTEXT(1) // "UTF-8" を返す
 
 ## Compatibility
 
-- YAYA: 初版起即可使用
+- YAYA: 從初版起即可使用
 
 ## See Also
 
 - CHARSETTEXTTOID
+- [字元編碼的名稱](../grammar/11-character-encoding.md#文字コードの名前)
