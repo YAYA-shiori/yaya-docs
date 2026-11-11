@@ -17,6 +17,7 @@
   （訳した見出しでも `file.md#見出し` のリンクが切れないように）
 原稿そのものは書き換えない。
 """
+import json
 import os
 import posixpath
 import re
@@ -40,6 +41,25 @@ def _lang_arg():
 LANG = _lang_arg()
 OUT = os.path.join(ROOT, '_site_src' + (f'_{LANG}' if LANG else ''))
 I18N = os.path.join(ROOT, 'i18n', LANG) if LANG else None
+
+
+def _load_originals():
+    """日本語以外が原文のファイルの登録簿（i18n/originals.json。キー → {"lang": 原文の言語, ...}）。無ければ空"""
+    try:
+        with open(os.path.join(ROOT, 'i18n', 'originals.json'), encoding='utf-8') as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+ORIGINALS = _load_originals()
+
+
+def is_original_here(rel):
+    """翻訳版（LANG）で、rel の本文が原文（その言語で書かれた原文そのもの）か。原文の言語の版でだけ真。
+    ページの頭の見出しに class orig-lang を付け、CSS（html[lang] ごとの ::after）が「原文」の印にする"""
+    return bool(LANG) and ORIGINALS.get(rel, {}).get('lang') == LANG and os.path.isfile(os.path.join(I18N, rel))
+
 SITE_URL = 'https://yaya-shiori.github.io/yaya-docs/'
 # oldstyle/build.py と同じ Markdown の設定（見出しの id を日本語の原稿から数えるのに使う）
 MD_EXTENSIONS = ['tables', 'admonition', 'attr_list', 'md_in_html', 'mdx_truly_sane_lists', 'pymdownx.superfences', 'toc']
@@ -273,10 +293,11 @@ def shift_headings(text, src, depth_of):
     ja_heads = list(scan_headings(read_ja(src))) if LANG else heads
     if len(heads) != len(ja_heads):
         sys.exit(f'エラー: {src}: 訳文の見出しの数が原文と合わない（原文 {len(ja_heads)}、訳文 {len(heads)}）')
-    for (i, level, title, _), (_, _, _, old) in zip(heads, ja_heads):
+    for n, ((i, level, title, _), (_, _, _, old)) in enumerate(zip(heads, ja_heads)):
         new_id = FRAGMENTS[(src, old)]
         title = HEADING_TEXT.get(title, title) if level >= 2 else title
-        lines[i] = f'{"#" * depth_of(level)} {title} {{#{new_id}}}'
+        cls = ' .orig-lang' if n == 0 and is_original_here(src) else ''
+        lines[i] = f'{"#" * depth_of(level)} {title} {{#{new_id}{cls}}}'
     return '\n'.join(lines)
 
 
@@ -391,9 +412,10 @@ def pin_ids(text, rel):
     if len(heads) != len(ids):
         sys.exit(f'エラー: {rel}: 訳文の見出しの数が原文と合わない（原文の toc {len(ids)}、訳文 {len(heads)}）')
     lines = text.split('\n')
-    for (i, indent, level, title), ident in zip(heads, ids):
+    for n, ((i, indent, level, title), ident) in enumerate(zip(heads, ids)):
         if not re.search(r'\{[^}]*#', title):
-            lines[i] = f'{indent}{"#" * level} {title} {{#{ident}}}'
+            cls = ' .orig-lang' if n == 0 and is_original_here(rel) else ''
+            lines[i] = f'{indent}{"#" * level} {title} {{#{ident}{cls}}}'
     return '\n'.join(lines)
 
 

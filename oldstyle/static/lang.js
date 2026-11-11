@@ -13,10 +13,14 @@
     { code: 'zh-Hant', label: '繁體中文' },
     { code: 'zh', label: '简体中文' }
   ];
+  // text: 機械翻訳の注記。orig: 頁に原文の項目（.orig-lang。その言語で書かれた原文そのもの。印は CSS の ::after）があるときに続ける一文
   var NOTICE = {
-    en: { text: 'This page is a machine translation. If in doubt, refer to the Japanese original.', link: 'View the Japanese original' },
-    'zh-Hant': { text: '本頁為機器翻譯。如有疑問，請以日文原文為準。', link: '查看日文原文' },
-    zh: { text: '本页为机器翻译。如有疑问，请以日文原文为准。', link: '查看日文原文' }
+    en: { text: 'This page is a machine translation. If in doubt, refer to the Japanese original.', link: 'View the Japanese original',
+          orig: 'Items marked \u201cOriginal\u201d were written in English by their authors and are not machine-translated.' },
+    'zh-Hant': { text: '本頁為機器翻譯。如有疑問，請以日文原文為準。', link: '查看日文原文',
+                 orig: '標示「原文」的項目由作者以繁體中文撰寫，並非機器翻譯。' },
+    zh: { text: '本页为机器翻译。如有疑问，请以日文原文为准。', link: '查看日文原文',
+          orig: '标有“原文”的项目由作者以简体中文撰写，并非机器翻译。' }
   };
 
   var meta = document.querySelector('meta[name="ukadoc-langs"]');
@@ -46,6 +50,10 @@
     a.textContent = n.link;
     note.appendChild(document.createTextNode(n.text + ' '));
     note.appendChild(a);
+    if (n.orig && document.querySelector('.orig-lang')) {
+      note.appendChild(document.createElement('br'));
+      note.appendChild(document.createTextNode(n.orig));
+    }
     body.insertBefore(note, body.firstChild);
   }
 

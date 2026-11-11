@@ -526,6 +526,26 @@ ul.index-grid li {
 	color: #7a5c00;
 }
 
+/* 翻訳版で、その言語で書かれた原文そのもの（機械翻訳でない。i18n/originals.json に登録したもの）の項目の見出しに付ける印。
+   scripts/prepare_site.py が、原文の言語の版の見出しに class orig-lang を付ける。印の字は html[lang] ごと */
+.orig-lang::after {
+	display: inline-block;
+	margin-left: 0.8em;
+	padding: 0 6px;
+	border: 1px solid #4c8f3c;
+	border-radius: 3px;
+	background: #eaf7e5;
+	color: #2f6b22;
+	font-size: 11px;
+	font-weight: normal;
+	font-style: normal;
+	line-height: 1.6;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+html[lang="en"] .orig-lang::after { content: "Original"; }
+html[lang="zh-Hant"] .orig-lang::after, html[lang="zh"] .orig-lang::after { content: "原文"; }
+
 /* ---- 言語切替（lang.js）。検索欄の右横。翻訳版が 1 つも無ければ出ない ---- */
 .ukadoc-translate {
 	position: relative;
