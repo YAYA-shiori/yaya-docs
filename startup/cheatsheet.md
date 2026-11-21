@@ -265,6 +265,7 @@ log, executelog.txt
 | 乱数 | [RAND](../functions/RAND.md) |
 | 時間のかかる処理を別スレッドで動かす | [THREADSTART](../functions/THREADSTART.md) [THREADSTATE](../functions/THREADSTATE.md) [THREADJOIN](../functions/THREADJOIN.md) [THREADRESULT](../functions/THREADRESULT.md) [THREADSTOP](../functions/THREADSTOP.md) [THREADCLOSE](../functions/THREADCLOSE.md) |
 | ファイル | [FOPEN](../functions/FOPEN.md) [FREAD](../functions/FREAD.md) [FCLOSE](../functions/FCLOSE.md) |
+| JSON の読み込み | [PARSEJSON](../functions/PARSEJSON.md) [FREADJSON](../functions/FREADJSON.md) [FREADJSONL](../functions/FREADJSONL.md)（1 行に 1 つの JSON のファイル） |
 
 ## 関連
 

@@ -94,6 +94,7 @@ YAYAに組み込まれているシステム関数の一覧。詳細は各関数�
 | [FREADENCODE](../functions/FREADENCODE.md) | エンコード変換しながら読み込む |
 | [FREADHTML](../functions/FREADHTML.md) | HTMLファイルを丸ごと読み込んでハッシュにする（Tc605-1以降） |
 | [FREADJSON](../functions/FREADJSON.md) | JSONファイルを丸ごと読み込んでハッシュ・配列にする（Tc601-1以降） |
+| [FREADJSONL](../functions/FREADJSONL.md) | JSON Lines（1行に1つのJSON）のファイルを、行ごとの値の配列にして読み込む（Tc608-6以降） |
 | [FREADTOML](../functions/FREADTOML.md) | TOMLファイルを丸ごと読み込んでハッシュにする（Tc602-5以降） |
 | [FREADXML](../functions/FREADXML.md) | XMLファイルを丸ごと読み込んでハッシュにする（Tc601-1以降） |
 | [FREADYAML](../functions/FREADYAML.md) | YAMLファイルを丸ごと読み込んでハッシュ・配列にする（Tc602-5以降） |
