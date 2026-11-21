@@ -1,14 +1,14 @@
-# List of System Functions
+# System Functions Index
 
 ## Overview
 
-A list of system functions built into YAYA. For details, see the page for each function in the `functions/` directory.
+A list of system functions built into YAYA. For details, see each function's page in the `functions/` directory.
 
 ## Renamed Functions
 
-Correspondence between old names found in older documentation or scripts and their current names. Functions with the old names no longer exist.
+The following table maps old names found in older documentation and scripts to their current names. The functions under the old names no longer exist.
 
-| Old name | New name | Version renamed/replaced |
+| Old name | New name | Version renamed or replaced |
 |------|------|------|
 | TONUMBER | [CVINT](../functions/CVINT.md) | v4 |
 | TONUMBER2 | [TOINT](../functions/TOINT.md) | v4 |
@@ -19,7 +19,7 @@ Correspondence between old names found in older documentation or scripts and the
 | SETSEPARATOR | [SETDELIM](../functions/SETDELIM.md) | v4 |
 | BINSTRTONUM | [BINSTRTOI](../functions/BINSTRTOI.md) | v4 |
 | HEXSTRTONUM | [HEXSTRTOI](../functions/HEXSTRTOI.md) | v4 |
-| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4 (older documentation says “equivalent”) |
+| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4 (described as "equivalent" in older documentation) |
 | GETSTRURLENCODE | [STRENCODE](../functions/STRENCODE.md) | Tc532-1 |
 | GETSTRURLDECODE | [STRDECODE](../functions/STRDECODE.md) | Tc532-1 |
 
@@ -27,25 +27,25 @@ Correspondence between old names found in older documentation or scripts and the
 
 | Function | Description |
 |------|------|
-| [ACOS](../functions/ACOS.md) | Returns the arccosine (in radians) |
-| [ANY](../functions/ANY.md) | Selects one random element from an array |
+| [ACOS](../functions/ACOS.md) | Returns the arccosine in radians |
+| [ANY](../functions/ANY.md) | Selects one element at random from an array |
 | [APPEND_RUNTIME_DIC](../functions/APPEND_RUNTIME_DIC.md) | Dynamically appends to the runtime dictionary |
 | [ARRAYDEDUP](../functions/ARRAYDEDUP.md) | Removes duplicate elements from an array |
 | [ARRAYSIZE](../functions/ARRAYSIZE.md) | Returns the number of elements in an array |
 | [ASEARCH](../functions/ASEARCH.md) | Searches an array and returns the index of the first match |
 | [ASEARCHEX](../functions/ASEARCHEX.md) | Searches an array and returns the indices of all matches |
-| [ASIN](../functions/ASIN.md) | Returns the arcsine (in radians) |
+| [ASIN](../functions/ASIN.md) | Returns the arcsine in radians |
 | [ASORT](../functions/ASORT.md) | Sorts an array |
-| [ATAN](../functions/ATAN.md) | Returns the arctangent (in radians) |
+| [ATAN](../functions/ATAN.md) | Returns the arctangent in radians |
 | [BINSTRTOI](../functions/BINSTRTOI.md) | Converts a binary string to an integer |
 | [BITWISE_AND](../functions/BITWISE_AND.md) | Bitwise AND |
 | [BITWISE_NOT](../functions/BITWISE_NOT.md) | Bitwise NOT |
 | [BITWISE_OR](../functions/BITWISE_OR.md) | Bitwise OR |
-| [BITWISE_SHIFT](../functions/BITWISE_SHIFT.md) | Bit shift |
+| [BITWISE_SHIFT](../functions/BITWISE_SHIFT.md) | Bitwise shift |
 | [BITWISE_XOR](../functions/BITWISE_XOR.md) | Bitwise XOR |
 | [CEIL](../functions/CEIL.md) | Rounds up |
 | [CHARSETIDTOTEXT](../functions/CHARSETIDTOTEXT.md) | Converts a character encoding ID to text |
-| [CHARSETLIB](../functions/CHARSETLIB.md) | Sets the character encoding for an external library |
+| [CHARSETLIB](../functions/CHARSETLIB.md) | Sets the character encoding for external libraries |
 | [CHARSETLIBEX](../functions/CHARSETLIBEX.md) | Sets the character encoding for a specific external library |
 | [CHARSETTEXTTOID](../functions/CHARSETTEXTTOID.md) | Converts character encoding text to an ID |
 | [CHR](../functions/CHR.md) | Converts a UCS-2 code to a character |
@@ -56,9 +56,9 @@ Correspondence between old names found in older documentation or scripts and the
 | [CUTSPACE](../functions/CUTSPACE.md) | Removes leading and trailing spaces and tabs |
 | [CVAUTO](../functions/CVAUTO.md) | Automatically converts a string to an appropriate type |
 | [CVAUTOEX](../functions/CVAUTOEX.md) | Extended version of CVAUTO |
-| [CVINT](../functions/CVINT.md) | Converts a variable to an integer |
-| [CVREAL](../functions/CVREAL.md) | Converts a variable to a real number |
-| [CVSTR](../functions/CVSTR.md) | Converts a variable to a string |
+| [CVINT](../functions/CVINT.md) | Converts a variable to the integer type |
+| [CVREAL](../functions/CVREAL.md) | Converts a variable to the real number type |
+| [CVSTR](../functions/CVSTR.md) | Converts a variable to the string type |
 
 ## D-F
 
@@ -67,7 +67,7 @@ Correspondence between old names found in older documentation or scripts and the
 | [DESERIALIZEVAR](../functions/DESERIALIZEVAR.md) | Restores a variable from a SERIALIZEVAR string (Tc607-3 and later) |
 | [DICLOAD](../functions/DICLOAD.md) | Loads a dictionary file |
 | [DICUNLOAD](../functions/DICUNLOAD.md) | Unloads a dictionary file |
-| [DIRECTSSTP](../functions/DIRECTSSTP.md) | Sends a request to a ghost using DirectSSTP |
+| [DIRECTSSTP](../functions/DIRECTSSTP.md) | Sends a request to a ghost via DirectSSTP |
 | [DUMPJSON](../functions/DUMPJSON.md) | Converts a value to a JSON string (Tc602-1 and later) |
 | [DUMPTOML](../functions/DUMPTOML.md) | Converts a hash to a TOML string (Tc602-5 and later) |
 | [DUMPVAR](../functions/DUMPVAR.md) | Dumps a variable |
@@ -75,41 +75,42 @@ Correspondence between old names found in older documentation or scripts and the
 | [DUMPYAML](../functions/DUMPYAML.md) | Converts a value to a YAML string (Tc602-5 and later) |
 | [ERASE](../functions/ERASE.md) | Removes a substring from a string |
 | [ERASEVAR](../functions/ERASEVAR.md) | Deletes a variable |
-| [EVAL](../functions/EVAL.md) | Evaluates a string as an expression or a sequence of statements |
-| [EXECUTE](../functions/EXECUTE.md) | Runs an external program |
-| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | Runs an external program, passes it standard input, and captures standard output and standard error (Tc608-3 and later) |
-| [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | Runs an external program and waits for it to finish |
+| [EVAL](../functions/EVAL.md) | Evaluates a string as a sequence of expressions or statements |
+| [EXECUTE](../functions/EXECUTE.md) | Executes an external program |
+| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | Executes an external program, supplies standard input, and captures standard output and standard error (Tc608-3 and later) |
+| [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | Executes an external program and waits for it to finish |
 | [FATTRIB](../functions/FATTRIB.md) | Gets or sets file attributes |
-| [FCHARSET](../functions/FCHARSET.md) | Sets the character encoding of a file |
+| [FCHARSET](../functions/FCHARSET.md) | Sets a file's character encoding |
 | [FCLOSE](../functions/FCLOSE.md) | Closes a file |
 | [FCOPY](../functions/FCOPY.md) | Copies a file |
 | [FDEL](../functions/FDEL.md) | Deletes a file |
-| [FDIGEST](../functions/FDIGEST.md) | Calculates a file hash |
-| [FENUM](../functions/FENUM.md) | Lists files and directories |
+| [FDIGEST](../functions/FDIGEST.md) | Computes a file's hash |
+| [FENUM](../functions/FENUM.md) | Enumerates files and directories |
 | [FLOOR](../functions/FLOOR.md) | Rounds down |
 | [FMOVE](../functions/FMOVE.md) | Moves a file |
 | [FOPEN](../functions/FOPEN.md) | Opens a file |
 | [FREAD](../functions/FREAD.md) | Reads from a file |
-| [FREADBIN](../functions/FREADBIN.md) | Reads a file as binary data |
+| [FREADBIN](../functions/FREADBIN.md) | Reads a file as binary |
 | [FREADENCODE](../functions/FREADENCODE.md) | Reads while converting the encoding |
-| [FREADHTML](../functions/FREADHTML.md) | Reads an entire HTML file and converts it to a hash (Tc605-1 and later) |
-| [FREADJSON](../functions/FREADJSON.md) | Reads an entire JSON file and converts it to a hash or array (Tc601-1 and later) |
-| [FREADTOML](../functions/FREADTOML.md) | Reads an entire TOML file and converts it to a hash (Tc602-5 and later) |
-| [FREADXML](../functions/FREADXML.md) | Reads an entire XML file and converts it to a hash (Tc601-1 and later) |
-| [FREADYAML](../functions/FREADYAML.md) | Reads an entire YAML file and converts it to a hash or array (Tc602-5 and later) |
+| [FREADHTML](../functions/FREADHTML.md) | Reads an entire HTML file into a hash (Tc605-1 and later) |
+| [FREADJSON](../functions/FREADJSON.md) | Reads an entire JSON file into a hash or array (Tc601-1 and later) |
+| [FREADJSONL](../functions/FREADJSONL.md) | Reads a JSON Lines file (one JSON value per line) into an array of values, one per line (Tc608-6 and later) |
+| [FREADTOML](../functions/FREADTOML.md) | Reads an entire TOML file into a hash (Tc602-5 and later) |
+| [FREADXML](../functions/FREADXML.md) | Reads an entire XML file into a hash (Tc601-1 and later) |
+| [FREADYAML](../functions/FREADYAML.md) | Reads an entire YAML file into a hash or array (Tc602-5 and later) |
 | [FRENAME](../functions/FRENAME.md) | Renames a file |
 | [FSEEK](../functions/FSEEK.md) | Moves the file pointer |
 | [FSIZE](../functions/FSIZE.md) | Returns the file size |
-| [FSTATUS](../functions/FSTATUS.md) | Returns the status of file I/O operations |
+| [FSTATUS](../functions/FSTATUS.md) | Returns the status of a file I/O operation |
 | [FTELL](../functions/FTELL.md) | Returns the file pointer position |
 | [FUNCDECL_ERASE](../functions/FUNCDECL_ERASE.md) | Deletes a dynamic function declaration |
-| [FUNCDECL_READ](../functions/FUNCDECL_READ.md) | Reads dynamic function declarations |
-| [FUNCDECL_WRITE](../functions/FUNCDECL_WRITE.md) | Writes dynamic function declarations |
+| [FUNCDECL_READ](../functions/FUNCDECL_READ.md) | Reads a dynamic function declaration |
+| [FUNCDECL_WRITE](../functions/FUNCDECL_WRITE.md) | Writes a dynamic function declaration |
 | [FUNCTIONEX](../functions/FUNCTIONEX.md) | Calls an external library function |
 | [FWRITE](../functions/FWRITE.md) | Writes to a file |
-| [FWRITE2](../functions/FWRITE2.md) | Writes to a file (with a newline) |
-| [FWRITEBIN](../functions/FWRITEBIN.md) | Writes to a file as binary data |
-| [FWRITEDECODE](../functions/FWRITEDECODE.md) | Writes while converting the encoding |
+| [FWRITE2](../functions/FWRITE2.md) | Writes to a file with a newline |
+| [FWRITEBIN](../functions/FWRITEBIN.md) | Writes to a file as binary |
+| [FWRITEDECODE](../functions/FWRITEDECODE.md) | Writes while decoding |
 | [FWRITEJSON](../functions/FWRITEJSON.md) | Converts a value to JSON and writes it to a file (Tc602-1 and later) |
 | [FWRITETOML](../functions/FWRITETOML.md) | Converts a hash to TOML and writes it to a file (Tc602-5 and later) |
 | [FWRITEXML](../functions/FWRITEXML.md) | Converts an element hash to XML and writes it to a file (Tc602-1 and later) |
@@ -133,32 +134,32 @@ Correspondence between old names found in older documentation or scripts and the
 | [GETSYSTEMFUNCLIST](../functions/GETSYSTEMFUNCLIST.md) | Get a list of system functions |
 | [GETTICKCOUNT](../functions/GETTICKCOUNT.md) | Get the tick count |
 | [GETTIME](../functions/GETTIME.md) | Get the current time |
-| [GETTIMEZONE](../functions/GETTIMEZONE.md) | Get local time zone information |
+| [GETTIMEZONE](../functions/GETTIMEZONE.md) | Get information about the local time zone |
 | [GETTYPE](../functions/GETTYPE.md) | Return the type of a variable |
-| [GETTYPEEX](../functions/GETTYPEEX.md) | Return detailed information about a variable's type |
+| [GETTYPEEX](../functions/GETTYPEEX.md) | Return the type of a variable in detail |
 | [GETVARLIST](../functions/GETVARLIST.md) | Get a list of global variables |
 | [HAN2ZEN](../functions/HAN2ZEN.md) | Convert half-width characters to full-width characters |
-| [HASH_EXIST](../functions/HASH_EXIST.md) | Check whether a hash contains a key (Tc600-3 and later) |
+| [HASH_EXIST](../functions/HASH_EXIST.md) | Check whether a key exists in a hash (Tc600-3 and later) |
 | [HASH_KEYS](../functions/HASH_KEYS.md) | Return the keys of a hash as an array (Tc600-3 and later) |
 | [HASH_SIZE](../functions/HASH_SIZE.md) | Return the number of elements in a hash (Tc600-3 and later) |
 | [HASH_SPLIT](../functions/HASH_SPLIT.md) | Split a string to create a hash (Tc600-3 and later) |
 | [HASH_VALUES](../functions/HASH_VALUES.md) | Return the values of a hash as an array (Tc600-3 and later) |
 | [HEXSTRTOI](../functions/HEXSTRTOI.md) | Convert a hexadecimal string to an integer |
-| [IARRAY](../functions/IARRAY.md) | Initialization value for a generic array |
+| [IARRAY](../functions/IARRAY.md) | Initial value for a generic array |
 | [IHASH](../functions/IHASH.md) | Create a hash (Tc600-3 and later) |
 | [INSERT](../functions/INSERT.md) | Insert a string into another string |
-| [ISEVALUABLE](../functions/ISEVALUABLE.md) | Check whether an expression can be evaluated by EVAL |
+| [ISEVALUABLE](../functions/ISEVALUABLE.md) | Check whether an expression can be evaluated with EVAL |
 | [ISFUNC](../functions/ISFUNC.md) | Check whether a function exists |
 | [ISGLOBALDEFINE](../functions/ISGLOBALDEFINE.md) | Check whether a global definition exists |
-| [ISINTSTR](../functions/ISINTSTR.md) | Check whether a string represents an integer |
-| [ISREALSTR](../functions/ISREALSTR.md) | Check whether a string represents a real number |
+| [ISINTSTR](../functions/ISINTSTR.md) | Check whether a string is an integer |
+| [ISREALSTR](../functions/ISREALSTR.md) | Check whether a string is a real number |
 | [ISVAR](../functions/ISVAR.md) | Check whether a variable exists |
 
 ## J-P
 
 | Function | Description |
 |------|------|
-| [LETTONAME](../functions/LETTONAME.md) | Assign to a dynamically specified variable name |
+| [LETTONAME](../functions/LETTONAME.md) | Assign a value to a dynamically specified variable name |
 | [LICENSE](../functions/LICENSE.md) | Display license information |
 | [LINT.GetFuncUsedBy](../functions/LINT.GetFuncUsedBy.md) | Get locations where a function is used (LINT) |
 | [LINT.GetGlobalVarLetted](../functions/LINT.GetGlobalVarLetted.md) | Get locations where a global variable is assigned (LINT) |
@@ -174,12 +175,12 @@ Correspondence between old names found in older documentation or scripts and the
 | [LSO](../functions/LSO.md) | Return the index of the last selected option |
 | [MKDIR](../functions/MKDIR.md) | Create a directory |
 | [OUTPUTNUM](../functions/OUTPUTNUM.md) | Set the output format for numbers |
-| [PARSEHEADER](../functions/PARSEHEADER.md) | Convert a header such as HTTP or SHIORI into a hash or array (Tc602-3 and later) |
-| [PARSEHTML](../functions/PARSEHTML.md) | Convert an HTML string into a hash (Tc605-1 and later) |
-| [PARSEJSON](../functions/PARSEJSON.md) | Convert a JSON string into a hash or array (Tc601-1 and later) |
-| [PARSETOML](../functions/PARSETOML.md) | Convert a TOML string into a hash (Tc602-5 and later) |
-| [PARSEXML](../functions/PARSEXML.md) | Convert an XML string into a hash (Tc601-1 and later) |
-| [PARSEYAML](../functions/PARSEYAML.md) | Convert a YAML string into a hash or array (Tc602-5 and later) |
+| [PARSEHEADER](../functions/PARSEHEADER.md) | Convert headers such as HTTP or SHIORI headers to a hash or array (Tc602-3 and later) |
+| [PARSEHTML](../functions/PARSEHTML.md) | Convert an HTML string to a hash (Tc605-1 and later) |
+| [PARSEJSON](../functions/PARSEJSON.md) | Convert a JSON string to a hash or array (Tc601-1 and later) |
+| [PARSETOML](../functions/PARSETOML.md) | Convert a TOML string to a hash (Tc602-5 and later) |
+| [PARSEXML](../functions/PARSEXML.md) | Convert an XML string to a hash (Tc601-1 and later) |
+| [PARSEYAML](../functions/PARSEYAML.md) | Convert a YAML string to a hash or array (Tc602-5 and later) |
 | [POW](../functions/POW.md) | Return a power |
 | [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md) | Process global definitions |
 
@@ -207,12 +208,12 @@ Correspondence between old names found in older documentation or scripts and the
 | [RMDIR](../functions/RMDIR.md) | Delete a directory |
 | [ROUND](../functions/ROUND.md) | Round to the nearest integer |
 | [SAVEVAR](../functions/SAVEVAR.md) | Save variables |
-| [SERIALIZEVAR](../functions/SERIALIZEVAR.md) | Convert variable values to a string in save-file format (Tc607-3 and later) |
+| [SERIALIZEVAR](../functions/SERIALIZEVAR.md) | Convert a variable's value to a string in save file format (Tc607-3 and later) |
 | [SETDELIM](../functions/SETDELIM.md) | Set the delimiter |
 | [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md) | Set a global definition |
 | [SETLASTERROR](../functions/SETLASTERROR.md) | Set the last error code |
 | [SETSETTING](../functions/SETSETTING.md) | Change a setting value |
-| [SETTAMAHWND](../functions/SETTAMAHWND.md) | Set the window handle of the tama |
+| [SETTAMAHWND](../functions/SETTAMAHWND.md) | Set the Tama window handle |
 | [SIN](../functions/SIN.md) | Return the sine |
 | [SINH](../functions/SINH.md) | Return the hyperbolic sine |
 | [SLEEP](../functions/SLEEP.md) | Pause processing |
@@ -223,9 +224,9 @@ Correspondence between old names found in older documentation or scripts and the
 | [SQLOPEN](../functions/SQLOPEN.md) | Open an SQLite database (Tc602-11 and later) |
 | [SQLQUERY](../functions/SQLQUERY.md) | Execute SQL and return the result rows (Tc602-11 and later) |
 | [SQRT](../functions/SQRT.md) | Return the square root |
-| [SRAND](../functions/SRAND.md) | Set the random seed |
+| [SRAND](../functions/SRAND.md) | Set the random number seed |
 | [STRDECODE](../functions/STRDECODE.md) | Decode a string |
-| [STRDIGEST](../functions/STRDIGEST.md) | Calculate a string hash |
+| [STRDIGEST](../functions/STRDIGEST.md) | Calculate a string's hash |
 | [STRENCODE](../functions/STRENCODE.md) | Encode a string |
 | [STRFORM](../functions/STRFORM.md) | Generate a formatted string |
 | [STRLEN](../functions/STRLEN.md) | Return the length of a string |
@@ -238,13 +239,13 @@ Correspondence between old names found in older documentation or scripts and the
 |------|------|
 | [TAN](../functions/TAN.md) | Returns the tangent |
 | [TANH](../functions/TANH.md) | Returns the hyperbolic tangent |
-| [THREADCLOSE](../functions/THREADCLOSE.md) | Discards the thread record (Tc608-1 and later) |
-| [THREADJOIN](../functions/THREADJOIN.md) | Waits for the thread to finish (Tc608-1 and later) |
-| [THREADRESULT](../functions/THREADRESULT.md) | Returns the return value of a function in a finished thread (Tc608-1 and later) |
-| [THREADSTART](../functions/THREADSTART.md) | Runs a function in a separate thread (Tc608-1 and later) |
-| [THREADSTATE](../functions/THREADSTATE.md) | Returns the state of a thread (Tc608-1 and later) |
-| [THREADSTOP](../functions/THREADSTOP.md) | Requests that a thread stop (Tc608-1 and later) |
-| [TOAUTO](../functions/TOAUTO.md) | Automatically converts a value to the appropriate type |
+| [THREADCLOSE](../functions/THREADCLOSE.md) | Discards a thread's record (Tc608-1 or later) |
+| [THREADJOIN](../functions/THREADJOIN.md) | Waits for a thread to finish (Tc608-1 or later) |
+| [THREADRESULT](../functions/THREADRESULT.md) | Returns the return value of a completed thread's function (Tc608-1 or later) |
+| [THREADSTART](../functions/THREADSTART.md) | Runs a function in a separate thread (Tc608-1 or later) |
+| [THREADSTATE](../functions/THREADSTATE.md) | Returns the state of a thread (Tc608-1 or later) |
+| [THREADSTOP](../functions/THREADSTOP.md) | Requests that a thread stop (Tc608-1 or later) |
+| [TOAUTO](../functions/TOAUTO.md) | Automatically converts a value to an appropriate type |
 | [TOAUTOEX](../functions/TOAUTOEX.md) | Extended version of TOAUTO |
 | [TOBINSTR](../functions/TOBINSTR.md) | Converts an integer to a binary string |
 | [TOHEXSTR](../functions/TOHEXSTR.md) | Converts an integer to a hexadecimal string |
@@ -253,7 +254,7 @@ Correspondence between old names found in older documentation or scripts and the
 | [TOREAL](../functions/TOREAL.md) | Converts a value to a real number |
 | [TOSTR](../functions/TOSTR.md) | Converts a value to a string |
 | [TOUPPER](../functions/TOUPPER.md) | Converts a string to uppercase |
-| [TRANSLATE](../functions/TRANSLATE.md) | Translates a string |
+| [TRANSLATE](../functions/TRANSLATE.md) | Converts a string |
 | [UNDEFFUNC](../functions/UNDEFFUNC.md) | Deletes a function definition |
 | [UNDEFGLOBALDEFINE](../functions/UNDEFGLOBALDEFINE.md) | Deletes a global definition |
 | [UNLOADLIB](../functions/UNLOADLIB.md) | Unloads an external library |

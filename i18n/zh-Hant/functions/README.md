@@ -1,10 +1,10 @@
 # 系統函式（內建函式）
 
-本頁依用途分類列出系統函式。網站會將每個分類整理在一個頁面中顯示。
+這是依用途分類的系統函式頁面清單。網站會將每個分類的內容彙整顯示於同一頁。
 
-新增函式時，請只在本檔案中對應的分類下列出一次。分類名稱須與函式頁面中的 `**Category:**` 行相同。
+新增函式時，請在此檔案對應的分類中只列出一次。分類名稱須與函式頁面的 `**Category:**` 行相同。
 
-## 型別取得／轉換
+## 類型取得／轉換
 
 - [GETTYPE](GETTYPE.md)
 - [GETTYPEEX](GETTYPEEX.md)
@@ -134,6 +134,7 @@
 - [FREADENCODE](FREADENCODE.md)
 - [FREADBIN](FREADBIN.md)
 - [FREADJSON](FREADJSON.md)
+- [FREADJSONL](FREADJSONL.md)
 - [FREADXML](FREADXML.md)
 - [FREADHTML](FREADHTML.md)
 - [FREADYAML](FREADYAML.md)
@@ -168,7 +169,7 @@
 - [SQLEXEC](SQLEXEC.md)
 - [SQLQUERY](SQLQUERY.md)
 
-## 外部程式庫
+## 外部函式庫
 
 - [LOADLIB](LOADLIB.md)
 - [UNLOADLIB](UNLOADLIB.md)
@@ -187,7 +188,7 @@
 - [GETENV](GETENV.md)
 - [READFMO](READFMO.md)
 
-## 中介操作・特殊函式
+## 中繼操作與特殊函式
 
 - [EVAL](EVAL.md)
 - [ISEVALUABLE](ISEVALUABLE.md)
@@ -223,7 +224,7 @@
 - [SETGLOBALDEFINE](SETGLOBALDEFINE.md)
 - [UNDEFGLOBALDEFINE](UNDEFGLOBALDEFINE.md)
 
-## 通訊・程序間通訊
+## 通訊與行程間通訊
 
 - [DIRECTSSTP](DIRECTSSTP.md)
 

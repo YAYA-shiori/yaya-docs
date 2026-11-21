@@ -1,10 +1,10 @@
 # System Functions (Built-in Functions)
 
-This is a list of system function pages, grouped by purpose. On the site, each category is displayed on a single page.
+This page lists system function pages by category. On the site, each category is displayed on a single page.
 
-When you add a new function, list it only once under the appropriate category in this file. Use the same category name as in the function page's `**Category:**` line.
+When adding a new function, list it only once in the appropriate category in this file. Use the same category name as the `**Category:**` line on the function page.
 
-## Type Retrieval/Conversion
+## Type Identification and Conversion
 
 - [GETTYPE](GETTYPE.md)
 - [GETTYPEEX](GETTYPEEX.md)
@@ -134,6 +134,7 @@ When you add a new function, list it only once under the appropriate category in
 - [FREADENCODE](FREADENCODE.md)
 - [FREADBIN](FREADBIN.md)
 - [FREADJSON](FREADJSON.md)
+- [FREADJSONL](FREADJSONL.md)
 - [FREADXML](FREADXML.md)
 - [FREADHTML](FREADHTML.md)
 - [FREADYAML](FREADYAML.md)
@@ -161,7 +162,7 @@ When you add a new function, list it only once under the appropriate category in
 - [MKDIR](MKDIR.md)
 - [RMDIR](RMDIR.md)
 
-## Databases
+## Database
 
 - [SQLOPEN](SQLOPEN.md)
 - [SQLCLOSE](SQLCLOSE.md)
@@ -223,7 +224,7 @@ When you add a new function, list it only once under the appropriate category in
 - [SETGLOBALDEFINE](SETGLOBALDEFINE.md)
 - [UNDEFGLOBALDEFINE](UNDEFGLOBALDEFINE.md)
 
-## Communication and Inter-Process Communication
+## Communication and Interprocess Communication
 
 - [DIRECTSSTP](DIRECTSSTP.md)
 

@@ -6,9 +6,9 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 
 ## 已更名的函式
 
-舊版文件或指令碼中使用的舊名稱與目前名稱的對照。舊名稱的函式已不存在。
+舊版資料或腳本中出現的舊名稱與目前名稱的對照。舊名稱的函式已不存在。
 
-| 舊名稱 | 新名稱 | 更名・替換的版本 |
+| 舊名稱 | 新名稱 | 更名或替換的版本 |
 |------|------|------|
 | TONUMBER | [CVINT](../functions/CVINT.md) | v4 |
 | TONUMBER2 | [TOINT](../functions/TOINT.md) | v4 |
@@ -19,7 +19,7 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | SETSEPARATOR | [SETDELIM](../functions/SETDELIM.md) | v4 |
 | BINSTRTONUM | [BINSTRTOI](../functions/BINSTRTOI.md) | v4 |
 | HEXSTRTONUM | [HEXSTRTOI](../functions/HEXSTRTOI.md) | v4 |
-| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4（舊版文件標示為「相當」） |
+| ISINTEGER / ISREAL | [GETTYPE](../functions/GETTYPE.md) | v4（舊版記載為「相當於」） |
 | GETSTRURLENCODE | [STRENCODE](../functions/STRENCODE.md) | Tc532-1 |
 | GETSTRURLDECODE | [STRDECODE](../functions/STRDECODE.md) | Tc532-1 |
 
@@ -27,16 +27,16 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 
 | 函式 | 說明 |
 |------|------|
-| [ACOS](../functions/ACOS.md) | 傳回反餘弦（弧度） |
-| [ANY](../functions/ANY.md) | 從陣列中隨機選取 1 個元素 |
-| [APPEND_RUNTIME_DIC](../functions/APPEND_RUNTIME_DIC.md) | 動態追加至執行階段辭典 |
-| [ARRAYDEDUP](../functions/ARRAYDEDUP.md) | 移除陣列中的重複元素 |
+| [ACOS](../functions/ACOS.md) | 傳回反餘弦值（弧度） |
+| [ANY](../functions/ANY.md) | 從陣列中隨機選取1個元素 |
+| [APPEND_RUNTIME_DIC](../functions/APPEND_RUNTIME_DIC.md) | 動態追加至執行時期辭典 |
+| [ARRAYDEDUP](../functions/ARRAYDEDUP.md) | 從陣列中刪除重複元素 |
 | [ARRAYSIZE](../functions/ARRAYSIZE.md) | 傳回陣列的元素數量 |
-| [ASEARCH](../functions/ASEARCH.md) | 搜尋陣列並傳回第一個符合項目的索引 |
-| [ASEARCHEX](../functions/ASEARCHEX.md) | 搜尋陣列並傳回所有符合項目的索引 |
-| [ASIN](../functions/ASIN.md) | 傳回反正弦（弧度） |
+| [ASEARCH](../functions/ASEARCH.md) | 搜尋陣列並傳回第一個相符的索引 |
+| [ASEARCHEX](../functions/ASEARCHEX.md) | 搜尋陣列並傳回所有相符的索引 |
+| [ASIN](../functions/ASIN.md) | 傳回反正弦值（弧度） |
 | [ASORT](../functions/ASORT.md) | 排序陣列 |
-| [ATAN](../functions/ATAN.md) | 傳回反正切（弧度） |
+| [ATAN](../functions/ATAN.md) | 傳回反正切值（弧度） |
 | [BINSTRTOI](../functions/BINSTRTOI.md) | 將二進位字串轉換為整數 |
 | [BITWISE_AND](../functions/BITWISE_AND.md) | 位元 AND |
 | [BITWISE_NOT](../functions/BITWISE_NOT.md) | 位元 NOT |
@@ -45,16 +45,16 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [BITWISE_XOR](../functions/BITWISE_XOR.md) | 位元 XOR |
 | [CEIL](../functions/CEIL.md) | 無條件進位 |
 | [CHARSETIDTOTEXT](../functions/CHARSETIDTOTEXT.md) | 將字元編碼 ID 轉換為文字 |
-| [CHARSETLIB](../functions/CHARSETLIB.md) | 設定外部程式庫的字元編碼 |
-| [CHARSETLIBEX](../functions/CHARSETLIBEX.md) | 設定特定外部程式庫的字元編碼 |
+| [CHARSETLIB](../functions/CHARSETLIB.md) | 設定外部函式庫的字元編碼 |
+| [CHARSETLIBEX](../functions/CHARSETLIBEX.md) | 設定特定外部函式庫的字元編碼 |
 | [CHARSETTEXTTOID](../functions/CHARSETTEXTTOID.md) | 將字元編碼文字轉換為 ID |
 | [CHR](../functions/CHR.md) | 將 UCS-2 編碼轉換為字元 |
 | [CHRCODE](../functions/CHRCODE.md) | 傳回字元的 UCS-2 編碼 |
 | [CLEARERRORLOG](../functions/CLEARERRORLOG.md) | 清除錯誤記錄 |
-| [COS](../functions/COS.md) | 傳回餘弦 |
-| [COSH](../functions/COSH.md) | 傳回雙曲餘弦 |
+| [COS](../functions/COS.md) | 傳回餘弦值 |
+| [COSH](../functions/COSH.md) | 傳回雙曲餘弦值 |
 | [CUTSPACE](../functions/CUTSPACE.md) | 移除前後的空白與定位字元 |
-| [CVAUTO](../functions/CVAUTO.md) | 自動將字串轉換為適當的型別 |
+| [CVAUTO](../functions/CVAUTO.md) | 將字串自動轉換為適當的型別 |
 | [CVAUTOEX](../functions/CVAUTOEX.md) | CVAUTO 的擴充版 |
 | [CVINT](../functions/CVINT.md) | 將變數轉換為整數型別 |
 | [CVREAL](../functions/CVREAL.md) | 將變數轉換為實數型別 |
@@ -77,26 +77,27 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [ERASEVAR](../functions/ERASEVAR.md) | 刪除變數 |
 | [EVAL](../functions/EVAL.md) | 將字串作為運算式或陳述式序列進行求值 |
 | [EXECUTE](../functions/EXECUTE.md) | 執行外部程式 |
-| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | 執行外部程式，傳送標準輸入並擷取標準輸出與標準錯誤輸出（Tc608-3 以後） |
-| [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | 執行外部程式並等待執行完成 |
+| [EXECUTE_CAPTURE](../functions/EXECUTE_CAPTURE.md) | 執行外部程式，傳入標準輸入並擷取標準輸出與標準錯誤輸出（Tc608-3 以後） |
+| [EXECUTE_WAIT](../functions/EXECUTE_WAIT.md) | 執行外部程式並等待其完成 |
 | [FATTRIB](../functions/FATTRIB.md) | 取得或設定檔案屬性 |
 | [FCHARSET](../functions/FCHARSET.md) | 設定檔案的字元編碼 |
 | [FCLOSE](../functions/FCLOSE.md) | 關閉檔案 |
 | [FCOPY](../functions/FCOPY.md) | 複製檔案 |
 | [FDEL](../functions/FDEL.md) | 刪除檔案 |
-| [FDIGEST](../functions/FDIGEST.md) | 計算檔案的雜湊 |
+| [FDIGEST](../functions/FDIGEST.md) | 計算檔案的雜湊值 |
 | [FENUM](../functions/FENUM.md) | 列舉檔案與目錄 |
 | [FLOOR](../functions/FLOOR.md) | 無條件捨去 |
 | [FMOVE](../functions/FMOVE.md) | 移動檔案 |
 | [FOPEN](../functions/FOPEN.md) | 開啟檔案 |
 | [FREAD](../functions/FREAD.md) | 從檔案讀取 |
-| [FREADBIN](../functions/FREADBIN.md) | 以二進位資料讀取檔案 |
-| [FREADENCODE](../functions/FREADENCODE.md) | 在讀取時進行編碼轉換 |
-| [FREADHTML](../functions/FREADHTML.md) | 一次讀取整個 HTML 檔案並轉換為雜湊（Tc605-1 以後） |
-| [FREADJSON](../functions/FREADJSON.md) | 一次讀取整個 JSON 檔案並轉換為雜湊或陣列（Tc601-1 以後） |
-| [FREADTOML](../functions/FREADTOML.md) | 一次讀取整個 TOML 檔案並轉換為雜湊（Tc602-5 以後） |
-| [FREADXML](../functions/FREADXML.md) | 一次讀取整個 XML 檔案並轉換為雜湊（Tc601-1 以後） |
-| [FREADYAML](../functions/FREADYAML.md) | 一次讀取整個 YAML 檔案並轉換為雜湊或陣列（Tc602-5 以後） |
+| [FREADBIN](../functions/FREADBIN.md) | 以二進位格式讀取檔案 |
+| [FREADENCODE](../functions/FREADENCODE.md) | 讀取時進行編碼轉換 |
+| [FREADHTML](../functions/FREADHTML.md) | 完整讀取 HTML 檔案並轉換為雜湊（Tc605-1 以後） |
+| [FREADJSON](../functions/FREADJSON.md) | 完整讀取 JSON 檔案並轉換為雜湊或陣列（Tc601-1 以後） |
+| [FREADJSONL](../functions/FREADJSONL.md) | 讀取 JSON Lines（每行1個 JSON）檔案，轉換為各行值的陣列（Tc608-6 以後） |
+| [FREADTOML](../functions/FREADTOML.md) | 完整讀取 TOML 檔案並轉換為雜湊（Tc602-5 以後） |
+| [FREADXML](../functions/FREADXML.md) | 完整讀取 XML 檔案並轉換為雜湊（Tc601-1 以後） |
+| [FREADYAML](../functions/FREADYAML.md) | 完整讀取 YAML 檔案並轉換為雜湊或陣列（Tc602-5 以後） |
 | [FRENAME](../functions/FRENAME.md) | 重新命名檔案 |
 | [FSEEK](../functions/FSEEK.md) | 移動檔案指標 |
 | [FSIZE](../functions/FSIZE.md) | 傳回檔案大小 |
@@ -105,11 +106,11 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [FUNCDECL_ERASE](../functions/FUNCDECL_ERASE.md) | 刪除動態函式宣告 |
 | [FUNCDECL_READ](../functions/FUNCDECL_READ.md) | 讀取動態函式宣告 |
 | [FUNCDECL_WRITE](../functions/FUNCDECL_WRITE.md) | 寫出動態函式宣告 |
-| [FUNCTIONEX](../functions/FUNCTIONEX.md) | 呼叫外部程式庫函式 |
+| [FUNCTIONEX](../functions/FUNCTIONEX.md) | 呼叫外部函式庫的函式 |
 | [FWRITE](../functions/FWRITE.md) | 寫入檔案 |
-| [FWRITE2](../functions/FWRITE2.md) | 寫入檔案（附加換行） |
-| [FWRITEBIN](../functions/FWRITEBIN.md) | 以二進位資料寫入檔案 |
-| [FWRITEDECODE](../functions/FWRITEDECODE.md) | 在寫入時進行解碼轉換 |
+| [FWRITE2](../functions/FWRITE2.md) | 寫入檔案（附帶換行） |
+| [FWRITEBIN](../functions/FWRITEBIN.md) | 以二進位格式寫入檔案 |
+| [FWRITEDECODE](../functions/FWRITEDECODE.md) | 寫入時進行解碼轉換 |
 | [FWRITEJSON](../functions/FWRITEJSON.md) | 將值轉換為 JSON 並寫入檔案（Tc602-1 以後） |
 | [FWRITETOML](../functions/FWRITETOML.md) | 將雜湊轉換為 TOML 並寫入檔案（Tc602-5 以後） |
 | [FWRITEXML](../functions/FWRITEXML.md) | 將元素的雜湊轉換為 XML 並寫入檔案（Tc602-1 以後） |
@@ -120,34 +121,34 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | 函式 | 說明 |
 |------|------|
 | [GETCALLSTACK](../functions/GETCALLSTACK.md) | 取得呼叫堆疊 |
-| [GETDELIM](../functions/GETDELIM.md) | 取得目前的分隔符 |
+| [GETDELIM](../functions/GETDELIM.md) | 取得目前的分隔符號 |
 | [GETENV](../functions/GETENV.md) | 取得環境變數 |
-| [GETERRORLOG](../functions/GETERRORLOG.md) | 取得錯誤記錄 |
+| [GETERRORLOG](../functions/GETERRORLOG.md) | 取得錯誤日誌 |
 | [GETFUNCINFO](../functions/GETFUNCINFO.md) | 取得函式資訊 |
 | [GETFUNCLIST](../functions/GETFUNCLIST.md) | 取得使用者自訂函式清單 |
-| [GETLASTERROR](../functions/GETLASTERROR.md) | 取得最後的錯誤碼 |
+| [GETLASTERROR](../functions/GETLASTERROR.md) | 取得最後的錯誤代碼 |
 | [GETMEMINFO](../functions/GETMEMINFO.md) | 取得記憶體資訊 |
 | [GETSECCOUNT](../functions/GETSECCOUNT.md) | 取得秒數計數 |
 | [GETSETTING](../functions/GETSETTING.md) | 取得設定值 |
 | [GETSTRBYTES](../functions/GETSTRBYTES.md) | 傳回字串的位元組數 |
 | [GETSYSTEMFUNCLIST](../functions/GETSYSTEMFUNCLIST.md) | 取得系統函式清單 |
-| [GETTICKCOUNT](../functions/GETTICKCOUNT.md) | 取得 Tick 計數 |
+| [GETTICKCOUNT](../functions/GETTICKCOUNT.md) | 取得計時器刻度計數 |
 | [GETTIME](../functions/GETTIME.md) | 取得目前時間 |
 | [GETTIMEZONE](../functions/GETTIMEZONE.md) | 取得本地時區資訊 |
-| [GETTYPE](../functions/GETTYPE.md) | 傳回變數型別 |
-| [GETTYPEEX](../functions/GETTYPEEX.md) | 詳細傳回變數型別 |
+| [GETTYPE](../functions/GETTYPE.md) | 傳回變數的型別 |
+| [GETTYPEEX](../functions/GETTYPEEX.md) | 傳回變數的詳細型別 |
 | [GETVARLIST](../functions/GETVARLIST.md) | 取得全域變數清單 |
-| [HAN2ZEN](../functions/HAN2ZEN.md) | 將半形字元轉換為全形字元 |
-| [HASH_EXIST](../functions/HASH_EXIST.md) | 確認雜湊中是否有指定的鍵（Tc600-3 以上） |
-| [HASH_KEYS](../functions/HASH_KEYS.md) | 以陣列傳回雜湊的鍵（Tc600-3 以上） |
-| [HASH_SIZE](../functions/HASH_SIZE.md) | 傳回雜湊的元素數量（Tc600-3 以上） |
-| [HASH_SPLIT](../functions/HASH_SPLIT.md) | 分割字串並建立雜湊（Tc600-3 以上） |
-| [HASH_VALUES](../functions/HASH_VALUES.md) | 以陣列傳回雜湊的值（Tc600-3 以上） |
+| [HAN2ZEN](../functions/HAN2ZEN.md) | 將半形轉換為全形 |
+| [HASH_EXIST](../functions/HASH_EXIST.md) | 確認雜湊中是否有指定的鍵（Tc600-3 以後） |
+| [HASH_KEYS](../functions/HASH_KEYS.md) | 以陣列傳回雜湊的鍵（Tc600-3 以後） |
+| [HASH_SIZE](../functions/HASH_SIZE.md) | 傳回雜湊的元素數量（Tc600-3 以後） |
+| [HASH_SPLIT](../functions/HASH_SPLIT.md) | 分割字串並建立雜湊（Tc600-3 以後） |
+| [HASH_VALUES](../functions/HASH_VALUES.md) | 以陣列傳回雜湊的值（Tc600-3 以後） |
 | [HEXSTRTOI](../functions/HEXSTRTOI.md) | 將十六進位字串轉換為整數 |
 | [IARRAY](../functions/IARRAY.md) | 通用陣列的初始值 |
-| [IHASH](../functions/IHASH.md) | 建立雜湊（Tc600-3 以上） |
+| [IHASH](../functions/IHASH.md) | 建立雜湊（Tc600-3 以後） |
 | [INSERT](../functions/INSERT.md) | 在字串中插入字串 |
-| [ISEVALUABLE](../functions/ISEVALUABLE.md) | 確認能否以 EVAL 評估 |
+| [ISEVALUABLE](../functions/ISEVALUABLE.md) | 確認是否可用 EVAL 求值 |
 | [ISFUNC](../functions/ISFUNC.md) | 確認函式是否存在 |
 | [ISGLOBALDEFINE](../functions/ISGLOBALDEFINE.md) | 確認全域定義是否存在 |
 | [ISINTSTR](../functions/ISINTSTR.md) | 確認是否為整數字串 |
@@ -166,21 +167,21 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [LINT.GetLocalVarLetted](../functions/LINT.GetLocalVarLetted.md) | 取得區域變數的指派位置（LINT） |
 | [LINT.GetLocalVarUsedBy](../functions/LINT.GetLocalVarUsedBy.md) | 取得區域變數的使用位置（LINT） |
 | [LINT.GetUserDefFuncUsedBy](../functions/LINT.GetUserDefFuncUsedBy.md) | 取得使用者自訂函式的使用位置（LINT） |
-| [LINT.GetVarRefs](../functions/LINT.GetVarRefs.md) | 逐一取得變數與函式的出現位置及區塊（LINT） |
-| [LOADLIB](../functions/LOADLIB.md) | 載入外部函式庫 |
+| [LINT.GetVarRefs](../functions/LINT.GetVarRefs.md) | 逐一取得變數、函式的出現位置及其所屬區塊（LINT） |
+| [LOADLIB](../functions/LOADLIB.md) | 載入外部程式庫 |
 | [LOG](../functions/LOG.md) | 傳回自然對數 |
 | [LOG10](../functions/LOG10.md) | 傳回常用對數 |
-| [LOGGING](../functions/LOGGING.md) | 輸出至記錄 |
+| [LOGGING](../functions/LOGGING.md) | 輸出至日誌 |
 | [LSO](../functions/LSO.md) | 傳回最後選取的選項索引 |
 | [MKDIR](../functions/MKDIR.md) | 建立目錄 |
 | [OUTPUTNUM](../functions/OUTPUTNUM.md) | 設定數值的輸出格式 |
-| [PARSEHEADER](../functions/PARSEHEADER.md) | 將類似 HTTP、SHIORI 的標頭轉換為雜湊或陣列（Tc602-3 以上） |
-| [PARSEHTML](../functions/PARSEHTML.md) | 將 HTML 字串轉換為雜湊（Tc605-1 以上） |
-| [PARSEJSON](../functions/PARSEJSON.md) | 將 JSON 字串轉換為雜湊或陣列（Tc601-1 以上） |
-| [PARSETOML](../functions/PARSETOML.md) | 將 TOML 字串轉換為雜湊（Tc602-5 以上） |
-| [PARSEXML](../functions/PARSEXML.md) | 將 XML 字串轉換為雜湊（Tc601-1 以上） |
-| [PARSEYAML](../functions/PARSEYAML.md) | 將 YAML 字串轉換為雜湊或陣列（Tc602-5 以上） |
-| [POW](../functions/POW.md) | 傳回次方 |
+| [PARSEHEADER](../functions/PARSEHEADER.md) | 將 HTTP、SHIORI 等標頭轉換為雜湊或陣列（Tc602-3 以後） |
+| [PARSEHTML](../functions/PARSEHTML.md) | 將 HTML 字串轉換為雜湊（Tc605-1 以後） |
+| [PARSEJSON](../functions/PARSEJSON.md) | 將 JSON 字串轉換為雜湊或陣列（Tc601-1 以後） |
+| [PARSETOML](../functions/PARSETOML.md) | 將 TOML 字串轉換為雜湊（Tc602-5 以後） |
+| [PARSEXML](../functions/PARSEXML.md) | 將 XML 字串轉換為雜湊（Tc601-1 以後） |
+| [PARSEYAML](../functions/PARSEYAML.md) | 將 YAML 字串轉換為雜湊或陣列（Tc602-5 以後） |
+| [POW](../functions/POW.md) | 傳回冪次運算結果 |
 | [PROCESSGLOBALDEFINE](../functions/PROCESSGLOBALDEFINE.md) | 處理全域定義 |
 
 ## Q-S
@@ -188,40 +189,40 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | 函式 | 說明 |
 |------|------|
 | [RAND](../functions/RAND.md) | 產生亂數 |
-| [READFMO](../functions/READFMO.md) | 從 FMO 載入資料 |
+| [READFMO](../functions/READFMO.md) | 從 FMO 讀取資料 |
 | [REPLACE](../functions/REPLACE.md) | 取代字串 |
-| [REQUESTLIB](../functions/REQUESTLIB.md) | 向外部函式庫發送請求 |
+| [REQUESTLIB](../functions/REQUESTLIB.md) | 傳送請求給外部程式庫 |
 | [RESTOREVAR](../functions/RESTOREVAR.md) | 還原變數 |
 | [RE_ASEARCH](../functions/RE_ASEARCH.md) | 使用正規表示式搜尋陣列 |
-| [RE_ASEARCHEX](../functions/RE_ASEARCHEX.md) | 使用正規表示式搜尋陣列（所有符合項目） |
-| [RE_GETLEN](../functions/RE_GETLEN.md) | 傳回正規表示式比對結果的長度 |
-| [RE_GETPOS](../functions/RE_GETPOS.md) | 傳回正規表示式比對結果的位置 |
-| [RE_GETSTR](../functions/RE_GETSTR.md) | 傳回正規表示式比對結果的字串 |
+| [RE_ASEARCHEX](../functions/RE_ASEARCHEX.md) | 使用正規表示式搜尋陣列（完全符合） |
+| [RE_GETLEN](../functions/RE_GETLEN.md) | 傳回正規表示式符合結果的長度 |
+| [RE_GETPOS](../functions/RE_GETPOS.md) | 傳回正規表示式符合結果的位置 |
+| [RE_GETSTR](../functions/RE_GETSTR.md) | 傳回符合正規表示式的字串 |
 | [RE_GREP](../functions/RE_GREP.md) | 使用正規表示式篩選 |
 | [RE_MATCH](../functions/RE_MATCH.md) | 確認是否符合正規表示式 |
-| [RE_OPTION](../functions/RE_OPTION.md) | 設定正規表示式選項 |
+| [RE_OPTION](../functions/RE_OPTION.md) | 設定正規表示式的選項 |
 | [RE_REPLACE](../functions/RE_REPLACE.md) | 使用正規表示式取代 |
-| [RE_REPLACEEX](../functions/RE_REPLACEEX.md) | 使用正規表示式取代（擴充版） |
+| [RE_REPLACEEX](../functions/RE_REPLACEEX.md) | 使用正規表示式取代（擴充） |
 | [RE_SEARCH](../functions/RE_SEARCH.md) | 使用正規表示式搜尋 |
 | [RE_SPLIT](../functions/RE_SPLIT.md) | 使用正規表示式分割 |
 | [RMDIR](../functions/RMDIR.md) | 刪除目錄 |
 | [ROUND](../functions/ROUND.md) | 四捨五入 |
 | [SAVEVAR](../functions/SAVEVAR.md) | 儲存變數 |
-| [SERIALIZEVAR](../functions/SERIALIZEVAR.md) | 將變數值轉換為存檔格式的字串（Tc607-3 以上） |
-| [SETDELIM](../functions/SETDELIM.md) | 設定分隔符 |
+| [SERIALIZEVAR](../functions/SERIALIZEVAR.md) | 將變數的值轉換為存檔格式的字串（Tc607-3 以後） |
+| [SETDELIM](../functions/SETDELIM.md) | 設定分隔符號 |
 | [SETGLOBALDEFINE](../functions/SETGLOBALDEFINE.md) | 設定全域定義 |
-| [SETLASTERROR](../functions/SETLASTERROR.md) | 設定最後的錯誤碼 |
+| [SETLASTERROR](../functions/SETLASTERROR.md) | 設定最後的錯誤代碼 |
 | [SETSETTING](../functions/SETSETTING.md) | 變更設定值 |
 | [SETTAMAHWND](../functions/SETTAMAHWND.md) | 設定玉的視窗控制代碼 |
 | [SIN](../functions/SIN.md) | 傳回正弦值 |
 | [SINH](../functions/SINH.md) | 傳回雙曲正弦值 |
 | [SLEEP](../functions/SLEEP.md) | 暫停處理 |
 | [SPLIT](../functions/SPLIT.md) | 分割字串並傳回陣列 |
-| [SPLITPATH](../functions/SPLITPATH.md) | 分解路徑 |
-| [SQLCLOSE](../functions/SQLCLOSE.md) | 關閉 SQLite 資料庫（Tc602-11 以上） |
-| [SQLEXEC](../functions/SQLEXEC.md) | 執行 SQL（Tc602-11 以上） |
-| [SQLOPEN](../functions/SQLOPEN.md) | 開啟 SQLite 資料庫（Tc602-11 以上） |
-| [SQLQUERY](../functions/SQLQUERY.md) | 執行 SQL 並傳回結果列（Tc602-11 以上） |
+| [SPLITPATH](../functions/SPLITPATH.md) | 拆解路徑 |
+| [SQLCLOSE](../functions/SQLCLOSE.md) | 關閉 SQLite 資料庫（Tc602-11 以後） |
+| [SQLEXEC](../functions/SQLEXEC.md) | 執行 SQL（Tc602-11 以後） |
+| [SQLOPEN](../functions/SQLOPEN.md) | 開啟 SQLite 資料庫（Tc602-11 以後） |
+| [SQLQUERY](../functions/SQLQUERY.md) | 執行 SQL 並傳回結果列（Tc602-11 以後） |
 | [SQRT](../functions/SQRT.md) | 傳回平方根 |
 | [SRAND](../functions/SRAND.md) | 設定亂數種子 |
 | [STRDECODE](../functions/STRDECODE.md) | 解碼字串 |
@@ -241,7 +242,7 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [THREADCLOSE](../functions/THREADCLOSE.md) | 捨棄執行緒的記錄（Tc608-1 以後） |
 | [THREADJOIN](../functions/THREADJOIN.md) | 等待執行緒結束（Tc608-1 以後） |
 | [THREADRESULT](../functions/THREADRESULT.md) | 傳回已結束執行緒的函式傳回值（Tc608-1 以後） |
-| [THREADSTART](../functions/THREADSTART.md) | 在其他執行緒中執行函式（Tc608-1 以後） |
+| [THREADSTART](../functions/THREADSTART.md) | 在另一個執行緒中執行函式（Tc608-1 以後） |
 | [THREADSTATE](../functions/THREADSTATE.md) | 傳回執行緒的狀態（Tc608-1 以後） |
 | [THREADSTOP](../functions/THREADSTOP.md) | 要求執行緒中斷（Tc608-1 以後） |
 | [TOAUTO](../functions/TOAUTO.md) | 自動將值轉換為適當的型別 |
@@ -256,5 +257,5 @@ YAYA 內建的系統函式一覽。詳細資訊請參閱各函式的頁面（`fu
 | [TRANSLATE](../functions/TRANSLATE.md) | 轉換字串 |
 | [UNDEFFUNC](../functions/UNDEFFUNC.md) | 刪除函式定義 |
 | [UNDEFGLOBALDEFINE](../functions/UNDEFGLOBALDEFINE.md) | 刪除全域定義 |
-| [UNLOADLIB](../functions/UNLOADLIB.md) | 卸載外部程式庫 |
-| [ZEN2HAN](../functions/ZEN2HAN.md) | 將全形字元轉換為半形字元 |
+| [UNLOADLIB](../functions/UNLOADLIB.md) | 卸載外部函式庫 |
+| [ZEN2HAN](../functions/ZEN2HAN.md) | 將全形轉換為半形 |

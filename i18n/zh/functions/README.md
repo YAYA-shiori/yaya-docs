@@ -1,8 +1,8 @@
 # 系统函数（内置函数）
 
-这是按用途分类整理的系统函数列表。在网站上，每个分类会汇总显示在一个页面中。
+本页按用途分类列出系统函数页面。网站会将每个分类汇总在一个页面中显示。
 
-添加新函数时，只需将其列入本文件中对应的分类一次。分类名称须与函数页面中的 `**Category:**` 行相同。
+添加新函数时，只需在本文件的相应分类中列出一次。分类名称应与函数页面的 `**Category:**` 行相同。
 
 ## 类型获取/转换
 
@@ -134,6 +134,7 @@
 - [FREADENCODE](FREADENCODE.md)
 - [FREADBIN](FREADBIN.md)
 - [FREADJSON](FREADJSON.md)
+- [FREADJSONL](FREADJSONL.md)
 - [FREADXML](FREADXML.md)
 - [FREADHTML](FREADHTML.md)
 - [FREADYAML](FREADYAML.md)
@@ -187,7 +188,7 @@
 - [GETENV](GETENV.md)
 - [READFMO](READFMO.md)
 
-## 元操作・特殊函数
+## 元操作与特殊函数
 
 - [EVAL](EVAL.md)
 - [ISEVALUABLE](ISEVALUABLE.md)
@@ -223,7 +224,7 @@
 - [SETGLOBALDEFINE](SETGLOBALDEFINE.md)
 - [UNDEFGLOBALDEFINE](UNDEFGLOBALDEFINE.md)
 
-## 通信・进程间通信
+## 通信与进程间通信
 
 - [DIRECTSSTP](DIRECTSSTP.md)
 
